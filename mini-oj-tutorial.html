@@ -1,0 +1,3287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>用 Mini-OJ 项目学 Java · 教程</title>
+<style>
+
+      :root {
+        --paper: #f7f7f5;
+        --paper-edge: #efefea;
+        --ink: #1a1a1a;
+        --ink-soft: #4a4a4a;
+        --ink-faint: #7a7a7a;
+        --rule: #d8d8d2;
+        --rule-soft: #e8e8e2;
+        --accent: #6f9bb8;
+        --accent-soft: #d9e6f0;
+        --accent-faint: #eef4f8;
+        --warn: #b88a4a;
+        --warn-soft: #f5ecdc;
+        --danger: #a05050;
+        --code-bg: #ececea;
+
+        /* Semantic palette for three-layer cards. Rename freely
+           (e.g. --layer-a / --layer-b / --layer-c) when the three
+           layers in the doc are not brain/hands/session. */
+        --brain: #6f9bb8;
+        --brain-bg: #eef4f8;
+        --hands: #b88a4a;
+        --hands-bg: #f5ecdc;
+        --session: #6b7560;
+        --session-bg: #ecede5;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { font-size: 16px; }
+
+      /* Font stacks include both English serifs/monospace and CJK
+         fallbacks so the same template renders cleanly for English
+         or Chinese source content. */
+      body {
+        font-family:
+          ui-serif, "Charter", "Iowan Old Style", "Source Serif Pro", Georgia,
+          "Songti SC", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        padding: 64px 24px 96px;
+      }
+
+      .doc { max-width: 840px; margin: 0 auto; }
+
+      /* ─── Header ─── */
+      .doc-header {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 28px;
+        margin-bottom: 48px;
+      }
+      .doc-eyebrow {
+        font-family:
+          ui-monospace, "SF Mono", Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 14px;
+      }
+      .doc-title {
+        font-family:
+          ui-serif, Charter, Georgia,
+          "Songti SC", "Source Han Serif SC", serif;
+        font-size: 34px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        line-height: 1.2;
+      }
+      .doc-subtitle {
+        font-size: 16px;
+        color: var(--ink-soft);
+        margin-top: 10px;
+        font-style: italic;
+      }
+      .doc-meta {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        color: var(--ink-faint);
+        margin-top: 18px;
+        display: flex;
+        gap: 24px;
+      }
+
+      /* ─── TL;DR ─── */
+      .tldr {
+        background: var(--accent-faint);
+        border-left: 2px solid var(--accent);
+        padding: 20px 24px;
+        margin-bottom: 56px;
+        font-size: 15px;
+      }
+      .tldr-label {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      /* ─── Sections ─── */
+      section { margin-bottom: 56px; }
+      h2 {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        margin-bottom: 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--rule);
+      }
+      h2 .num {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 12px;
+        color: var(--ink-faint);
+        font-weight: 500;
+        margin-right: 14px;
+        letter-spacing: 0.05em;
+      }
+      h3 {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 28px 0 10px;
+      }
+      h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 22px 0 8px;
+      }
+      p { margin-bottom: 14px; }
+      p + p { margin-top: -2px; }
+      a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+      a:hover { border-bottom-color: var(--accent); }
+      code {
+        font-family:
+          ui-monospace, "SF Mono", Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 13px;
+        background: var(--code-bg);
+        padding: 1px 5px;
+        border-radius: 2px;
+      }
+      pre {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 12.5px;
+        line-height: 1.55;
+        background: var(--code-bg);
+        padding: 14px 18px;
+        margin: 14px 0 18px;
+        overflow-x: auto;
+        border-left: 2px solid var(--rule);
+      }
+      pre code { background: transparent; padding: 0; }
+      ul, ol { margin: 8px 0 16px 22px; }
+      li { margin-bottom: 6px; }
+      strong { font-weight: 600; }
+      em { color: var(--ink-soft); }
+      blockquote {
+        border-left: 2px solid var(--rule);
+        padding: 4px 0 4px 18px;
+        margin: 14px 0 18px;
+        color: var(--ink-soft);
+        font-style: italic;
+      }
+
+      /* ─── Tables ─── */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 14px 0 18px;
+        font-size: 14px;
+      }
+      th, td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--rule-soft);
+        vertical-align: top;
+      }
+      th {
+        font-weight: 600;
+        font-family:
+          ui-sans-serif, system-ui,
+          "PingFang SC", "Hiragino Sans GB", sans-serif;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--ink-faint);
+        border-bottom: 1px solid var(--rule);
+      }
+      tbody tr:hover { background: rgba(0,0,0,0.015); }
+      td.num {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 13px;
+      }
+      td.accent { color: var(--accent); font-weight: 500; }
+
+      /* ─── Callouts ─── */
+      .callout {
+        border: 1px solid var(--rule);
+        background: #fff;
+        padding: 16px 18px;
+        margin: 16px 0 20px;
+      }
+      .callout.warn {
+        border-color: #e6d4a8;
+        background: var(--warn-soft);
+      }
+      .callout.cite {
+        border-left: 2px solid var(--accent);
+        border-top: none; border-right: none; border-bottom: none;
+        background: var(--accent-faint);
+        padding-left: 22px;
+        font-style: italic;
+      }
+      .callout-label {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .callout.warn .callout-label { color: var(--warn); }
+      .cite-source {
+        font-style: normal;
+        font-size: 12px;
+        color: var(--ink-faint);
+        margin-top: 10px;
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+      }
+
+      /* ─── Figure / Diagram ─── */
+      figure {
+        margin: 28px 0 32px;
+        border: 1px solid var(--rule);
+        background: #fff;
+      }
+      figure svg { display: block; width: 100%; height: auto; }
+      figure img { display: block; width: 100%; height: auto; }
+      figcaption {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        padding: 10px 16px;
+        border-top: 1px solid var(--rule-soft);
+        background: var(--paper-edge);
+      }
+      figcaption .fig-num {
+        color: var(--accent);
+        margin-right: 10px;
+        font-weight: 600;
+      }
+
+      /* ─── N-column concept cards ─── */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin: 20px 0 18px;
+      }
+      .cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .cards.cols-4 { grid-template-columns: repeat(4, 1fr); }
+      .card {
+        border: 1px solid var(--rule);
+        background: #fff;
+        padding: 16px 16px 14px;
+      }
+      .card-icon {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--accent);
+      }
+      .card-name {
+        font-family:
+          ui-serif, Charter, Georgia,
+          "Songti SC", "Source Han Serif SC", serif;
+        font-size: 17px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .card-where {
+        font-size: 12px;
+        color: var(--ink-faint);
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+      .card-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+      /* tone variants for cards */
+      .card.tone-a .card-icon { color: var(--brain); }
+      .card.tone-b .card-icon { color: var(--hands); }
+      .card.tone-c .card-icon { color: var(--session); }
+
+      /* ─── Buttons / Inputs (for interactive sections) ─── */
+      .btn {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 8px 14px;
+        background: #fff;
+        color: var(--ink);
+        border: 1px solid var(--rule);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn:hover { background: var(--paper-edge); }
+      .btn.primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .btn.primary:hover { background: #5a87a4; }
+
+      input[type="text"], input[type="email"], textarea, select {
+        font-family:
+          ui-serif, Charter, Georgia,
+          "Songti SC", "Source Han Serif SC", serif;
+        font-size: 14px;
+        padding: 8px 12px;
+        background: #fff;
+        border: 1px solid var(--rule);
+        color: var(--ink);
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      label {
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-faint);
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      /* ─── Footer ─── */
+      footer {
+        margin-top: 80px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        font-size: 12px;
+        color: var(--ink-faint);
+      }
+      footer h4 {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-family:
+          ui-monospace, Menlo,
+          "PingFang SC", "Hiragino Sans GB", monospace;
+        margin-bottom: 10px;
+        color: var(--ink-soft);
+      }
+      footer ul { list-style: none; margin-left: 0; }
+      footer li { margin-bottom: 4px; }
+
+      .mascot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+
+      @media (max-width: 720px) {
+        body { padding: 32px 16px 64px; }
+        .doc-title { font-size: 26px; }
+        .cards, .cards.cols-2, .cards.cols-4 { grid-template-columns: 1fr; }
+        .doc-meta { flex-wrap: wrap; gap: 12px; }
+      }
+    
+
+/* —— interactivity —— */
+section.collapsible h2 { cursor: pointer; position: relative; padding-right: 28px; }
+section.collapsible h2::after { content:"\2212"; position:absolute; right:8px; top:8px; font-family: ui-monospace, Menlo, monospace; color: var(--ink-faint); }
+section.collapsible.collapsed h2::after { content:"+"; }
+section.collapsible.collapsed > *:not(h2) { display:none; }
+pre { position: relative; }
+.copy-btn { position:absolute; top:8px; right:8px; font-family: ui-monospace, Menlo, monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; background:#fff; border:1px solid var(--rule); padding:3px 7px; cursor:pointer; color: var(--ink-faint); }
+.copy-btn:hover { color: var(--ink); }
+.toc { position: fixed; top: 56px; left: 20px; width: 218px; max-height: 82vh; overflow:auto; font-family: ui-monospace, Menlo, monospace; font-size: 11px; line-height: 1.65; padding-right:8px; }
+.toc a { display:block; color: var(--ink-faint); border:none; padding: 1px 0; }
+.toc a:hover { color: var(--ink-soft); }
+.toc a.active { color: var(--accent); font-weight: 600; }
+.toc .toc-title { color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; font-weight:600; }
+@media (max-width: 1260px) { .toc { display:none; } }
+html.dark { --paper:#1a1a1a; --paper-edge:#222; --ink:#e8e8e2; --ink-soft:#b8b8b2; --ink-faint:#888; --rule:#333; --rule-soft:#2a2a2a; --code-bg:#262624; --accent-faint:#1c2a35; --warn-soft:#2c2418; }
+html.dark .callout, html.dark .card, html.dark figure, html.dark .copy-btn { background:#1f1f1f; }
+html.dark figcaption { background:#181818; }
+html.dark pre, html.dark code { background:#262624; }
+.theme-toggle { position: fixed; top:14px; right:14px; font-family: ui-monospace, Menlo, monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; background: var(--paper-edge); color: var(--ink-faint); border:1px solid var(--rule); padding:6px 10px; cursor:pointer; z-index:30; }
+.reading-progress { position: fixed; top:0; left:0; height:2px; background: var(--accent); width:0%; z-index:40; transition: width 0.1s ease-out; }
+
+</style>
+</head>
+<body>
+<div class="reading-progress" id="progress"></div>
+<button class="theme-toggle" id="theme-toggle">dark</button>
+<nav class="toc" id="toc"></nav>
+<article class="doc">
+<header class="doc-header">
+  <div class="doc-eyebrow"><span class="mascot"></span>Mini-OJ · Java 学习教程</div>
+  <h1 class="doc-title">用 Mini-OJ 项目学 Java</h1>
+  <p class="doc-subtitle">从 HelloWorld 到多线程网络判题系统 · 古法手撸 · 教学优先</p>
+  <div class="doc-meta">
+    <span>STATUS · 教程</span>
+    <span>ENV · Ubuntu + nvim + JDK</span>
+    <span>REPO · github.com/winbeau/Mini-OJ-docs</span>
+  </div>
+</header>
+<div class="tldr">
+  <div class="tldr-label">TL;DR</div>
+  以一个 <strong>Mini-OJ(在线判题系统)</strong> 为主线,循序渐进学完 Java 课程 13 章:从环境搭建与 HelloWorld,到面向对象、接口/继承/多态/异常、常用类库与反射,再到文件 I/O、JDBC、Swing GUI、多线程与网络编程。判题分两条路:<strong>Java 内模拟判题</strong>(教 OOP)与<strong>独立判题机</strong>(C++ 单文件,真实编译运行 C++/Python 提交)。全程 <code>javac/java</code> 古法手撸,简单、教学优先。点击章节标题可折叠,右上角可切换暗色。
+</div>
+<figure>
+<svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, Menlo, monospace" font-size="12">
+  <defs><marker id="ah" markerWidth="10" markerHeight="8" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#7a7a7a"/></marker></defs>
+  <rect width="760" height="300" fill="#fff"/>
+  <rect x="20"  y="52"  width="150" height="58" rx="4" fill="#fff"     stroke="#d8d8d2"/>
+  <text x="95"  y="78"  text-anchor="middle" fill="#1a1a1a">Swing 客户端</text>
+  <text x="95"  y="96"  text-anchor="middle" fill="#7a7a7a">Ch9</text>
+  <rect x="300" y="52"  width="170" height="58" rx="4" fill="#fff"     stroke="#d8d8d2"/>
+  <text x="385" y="78"  text-anchor="middle" fill="#1a1a1a">多线程判题服务端</text>
+  <text x="385" y="96"  text-anchor="middle" fill="#7a7a7a">Ch12 / Ch13</text>
+  <rect x="560" y="42"  width="180" height="78" rx="4" fill="#eef4f8"  stroke="#6f9bb8"/>
+  <text x="650" y="70"  text-anchor="middle" fill="#1a1a1a">判题机 judge</text>
+  <text x="650" y="90"  text-anchor="middle" fill="#4a4a4a">编译运行</text>
+  <text x="650" y="106" text-anchor="middle" fill="#4a4a4a">C++ / Python</text>
+  <rect x="300" y="206" width="170" height="54" rx="4" fill="#fff"     stroke="#d8d8d2"/>
+  <text x="385" y="231" text-anchor="middle" fill="#1a1a1a">MySQL</text>
+  <text x="385" y="249" text-anchor="middle" fill="#7a7a7a">Ch11</text>
+  <rect x="560" y="206" width="180" height="54" rx="4" fill="#fff"     stroke="#d8d8d2"/>
+  <text x="650" y="231" text-anchor="middle" fill="#1a1a1a">文件题库 / 用例</text>
+  <text x="650" y="249" text-anchor="middle" fill="#7a7a7a">Ch10</text>
+  <line x1="170" y1="81" x2="298" y2="81" stroke="#7a7a7a" marker-end="url(#ah)"/>
+  <text x="234" y="74"  text-anchor="middle" fill="#7a7a7a">Socket</text>
+  <line x1="470" y1="81" x2="558" y2="81" stroke="#7a7a7a" marker-end="url(#ah)"/>
+  <text x="514" y="74"  text-anchor="middle" fill="#7a7a7a">调用</text>
+  <line x1="385" y1="110" x2="385" y2="204" stroke="#7a7a7a" marker-end="url(#ah)"/>
+  <text x="392" y="160" text-anchor="start"  fill="#7a7a7a">JDBC</text>
+  <line x1="650" y1="206" x2="650" y2="122" stroke="#7a7a7a" marker-end="url(#ah)"/>
+  <text x="657" y="166" text-anchor="start"  fill="#7a7a7a">题目目录</text>
+</svg>
+<figcaption><span class="fig-num">FIG 1</span>最终架构 · Swing 客户端 ↔ Socket ↔ 多线程判题服务端 ↔ MySQL,判题机负责真实编译运行</figcaption>
+</figure>
+<section class="collapsible">
+<h2 id="sec-1"><span class="num">01</span>学习路线图</h2>
+<blockquote>
+<p>环境:Ubuntu + nvim + JDK。开发方式:先裸
+<code>javac/java</code>,从单文件 → 多文件 → jar → 依赖管理,循序渐进。
+主线:<strong>给题目+测试用例,(编译)运行用户代码,比对输出,判
+<code>AC/WA/TLE/MLE/CE/RE</code>。</strong> 判题两条路:Java
+内模拟判题(教学,M3/M4)+ 外部判题机真实编译运行
+C++/Python(附录第11章)。</p>
+</blockquote>
+<h3 id="最终目标架构">最终目标架构</h3>
+<pre><code>Swing 客户端 ──Socket──▶ 多线程判题服务端 ──JDBC──▶ MySQL
+   (Ch9)                  (Ch12/Ch13)              (Ch11)
+                              │
+                              ▼
+                   判题核心:Problem/Judge/Result
+                   (Ch2-8) + 文件题库(Ch10)
+                              │
+                              ▼
+                   判题机(附录):编译运行 C++/Python 真实提交</code></pre>
+<h3 id="里程碑总览">里程碑总览</h3>
+<table>
+<thead>
+<tr class="header">
+<th>阶段</th>
+<th>章节</th>
+<th>里程碑</th>
+<th>产物</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M0</td>
+<td>Ch1</td>
+<td>环境 + HelloWorld</td>
+<td>能编译运行的 <code>Main.java</code></td>
+</tr>
+<tr class="even">
+<td>M1</td>
+<td>Ch2–3</td>
+<td>单题判题器(硬编码)</td>
+<td>能判 A+B 出 AC/WA 的单文件程序</td>
+</tr>
+<tr class="odd">
+<td>M2</td>
+<td>Ch4</td>
+<td>对象建模</td>
+<td><code>oj.core</code> 包 + 可运行 jar + javadoc</td>
+</tr>
+<tr class="even">
+<td>M3</td>
+<td>Ch5–7</td>
+<td>多判题策略 + 健壮性</td>
+<td><code>Judge</code> 接口/抽象类/多态 + 自定义异常</td>
+</tr>
+<tr class="odd">
+<td>M4</td>
+<td>Ch8</td>
+<td>比对/解析增强 + 反射</td>
+<td>正则 SpecialJudge + 反射可插拔判题器</td>
+</tr>
+<tr class="even">
+<td>M5a</td>
+<td>Ch10</td>
+<td>文件题库 + 序列化</td>
+<td>从 <code>problems/</code> 目录加载题、提交落盘</td>
+</tr>
+<tr class="odd">
+<td>M5b</td>
+<td>Ch11</td>
+<td>JDBC + MySQL</td>
+<td><code>users/problems/submissions</code> 三表 + DAO + 事务</td>
+</tr>
+<tr class="even">
+<td>M5c</td>
+<td>Ch9</td>
+<td>Swing 桌面客户端</td>
+<td>选题→编辑→提交→看结果(MVC)</td>
+</tr>
+<tr class="odd">
+<td>M6a</td>
+<td>Ch12</td>
+<td>多线程判题队列</td>
+<td>并发判题 + 守护线程做 TLE 超时</td>
+</tr>
+<tr class="even">
+<td>M6b</td>
+<td>Ch13</td>
+<td>网络 C/S</td>
+<td>Socket 客户端 ↔︎ ServerSocket 服务端</td>
+</tr>
+<tr class="odd">
+<td>附录</td>
+<td>—</td>
+<td>判题机集成</td>
+<td>C++ 单文件判题机 + Java <code>ProcessBuilder</code>
+调用(真实编译运行)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="项目目录最终演进形态">项目目录(最终演进形态)</h3>
+<pre><code>mini-oj/
+├── src/oj/
+│   ├── core/       Problem, TestCase, Submission, JudgeResult (M2)
+│   ├── judge/      Judge, AbstractJudge, StandardJudge, SpecialJudge (M3-M4)
+│   ├── exception/  JudgeException, TimeLimitException (M3)
+│   ├── io/         题库加载、序列化 (M5a)
+│   ├── db/         DAO + 连接/事务 (M5b)
+│   ├── gui/        Swing 客户端 (M5c)
+│   ├── net/        Socket 客户端/服务端 (M6)
+│   └── Main.java
+├── problems/       题库:title.txt / *.in / *.out (M5a)
+├── lib/            mysql-connector-j.jar 等 (M5b)
+├── build/          .class 输出
+├── Makefile        编译/打包脚本 (M2 起)
+├── judge/          判题机(C++ 单文件 judge.cpp,真实编译运行 C++/Python,见附录)
+└── README.md</code></pre>
+<h3 id="工具链演进">工具链演进</h3>
+<ul>
+<li><strong>M0–M1</strong>:<code>nvim</code> + <code>javac</code> +
+<code>java</code> + <code>javap</code>(反编译看字节码),单文件。</li>
+<li><strong>M2</strong>:多文件 +
+<code>package</code>,<code>Makefile</code> 一键编译,<code>jar cfe</code>
+打可运行包,<code>javadoc</code> 出文档。</li>
+<li><strong>M5b</strong>:引入外部 jar(MySQL 驱动)→ 此处自然过渡到
+<strong>Maven/Gradle</strong> 管依赖与 classpath。</li>
+<li>nvim:早期裸 javac 足够;中期可选装
+<code>nvim-jdtls</code>(LSP)提升补全/跳转。</li>
+</ul>
+<hr />
+<h2 id="逐里程碑详细计划">逐里程碑详细计划</h2>
+<p>每个里程碑统一四块:<strong>知识点 / 任务(写什么)/ 关键命令 /
+验收标准</strong>。</p>
+<h3 id="m0--ch1-环境与第一个程序">M0 — Ch1 环境与第一个程序</h3>
+<ul>
+<li><strong>知识点</strong>:Java 特点(了解)、JDK
+安装与环境变量、编写→编译→运行三步、<code>javap</code>
+反编译、编程风格(Allman/K&amp;R)与注释。</li>
+<li><strong>任务</strong>:装 JDK 并配环境;<code>nvim Main.java</code>
+打印 <code>Mini-OJ judge ready</code>;建项目根目录
+<code>mini-oj/</code>。</li>
+<li><strong>命令</strong>:
+<pre class="bash"><code>sudo apt install openjdk-21-jdk   # 或用 sdkman
+java -version &amp;&amp; javac -version
+nvim Main.java
+javac Main.java &amp;&amp; java Main
+javap -c Main                     # 看字节码,理解 .class/JVM</code></pre></li>
+<li><strong>验收</strong>:终端输出 ready;能讲清
+<code>.java → .class → JVM</code>;能读懂一两行字节码。</li>
+</ul>
+<h3 id="m1--ch23-单题判题器硬编码">M1 — Ch2–3 单题判题器(硬编码)</h3>
+<ul>
+<li><strong>知识点</strong>:标识符/关键字、基本数据类型与类型转换、<code>Scanner</code>
+输入/<code>println</code>
+输出、数组(声明/分配/<code>length</code>/初始化/遍历)、算术/关系/逻辑/赋值/位运算、<code>if</code>/<code>switch</code>、<code>for</code>/<code>while</code>/<code>do-while</code>、<code>break</code>/<code>continue</code>。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>程序内置 N
+组测试用例:<code>int[] a, b; int[] expected;</code>。</li>
+<li>写"用户解法"方法 <code>solve(x,y)</code> 返回
+<code>x+y</code>。</li>
+<li><code>for</code> 逐组比对:相等记 AC,否则 WA 并打印"第 i 组 期望 X
+实际 Y"。</li>
+<li>再加一道用
+<code>switch</code>(成绩等级)和一道用循环(判素数/求和)的题,练全流程控制。</li>
+</ol></li>
+<li><strong>验收</strong>:能跑出 <code>3/3 AC</code> 或
+<code>2/3 WA(...)</code>;故意改一组用例,判定正确翻转为 WA。</li>
+</ul>
+<h3 id="m2--ch4-对象建模">M2 — Ch4 对象建模</h3>
+<ul>
+<li><strong>知识点</strong>:类/成员变量/方法、构造方法、对象创建与使用、引用
+vs 实体、参数传值(基本/引用/可变参数)、对象组合、实例成员 vs
+类成员(<code>static</code>)、方法重载、<code>this</code>、<code>package</code>/<code>import</code>、访问权限(private/public/友好/protected)、对象数组、可运行
+jar、javadoc。</li>
+<li><strong>任务</strong>:把 M1 拆成对象——
+<ul>
+<li><code>TestCase{ String input; String expected; }</code></li>
+<li><code>Problem{ int id; String title; TestCase[] cases; }</code>(<strong>对象数组</strong>;<code>addCases(TestCase... cs)</code>
+用<strong>可变参数</strong>)</li>
+<li><code>Submission{ Problem problem; String userOutput; }</code></li>
+<li><code>JudgeResult{ String status; String detail; int passed, total; }</code></li>
+<li>全字段 <code>private</code> + getter;<code>static</code>
+计数器统计总提交数;<code>judge(Problem)</code> /
+<code>judge(Problem,int)</code> <strong>重载</strong>;构造方法里用
+<code>this</code>。</li>
+<li>放进 <code>package oj.core</code>,正确目录;写
+<code>Makefile</code>。</li>
+</ul></li>
+<li><strong>命令</strong>:
+<pre class="bash"><code>javac -d build $(find src -name &#39;*.java&#39;)
+jar cfe mini-oj.jar oj.Main -C build .
+java -jar mini-oj.jar
+javadoc -d doc -sourcepath src -subpackages oj</code></pre></li>
+<li><strong>验收</strong>:判题逻辑全用对象;<code>java -jar</code>
+能跑;<code>doc/</code> 有 API 文档;能讲清"引用 vs 实体"。</li>
+</ul>
+<h3 id="m3--ch57-多判题策略--健壮性">M3 — Ch5–7 多判题策略 + 健壮性</h3>
+<ul>
+<li><strong>知识点</strong>:继承/成员隐藏/方法重写/<code>super</code>/<code>final</code>/上转型/多态、抽象类与抽象方法、面向抽象、开闭原则;接口/实现/接口回调/函数接口+Lambda/接口多态/接口参数/抽象类
+vs 接口/面向接口;内部类、匿名类、Lambda
+代替匿名类、异常(<code>try-catch</code>、自定义异常)、断言。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>定义接口
+<code>Judge{ JudgeResult judge(Problem p, Solution s); }</code>。</li>
+<li><code>abstract AbstractJudge</code>:模板方法(遍历用例+统计),抽象
+<code>boolean compare(String exp, String act)</code> 留子类。</li>
+<li>子类:<code>StandardJudge</code>(精确,trim
+行尾)、<code>SpecialJudge</code>(浮点容差
+1e-6)、<code>TokenJudge</code>(忽略多余空白)。</li>
+<li><strong>多态</strong>:<code>Judge j = pickJudge(p.type); j.judge(...)</code>
+—— 新增判题器不改调用方(<strong>开闭原则</strong>)。</li>
+<li>自定义异常
+<code>JudgeException</code>/<code>TimeLimitException</code>(见 00
+契约);判题中 <code>try-catch</code> 把崩溃映射成 RE
+状态(而非让程序挂掉)。</li>
+<li>用 Lambda / 匿名类实现一个 <code>OutputComparator</code>
+回调,体会两者关系。</li>
+<li><code>assert passed &lt;= total</code> 做内部不变量断言。</li>
+</ol></li>
+<li><strong>验收</strong>:同一接口跑标准题与浮点题;造个会抛异常的解法→判
+RE/CE;新增判题器只加类、不改老代码。</li>
+</ul>
+<h3 id="m4--ch8-比对解析增强--反射">M4 — Ch8 比对/解析增强 + 反射</h3>
+<ul>
+<li><strong>知识点</strong>:<code>String</code>(常用方法/与基本类型、字符数组、字节数组互转)、正则(元字符/替换/分解、<code>Pattern</code>/<code>Matcher</code>)、<code>StringTokenizer</code>、<code>Scanner</code>、<code>StringBuffer</code>、日期时间(<code>LocalDateTime</code>/<code>Duration</code>/格式化)、<code>Math</code>/<code>BigInteger</code>/<code>Random</code>/数字格式化、<strong>反射(<code>Class</code>)</strong>、<code>Arrays</code>/<code>System</code>。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>比对升级:<code>trim/split/equals</code>
+做行级比对;<code>StringBuffer</code> 拼接判题报告。</li>
+<li>正则:<code>SpecialJudge</code> 用
+<code>Pattern</code>/<code>Matcher</code>
+校验输出格式(如"若干空格分隔的整数"),提取数字。</li>
+<li>解析:<code>Scanner</code>/<code>StringTokenizer</code>
+切分输入数据。</li>
+<li>日期:记录提交时间戳,<code>Duration</code> 统计判题耗时(为 TLE
+铺垫)。</li>
+<li><code>BigInteger</code>:加一道"大数加法/阶乘"题,验证高精度判题。</li>
+<li><strong>反射</strong>:从配置字符串
+<code>Class.forName("oj.judge.SpecialJudge").getDeclaredConstructor().newInstance()</code>
+动态加载判题器 → 判题器可插拔。</li>
+</ol></li>
+<li><strong>验收</strong>:浮点/格式题靠正则判对;报告含时间戳+耗时;改配置字符串就能换判题器。</li>
+</ul>
+<h3 id="m5a--ch10-文件题库--序列化">M5a — Ch10 文件题库 + 序列化</h3>
+<ul>
+<li><strong>知识点</strong>:<code>File</code>(属性/目录/创建删除)、字节流、字符流、缓冲流、随机流(<code>RandomAccessFile</code>)、数据流(<code>DataOutputStream</code>)、对象流、序列化、<code>Scanner</code>
+解析文件、(选)文件锁。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>题库落地:<code>problems/1/title.txt</code>、<code>problems/1/1.in</code>、<code>problems/1/1.out</code>;用
+<code>File</code>
+遍历目录加载题与用例,<strong>替换硬编码</strong>。</li>
+<li>字符流+缓冲流读 <code>.in/.out</code>;<code>Scanner</code>
+解析文件。</li>
+<li><code>Submission implements Serializable</code>,对象流写到
+<code>submissions/*.ser</code>,反序列化读回历史。</li>
+<li>数据流写紧凑统计;<code>RandomAccessFile</code>
+追加判题日志;(选)文件锁保护并发写(为多线程铺垫)。</li>
+</ol></li>
+<li><strong>验收</strong>:加新题只需往 <code>problems/</code>
+放文件、不改代码;重启后能从 <code>.ser</code> 读回历史提交。</li>
+</ul>
+<h3 id="m5b--ch11-jdbc--mysql">M5b — Ch11 JDBC + MySQL</h3>
+<ul>
+<li><strong>知识点</strong>:MySQL
+启动/客户端、JDBC、连接、查询(顺序/游标/条件排序)、增删改、<code>PreparedStatement</code>+通配符、通用查询、事务。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>装 MySQL,建库 <code>mini_oj</code>,建表
+<code>users / problems / submissions</code>。</li>
+<li>引入 <code>mysql-connector-j.jar</code>(放 <code>lib/</code>)→
+<strong>此处引入 Maven/Gradle 管依赖</strong>。</li>
+<li>DAO:<code>ProblemDao</code>/<code>SubmissionDao</code> 用
+<code>PreparedStatement</code> 做 CRUD;查历史提交、排行。</li>
+<li><strong>事务</strong>:一次提交 = 插入 submission + 更新 user
+通过题数,放进一个事务(<code>setAutoCommit(false)</code> +
+<code>commit/rollback</code>)。</li>
+<li>元数据/提交从文件平滑迁到 DB(题面可仍放文件)。</li>
+</ol></li>
+<li><strong>验收</strong>:提交进
+MySQL;能按用户/题目查询;事务中途抛异常时统计不被脏写(回滚生效)。</li>
+</ul>
+<h3 id="m5c--ch9-swing-桌面客户端">M5c — Ch9 Swing 桌面客户端</h3>
+<ul>
+<li><strong>知识点</strong>:Swing
+概述、<code>JFrame</code>、菜单、常用组件/容器/布局、事件处理(Action/Item/Document/Mouse/Key/Window/Focus)、匿名类/Lambda
+监听器、MVC、对话框、<code>JTree</code>、<code>JTable</code>、按钮绑键盘。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>主窗:左 <code>JTree</code>/<code>JList</code> 题目列表(读 DB),中
+<code>JTextArea</code> 代码/输入编辑区,下 <code>JTable</code> 显示各用例
+AC/WA + 耗时。</li>
+<li>菜单条(文件/帮助)+ "提交"按钮。</li>
+<li>事件:点题目→加载题面;点提交→判题→刷新结果表(Lambda 监听器);至少用到
+3 类事件。</li>
+<li>对话框:结果消息框、异常错误框、退出确认框。</li>
+<li><strong>MVC</strong> 分层:Model(DAO+判题)/ View(Swing)/
+Controller(监听器)。</li>
+</ol></li>
+<li><strong>验收</strong>:纯 GUI 完成"选题→编辑→提交→看结果";结构是
+MVC。</li>
+</ul>
+<h3 id="m6a--ch12-多线程判题队列">M6a — Ch12 多线程判题队列</h3>
+<ul>
+<li><strong>知识点</strong>:进程/线程、状态生命周期、调度优先级、<code>Thread</code>/<code>Runnable</code>、<code>run</code>
+调用次数、常用方法、<code>synchronized</code>
+同步、<code>wait/notify</code> 协调、<code>join</code> 联合、GUI
+线程(<code>SwingWorker</code>/EDT)、计时器线程、守护线程。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>判题队列:提交进 <code>BlockingQueue</code>(或自写 synchronized
+队列),N 个工作线程消费(生产者-消费者)。</li>
+<li>同步保护共享统计;<code>wait/notify</code> 协调空队列。</li>
+<li><strong>TLE</strong>:每组用例起一个守护/计时线程,超时(如 1s)→中断→判
+TLE(呼应 M4 的 <code>Duration</code>)。</li>
+<li>GUI 判题放后台 <code>SwingWorker</code>,结果回 EDT
+刷新表格,界面不卡。</li>
+<li><code>join</code> 批量判题等全部完成再汇总。</li>
+</ol></li>
+<li><strong>验收</strong>:多份提交并发判;死循环解法被判 TLE
+而非卡死;判题时 GUI 不冻结。</li>
+</ul>
+<h3 id="m6b--ch13-网络-cs收官">M6b — Ch13 网络 C/S(收官)</h3>
+<ul>
+<li><strong>知识点</strong>:<code>URL</code>(构造/读资源)、<code>InetAddress</code>(地址表示/获取)、套接字、<code>Socket</code>/<code>ServerSocket</code>。</li>
+<li><strong>任务</strong>:
+<ol type="1">
+<li>拆 C/S:服务端 <code>ServerSocket</code> 监听,收到提交丢进 M6a
+判题队列,判完把结果写回 <code>Socket</code>。</li>
+<li>客户端(Swing)用 <code>Socket</code>
+发"题号+代码/输出",收结果显示。</li>
+<li>服务端多线程:每连接一个线程或线程池(呼应 Ch12)。</li>
+<li><code>InetAddress</code> 显示客户端来源;(选)<code>URL</code>
+从远程拉题库。</li>
+<li>最终形态成立:<strong>Swing 客户端 ↔︎ Socket ↔︎ 多线程判题服务端 ↔︎
+MySQL</strong>。</li>
+</ol></li>
+<li><strong>验收</strong>:两进程(同机不同端口)跑通"远程提交→远程判题→结果回显";多客户端并发不串。</li>
+</ul>
+<hr />
+<h3 id="学习方法建议">学习方法建议</h3>
+<ul>
+<li><strong>一里程碑一可运行产物</strong>:每个 M 结束都能
+<code>java</code>/<code>java -jar</code> 跑出东西,再进下一个。</li>
+<li><strong>先理解再扩展</strong>:每章新知识先用在 OJ
+的某个真实需求上,避免"为语法而语法"。</li>
+<li><strong>保留旧版本</strong>:每个里程碑提交一次(可
+<code>git init</code>),方便回看演进。</li>
+<li><strong>验收当门槛</strong>:没过验收标准不进下一阶段。</li>
+</ul>
+<blockquote>
+<p>进度勾选:M0 ☐ M1 ☐ M2 ☐ M3 ☐ M4 ☐ M5a ☐ M5b ☐ M5c ☐ M6a ☐ M6b ☐</p>
+</blockquote>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-2"><span class="num">02</span>项目总设计 · 全局契约</h2>
+<blockquote>
+<p>这份是<strong>地基</strong>:定下全项目的包结构、类/接口清单、核心数据模型签名。各章文档都引用本文,<strong>不得擅自改名或改签名</strong>。
+原则:<strong>简单、教学优先</strong>。能少一个类就少一个,能不实现的非重点就不实现。</p>
+</blockquote>
+<h3 id="1-简化原则我们故意不做什么">1. 简化原则(我们故意不做什么)</h3>
+<ul>
+<li><strong>不真编译运行用户源码</strong>:用 <code>Solution</code>
+接口模拟"用户提交的程序"。学生写一个实现类就是一次提交。
+<ul>
+<li>副作用:<code>CE</code>(编译错误)在核心里不会自然出现 →
+只在<strong>可选拓展</strong>(<code>ProcessBuilder</code>
+跑外部程序)里提一句,核心状态以 <code>AC/WA/RE/TLE/PE</code> 为主。</li>
+</ul></li>
+<li><strong>不引入框架</strong>:全程
+<code>javac</code>/<code>java</code> 手撸;M5b 接 MySQL 驱动时才用
+<code>java -cp</code> 挂 jar(不强制上 Maven)。</li>
+<li><strong>非重点只了解不实现</strong>:位运算、<code>instanceof</code>
+细节、Derby/Access/SQLServer、读写图像、文件锁、颜色对话框等——文档里标注"了解即可",不写进项目。</li>
+</ul>
+<h3 id="2-关键设计决策">2. 关键设计决策</h3>
+<table>
+<thead>
+<tr class="header">
+<th>决策</th>
+<th>选择</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>用户解法表示</td>
+<td><code>Solution</code>
+接口:<code>String solve(String input)</code></td>
+<td>纯 Java,免去外部进程;天然教接口+多态</td>
+</tr>
+<tr class="even">
+<td>判题结果状态</td>
+<td><code>enum Status</code></td>
+<td>最干净(enum 不在大纲但极简单;也可用 <code>final String</code>
+常量替代,呼应 Ch5 常量)</td>
+</tr>
+<tr class="odd">
+<td>判题器演进</td>
+<td>M2 具体 <code>SimpleJudge</code> 类 → M3 重构成 <code>Judge</code>
+接口 + <code>AbstractJudge</code> + 子类</td>
+<td>"学到抽象再抽象",重构即教学</td>
+</tr>
+<tr class="even">
+<td>题库来源</td>
+<td>M2 硬编码 → M5a 改读 <code>problems/</code> 文件 → M5b 元数据进
+MySQL</td>
+<td>一步步替换,旧代码尽量复用</td>
+</tr>
+<tr class="odd">
+<td>TLE</td>
+<td>M3 先定义异常类(学语法)→ M6a 用线程真正触发</td>
+<td>概念与实现分两阶段</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-最终包结构逐章长出来">3. 最终包结构(逐章长出来)</h3>
+<pre><code>mini-oj/
+├── src/oj/
+│   ├── core/        Status, TestCase, Problem, JudgeResult, Submission   (M2)
+│   ├── judge/       Solution, Judge, AbstractJudge, StandardJudge, SpecialJudge  (M2具体→M3/M4)
+│   │   └── queue/   JudgeQueue, JudgeWorker                              (M6a)
+│   ├── exception/   JudgeException, TimeLimitException                   (M3)
+│   ├── io/          ProblemLoader, SubmissionStore                      (M5a)
+│   ├── db/          Db, ProblemDao, SubmissionDao                       (M5b)
+│   ├── gui/         OjFrame, OjController                               (M5c)
+│   ├── net/         JudgeServer, JudgeClient                           (M6b)
+│   └── Main.java                                                       (M0/演示)
+├── problems/        题库:&lt;id&gt;/title.txt, &lt;id&gt;/N.in, &lt;id&gt;/N.out          (M5a)
+├── lib/             mysql-connector-j.jar                              (M5b)
+├── build/           .class 输出
+└── Makefile         一键编译/打包                                       (M2 起)</code></pre>
+<blockquote>
+<p>Ch1–3(M0–M1)还没学包,先用<strong>默认包、单文件
+<code>Main.java</code></strong>;M2 学了包再迁进 <code>oj.*</code>。</p>
+</blockquote>
+<h3 id="4-全量类接口清单">4. 全量类/接口清单</h3>
+<table>
+<thead>
+<tr class="header">
+<th>类/接口</th>
+<th>包</th>
+<th>引入</th>
+<th>一句话职责</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Main</code></td>
+<td>(默认/oj)</td>
+<td>M0</td>
+<td>程序入口、各阶段演示</td>
+</tr>
+<tr class="even">
+<td><code>Status</code>(enum)</td>
+<td>core</td>
+<td>M2</td>
+<td>判题状态:AC/WA/TLE/RE/CE/PE</td>
+</tr>
+<tr class="odd">
+<td><code>TestCase</code></td>
+<td>core</td>
+<td>M2</td>
+<td>一组测试:输入 + 期望输出</td>
+</tr>
+<tr class="even">
+<td><code>Problem</code></td>
+<td>core</td>
+<td>M2</td>
+<td>题目:id/标题/用例数组/时限</td>
+</tr>
+<tr class="odd">
+<td><code>JudgeResult</code></td>
+<td>core</td>
+<td>M2</td>
+<td>判题结果:状态/通过数/总数/详情/耗时</td>
+</tr>
+<tr class="even">
+<td><code>Submission</code></td>
+<td>core</td>
+<td>M2</td>
+<td>一次提交:谁/哪题/结果/时间</td>
+</tr>
+<tr class="odd">
+<td><code>Solution</code></td>
+<td>judge</td>
+<td>M2(类)→M3(接口)</td>
+<td>用户解法:<code>solve(input)→output</code></td>
+</tr>
+<tr class="even">
+<td><code>Judge</code></td>
+<td>judge</td>
+<td>M3</td>
+<td>判题器接口</td>
+</tr>
+<tr class="odd">
+<td><code>AbstractJudge</code></td>
+<td>judge</td>
+<td>M3</td>
+<td>模板:遍历用例/计时/抓异常/统计</td>
+</tr>
+<tr class="even">
+<td><code>StandardJudge</code></td>
+<td>judge</td>
+<td>M3</td>
+<td>精确比对(去行尾空白)</td>
+</tr>
+<tr class="odd">
+<td><code>SpecialJudge</code></td>
+<td>judge</td>
+<td>M4</td>
+<td>浮点容差 / 正则格式校验</td>
+</tr>
+<tr class="even">
+<td><code>JudgeException</code></td>
+<td>exception</td>
+<td>M3</td>
+<td>判题异常基类(自定义异常)</td>
+</tr>
+<tr class="odd">
+<td><code>TimeLimitException</code></td>
+<td>exception</td>
+<td>M3定义/M6a触发</td>
+<td>超时异常</td>
+</tr>
+<tr class="even">
+<td><code>ProblemLoader</code></td>
+<td>io</td>
+<td>M5a</td>
+<td>从 <code>problems/</code> 目录加载题目</td>
+</tr>
+<tr class="odd">
+<td><code>SubmissionStore</code></td>
+<td>io</td>
+<td>M5a</td>
+<td>序列化保存/读取提交历史</td>
+</tr>
+<tr class="even">
+<td><code>Db</code></td>
+<td>db</td>
+<td>M5b</td>
+<td>取得数据库连接</td>
+</tr>
+<tr class="odd">
+<td><code>ProblemDao</code></td>
+<td>db</td>
+<td>M5b</td>
+<td>题目表读写</td>
+</tr>
+<tr class="even">
+<td><code>SubmissionDao</code></td>
+<td>db</td>
+<td>M5b</td>
+<td>提交表读写 + 事务</td>
+</tr>
+<tr class="odd">
+<td><code>OjFrame</code></td>
+<td>gui</td>
+<td>M5c</td>
+<td>主窗口(View)</td>
+</tr>
+<tr class="even">
+<td><code>OjController</code></td>
+<td>gui</td>
+<td>M5c</td>
+<td>事件监听(Controller),简单时可并入 OjFrame</td>
+</tr>
+<tr class="odd">
+<td><code>JudgeQueue</code></td>
+<td>judge.queue</td>
+<td>M6a</td>
+<td>线程安全的提交队列</td>
+</tr>
+<tr class="even">
+<td><code>JudgeWorker</code></td>
+<td>judge.queue</td>
+<td>M6a</td>
+<td>判题工作线程(Runnable)</td>
+</tr>
+<tr class="odd">
+<td><code>JudgeServer</code></td>
+<td>net</td>
+<td>M6b</td>
+<td>ServerSocket 服务端</td>
+</tr>
+<tr class="even">
+<td><code>JudgeClient</code></td>
+<td>net</td>
+<td>M6b</td>
+<td>Socket 客户端</td>
+</tr>
+</tbody>
+</table>
+<p>合计约 24 个(含 Main),分 10 个里程碑逐步引入,任何时刻都"刚够用"。</p>
+<h3 id="5-核心数据模型契约签名锁定后续章节照此实现">5.
+核心数据模型契约(签名锁定,后续章节照此实现)</h3>
+<blockquote>
+<p>这些是稳定接口,M2 定下后基本不变。字段尽量 <code>final</code> + 私有
++ getter。</p>
+</blockquote>
+<pre class="java"><code>// oj.core.Status  —— 全项目唯一权威定义
+enum Status { AC, WA, TLE, MLE, RE, CE, PE }
+// 谁产生谁:Java 内判题(M3/M4)只产 AC/WA/RE(PE 由可选 FormatChecker 产);
+//          判题机(第11章)产 AC/WA/TLE/MLE/RE/CE,其内部错 ERR 由 MachineJudge 映射成 RE。
+
+// oj.core.TestCase
+class TestCase {
+    private final String input;
+    private final String expected;
+    TestCase(String input, String expected)
+    String getInput();  String getExpected();
+}
+
+// oj.core.Problem
+class Problem {
+    private final int id;
+    private final String title;
+    private final TestCase[] cases;
+    private final long timeLimitMs;                 // M6a 才真正用到
+    Problem(int id, String title, TestCase[] cases)                 // 默认时限 1000ms
+    Problem(int id, String title, TestCase[] cases, long timeLimitMs)   // 重载(Ch4)
+    int getId(); String getTitle(); TestCase[] getCases(); long getTimeLimitMs();
+}
+
+// oj.core.JudgeResult
+class JudgeResult {
+    private final Status status;
+    private final int passed, total;
+    private final String detail;     // 失败说明,如 &quot;case#2 期望 5 实际 4&quot;
+    private final long elapsedMs;
+    JudgeResult(Status status, int passed, int total, String detail, long elapsedMs)
+    Status getStatus(); int getPassed(); int getTotal(); String getDetail(); long getElapsedMs();
+    boolean isAccepted();            // status == AC
+    @Override String toString();     // 如 &quot;AC 3/3 (12ms)&quot;
+}
+
+// oj.core.Submission
+class Submission {
+    private static int counter = 0;          // 类变量:累计提交数(Ch4 static)
+    private final int id;                     // 由 counter 自增得到
+    private final int problemId;
+    private final String userName;
+    private JudgeResult result;               // 判完回填
+    private final LocalDateTime time;         // M4 引入
+    Submission(int problemId, String userName)
+    int getId(); int getProblemId(); String getUserName(); LocalDateTime getTime();
+    JudgeResult getResult(); void setResult(JudgeResult r);
+    static int count();                       // 返回 counter
+}
+
+// oj.judge.Solution  (M2 先做成普通类,M3 改成接口)
+interface Solution {
+    String solve(String input);              // 输入一组数据 → 产生输出
+}
+
+// oj.judge.Judge  (M3)
+interface Judge {
+    JudgeResult judge(Problem problem, Solution solution);
+}</code></pre>
+<h3 id="6-命名--风格约定">6. 命名 / 风格约定</h3>
+<ul>
+<li>包名小写
+<code>oj.xxx</code>;类名大驼峰;方法/变量小驼峰;常量全大写。</li>
+<li>缩进 4 空格;采用 K&amp;R(左括号不换行)。每个 public 类/方法写一句
+Javadoc。</li>
+<li>一个文件一个 public 类;<code>main</code> 只放在 <code>Main</code>/各
+<code>*Server</code>/<code>*Client</code>。</li>
+</ul>
+<h3 id="7-文档清单本系列">7. 文档清单(本系列)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>文件</th>
+<th>对应</th>
+<th>里程碑</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>00-项目总设计.md</code></td>
+<td>全局契约</td>
+<td>—</td>
+</tr>
+<tr class="even">
+<td><code>01-Ch1-环境与HelloWorld.md</code></td>
+<td>第1章</td>
+<td>M0</td>
+</tr>
+<tr class="odd">
+<td><code>02-Ch2-3-单题判题器.md</code></td>
+<td>第2-3章</td>
+<td>M1</td>
+</tr>
+<tr class="even">
+<td><code>03-Ch4-对象建模.md</code></td>
+<td>第4章</td>
+<td>M2</td>
+</tr>
+<tr class="odd">
+<td><code>04-Ch5-7-判题器与异常.md</code></td>
+<td>第5-7章</td>
+<td>M3</td>
+</tr>
+<tr class="even">
+<td><code>05-Ch8-比对解析与反射.md</code></td>
+<td>第8章</td>
+<td>M4</td>
+</tr>
+<tr class="odd">
+<td><code>06-Ch10-文件题库与序列化.md</code></td>
+<td>第10章</td>
+<td>M5a</td>
+</tr>
+<tr class="even">
+<td><code>07-Ch11-JDBC与MySQL.md</code></td>
+<td>第11章</td>
+<td>M5b</td>
+</tr>
+<tr class="odd">
+<td><code>08-Ch9-Swing客户端.md</code></td>
+<td>第9章</td>
+<td>M5c</td>
+</tr>
+<tr class="even">
+<td><code>09-Ch12-多线程判题队列.md</code></td>
+<td>第12章</td>
+<td>M6a</td>
+</tr>
+<tr class="odd">
+<td><code>10-Ch13-网络C-S.md</code></td>
+<td>第13章</td>
+<td>M6b</td>
+</tr>
+<tr class="even">
+<td><code>11-附录-判题机集成.md</code></td>
+<td>Java 调外部判题机(<code>judge/</code>)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>判题机</strong>(真实编译运行 C++/Python
+提交)是独立组件,代码在仓库 <code>judge/</code>(单文件
+<code>judge.cpp</code>)。 M3/M4 的 Java
+内判题(<code>Judge</code>/<code>Solution</code>)用于教
+OOP,保留;真实判题走 <code>MachineJudge</code> 调
+<code>judge/</code>,见第11章。 注:集成判题机后 <code>Status</code> 增加
+<code>MLE</code>:<code>enum Status { AC, WA, TLE, MLE, RE, CE, PE }</code>。</p>
+</blockquote>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-3"><span class="num">03</span>第1章 · 环境与 HelloWorld(M0)</h2>
+<blockquote>
+<p>目标:装好
+JDK,理解"编写→编译→运行",跑出第一个程序。<strong>本章只有一个文件、一个方法。</strong></p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Java 地位/特点/James Gosling</td>
+<td><strong>了解即可</strong>,不实现</td>
+</tr>
+<tr class="even">
+<td>JDK 安装与环境变量</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>编写→编译→运行 三步</td>
+<td><strong>动手</strong>(核心)</td>
+</tr>
+<tr class="even">
+<td><code>javap</code> 反编译</td>
+<td><strong>动手</strong>(看一眼字节码即可)</td>
+</tr>
+<tr class="odd">
+<td>编程风格 Allman/K&amp;R、注释</td>
+<td><strong>了解</strong>,本项目统一用 K&amp;R</td>
+</tr>
+</tbody>
+</table>
+<h3 id="要写的代码">要写的代码</h3>
+<p><strong>文件</strong>:<code>Main.java</code>(默认包,先不分包)</p>
+<pre><code>类 Main
+└── public static void main(String[] args)</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>方法</th>
+<th>签名</th>
+<th>职责</th>
+<th>关键逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>入口</td>
+<td><code>public static void main(String[] args)</code></td>
+<td>打印就绪信息</td>
+<td>一行 <code>System.out.println("Mini-OJ judge ready");</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>就这么简单。重点不在代码,在于走通工具链。</p>
+</blockquote>
+<h3 id="动手步骤">动手步骤</h3>
+<pre class="bash"><code># 1. 装 JDK(二选一)
+sudo apt install openjdk-21-jdk
+java -version &amp;&amp; javac -version
+
+# 2. 建目录、写代码
+mkdir -p ~/mini-oj &amp;&amp; cd ~/mini-oj
+nvim Main.java          # 写上面的 Main 类
+
+# 3. 编译 → 运行
+javac Main.java         # 生成 Main.class
+java Main               # 输出: Mini-OJ judge ready
+
+# 4. 反编译看字节码(理解 .class)
+javap -c Main</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><code>java -version</code>
+正常,<code>echo $JAVA_HOME</code> 有值(如配了)。</label></li>
+<li><label><input type="checkbox" />终端打印
+<code>Mini-OJ judge ready</code>。</label></li>
+<li><label><input
+type="checkbox" />能用自己的话说清:<code>Main.java</code> --javac--&gt;
+<code>Main.class</code> --java(JVM)--&gt; 运行。</label></li>
+<li><label><input type="checkbox" /><code>javap -c Main</code> 能看到
+<code>main</code> 方法的字节码(认出
+<code>getstatic</code>/<code>invokevirtual</code>
+即可,不求全懂)。</label></li>
+</ul>
+<h3 id="本章产物">本章产物</h3>
+<p>一个能编译运行的
+<code>Main.java</code>。下一章在它里面加判题逻辑。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-4"><span class="num">04</span>第2-3章 · 单题判题器(M1)</h2>
+<blockquote>
+<p>目标:<strong>还不用类</strong>,只用基本类型、数组、循环、分支,写出能判
+A+B 的判题器,跑出 <code>AC/WA</code>。 全部代码仍在单文件
+<code>Main.java</code>,用 <code>static</code> 方法 + 数组组织。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>标识符/关键字、基本数据类型、类型转换</td>
+<td><strong>动手</strong>(int/double/String/类型转换)</td>
+</tr>
+<tr class="even">
+<td>Scanner 输入 / println 输出</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>数组:声明/分配/length/初始化/遍历</td>
+<td><strong>动手</strong>(用例存数组)</td>
+</tr>
+<tr class="even">
+<td>算术/关系/逻辑/赋值运算符</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>位运算符、instanceof</td>
+<td><strong>了解即可</strong>,不实现</td>
+</tr>
+<tr class="even">
+<td>if / if-else / switch</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>for / while / do-while、break/continue</td>
+<td><strong>动手</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="要写的代码">要写的代码</h3>
+<p><strong>文件</strong>:<code>Main.java</code>(默认包,纯
+<code>static</code> 方法)</p>
+<pre><code>类 Main
+├── main                  程序入口,依次跑三道题的判题
+├── solve                 题1:模拟用户解法 a+b
+├── judgeAplusB           题1:遍历用例,统计 AC/WA 并打印
+├── grade                 题2:switch 求成绩等级(练 switch)
+├── isPrime               题3:循环判素数(练 for/while/break)
+└── compareInt            通用:比对期望值与实际值</code></pre>
+<h4 id="方法清单逐个">方法清单(逐个)</h4>
+<table>
+<thead>
+<tr class="header">
+<th>方法</th>
+<th>签名</th>
+<th>职责</th>
+<th>关键逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>入口</td>
+<td><code>public static void main(String[] a)</code></td>
+<td>跑三道题</td>
+<td>顺序调 <code>judgeAplusB()</code> 等,打印分隔</td>
+</tr>
+<tr class="even">
+<td>解法1</td>
+<td><code>static int solve(int a, int b)</code></td>
+<td>模拟用户 A+B 解法</td>
+<td><code>return a + b;</code></td>
+</tr>
+<tr class="odd">
+<td>判题1</td>
+<td><code>static void judgeAplusB()</code></td>
+<td>内置用例→逐组判→统计</td>
+<td>见下方算法</td>
+</tr>
+<tr class="even">
+<td>比对</td>
+<td><code>static boolean compareInt(int expected, int actual)</code></td>
+<td>判断一组是否通过</td>
+<td><code>return expected == actual;</code></td>
+</tr>
+<tr class="odd">
+<td>解法2</td>
+<td><code>static char grade(int score)</code></td>
+<td>分数→等级(练 switch)</td>
+<td><code>switch(score/10){case 10,9-&gt;'A'; ...}</code></td>
+</tr>
+<tr class="even">
+<td>解法3</td>
+<td><code>static boolean isPrime(int n)</code></td>
+<td>判素数(练循环)</td>
+<td><code>for(i=2;i*i&lt;=n;i++) if(n%i==0) return false;</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>题2/题3 只需各写一个简版 <code>judgeXxx()</code> 仿照
+<code>judgeAplusB</code>,确认 switch / 循环
+都用上即可,不必三题都做满——<strong>够覆盖知识点就停</strong>。</p>
+</blockquote>
+<h4 id="judgeaplusb-算法核心讲清数组循环分支"><code>judgeAplusB</code>
+算法(核心,讲清数组+循环+分支)</h4>
+<pre><code>// 用例:每行 {a, b};期望:对应 a+b
+int[][] inputs   = { {1,2}, {10,20}, {0,0} };
+int[] expected   = {   3,     30,      0  };
+
+int passed = 0;
+for (int i = 0; i &lt; inputs.length; i++) {          // 数组 length + for 遍历
+    int actual = solve(inputs[i][0], inputs[i][1]);
+    if (compareInt(expected[i], actual)) {          // 分支
+        passed++;
+    } else {
+        System.out.println(&quot;case#&quot; + i + &quot; 期望 &quot; + expected[i] + &quot; 实际 &quot; + actual);
+        // 可 continue / break,体会两者区别
+    }
+}
+String status = (passed == inputs.length) ? &quot;AC&quot; : &quot;WA&quot;;   // 三元 + 关系运算
+System.out.println(&quot;A+B: &quot; + status + &quot; &quot; + passed + &quot;/&quot; + inputs.length);</code></pre>
+<blockquote>
+<p>故意制造一组错的期望值,观察输出从 <code>AC</code> 变 <code>WA</code>
+并打出失败行——这就是"判题"的内核。</p>
+</blockquote>
+<h3 id="动手步骤">动手步骤</h3>
+<pre class="bash"><code>cd ~/mini-oj
+nvim Main.java            # 按上面方法清单补全
+javac Main.java &amp;&amp; java Main
+# 期望输出形如:
+#   A+B: AC 3/3
+#   Grade(85): B
+#   isPrime(7): true</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />三道题都能跑,A+B 打印
+<code>AC 3/3</code>。</label></li>
+<li><label><input type="checkbox" />把某组 <code>expected</code> 改错 →
+输出变 <code>WA 2/3</code> 且打出失败的 case 行。</label></li>
+<li><label><input
+type="checkbox" />代码里确实用到了:数组遍历、<code>if</code>/三元、<code>switch</code>、<code>for</code>(或
+<code>while</code>)。</label></li>
+<li><label><input
+type="checkbox" />能说清"为什么现在代码很难扩展到多道题"——为下一章引入"类/对象"埋伏笔。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>一个单文件、面向过程的判题器。<strong>痛点</strong>:题目、用例、结果全是散落的数组和变量,加一道题要改一堆地方。第3章(M2)用<strong>类与对象</strong>把它们封装成
+<code>Problem</code>/<code>TestCase</code>/<code>JudgeResult</code>。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-5"><span class="num">05</span>第4章 · 对象建模(M2)</h2>
+<blockquote>
+<p>目标:把 M1 散落的数组/变量,封装成 <code>oj.core</code>
+的几个类;判题逻辑收进一个
+<code>SimpleJudge</code>(还没学接口,先用具体类)。学会包、jar、javadoc。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>类/成员变量/方法/构造方法/<code>this</code></td>
+<td><strong>动手</strong>(贯穿)</td>
+</tr>
+<tr class="even">
+<td>封装(private + getter)</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>实例成员 vs 类成员(<code>static</code>)</td>
+<td><strong>动手</strong>(<code>Submission.counter</code>)</td>
+</tr>
+<tr class="even">
+<td>方法重载、可变参数</td>
+<td><strong>动手</strong>(构造重载 + <code>TestCase...</code>)</td>
+</tr>
+<tr class="odd">
+<td>对象数组</td>
+<td><strong>动手</strong>(<code>Problem.cases</code>)</td>
+</tr>
+<tr class="even">
+<td>包 <code>package</code> / <code>import</code> / 访问权限</td>
+<td><strong>动手</strong>(迁进 <code>oj.core</code>)</td>
+</tr>
+<tr class="odd">
+<td>可运行 jar、javadoc</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>基本类型的类封装、<code>var</code> 局部变量</td>
+<td><strong>了解即可</strong>,可不专门写</td>
+</tr>
+</tbody>
+</table>
+<h3 id="要写的类本章共-6-个">要写的类(本章共 6 个)</h3>
+<pre><code>oj.core:   Status(enum)  TestCase  Problem  JudgeResult  Submission
+oj.judge:  Solution(本章先做成具体类)  SimpleJudge</code></pre>
+<h4 id="statusenum--ojcorestatusjava">Status(enum) —
+<code>oj/core/Status.java</code></h4>
+<pre class="java"><code>package oj.core;
+public enum Status { AC, WA, TLE, MLE, RE, CE, PE }   // 权威定义见 00 §5;MLE/CE 主要由判题机(第11章)产生,Java 内判题用不到</code></pre>
+<h4 id="testcase--ojcoretestcasejava">TestCase —
+<code>oj/core/TestCase.java</code></h4>
+<pre class="java"><code>package oj.core;
+public class TestCase {
+    private final String input;
+    private final String expected;
+    public TestCase(String input, String expected) {
+        this.input = input;            // this 区分参数与字段
+        this.expected = expected;
+    }
+    public String getInput()    { return input; }
+    public String getExpected() { return expected; }
+}</code></pre>
+<h4 id="problem--ojcoreproblemjava对象数组--构造重载--可变参数">Problem
+— <code>oj/core/Problem.java</code>(对象数组 + 构造重载 + 可变参数)</h4>
+<pre class="java"><code>package oj.core;
+public class Problem {
+    private final int id;
+    private final String title;
+    private final TestCase[] cases;        // 对象数组
+    private final long timeLimitMs;
+    // 构造重载①:默认时限 1000ms;可变参数 TestCase... 本质就是 TestCase[]
+    public Problem(int id, String title, TestCase... cases) {
+        this(id, title, 1000, cases);      // this(...) 调另一个构造方法
+    }
+    // 构造重载②:显式时限
+    public Problem(int id, String title, long timeLimitMs, TestCase... cases) {
+        this.id = id; this.title = title;
+        this.timeLimitMs = timeLimitMs; this.cases = cases;
+    }
+    public int getId()           { return id; }
+    public String getTitle()     { return title; }
+    public TestCase[] getCases() { return cases; }
+    public long getTimeLimitMs() { return timeLimitMs; }
+}</code></pre>
+<blockquote>
+<p>注:为可变参数好用,把 <code>timeLimitMs</code> 放在 <code>cases</code>
+前;签名与 00 契约等价(<code>TestCase...</code> 即
+<code>TestCase[]</code>)。</p>
+</blockquote>
+<h4 id="judgeresult--ojcorejudgeresultjava">JudgeResult —
+<code>oj/core/JudgeResult.java</code></h4>
+<pre class="java"><code>package oj.core;
+public class JudgeResult {
+    private final Status status;
+    private final int passed, total;
+    private final String detail;
+    private final long elapsedMs;
+    public JudgeResult(Status status, int passed, int total, String detail, long elapsedMs) {
+        this.status=status; this.passed=passed; this.total=total;
+        this.detail=detail; this.elapsedMs=elapsedMs;
+    }
+    public Status getStatus()  { return status; }
+    public int getPassed()     { return passed; }
+    public int getTotal()      { return total; }
+    public String getDetail()  { return detail; }
+    public long getElapsedMs() { return elapsedMs; }
+    public boolean isAccepted(){ return status == Status.AC; }
+    @Override public String toString() {
+        return status + &quot; &quot; + passed + &quot;/&quot; + total + &quot; (&quot; + elapsedMs + &quot;ms)&quot;;
+    }
+}</code></pre>
+<h4 id="submission--ojcoresubmissionjava类变量-static">Submission —
+<code>oj/core/Submission.java</code>(类变量 static)</h4>
+<pre class="java"><code>package oj.core;
+public class Submission {
+    private static int counter = 0;     // 类变量:所有提交共享
+    private final int id;
+    private final int problemId;
+    private final String userName;
+    private JudgeResult result;         // 判完回填
+    public Submission(int problemId, String userName) {
+        this.id = ++counter;           // 自增得到唯一 id
+        this.problemId = problemId;
+        this.userName = userName;
+    }
+    public int getId()            { return id; }
+    public int getProblemId()     { return problemId; }
+    public String getUserName()   { return userName; }
+    public JudgeResult getResult(){ return result; }
+    public void setResult(JudgeResult r){ this.result = r; }
+    public static int count()     { return counter; }   // 类方法
+}</code></pre>
+<blockquote>
+<p><code>time</code>
+字段(LocalDateTime)第5章(M4)再加,避免本章引入日期类。</p>
+</blockquote>
+<h4 id="solution本章具体类--ojjudgeaplusbjava">Solution(本章=具体类) —
+<code>oj/judge/AplusB.java</code></h4>
+<pre class="java"><code>package oj.judge;
+import java.util.Scanner;
+public class AplusB {                  // 第6章会抽象成 Solution 接口
+    public String solve(String input) {
+        Scanner sc = new Scanner(input);
+        return String.valueOf(sc.nextInt() + sc.nextInt());
+    }
+}</code></pre>
+<h4 id="simplejudge--ojjudgesimplejudgejava本章核心">SimpleJudge —
+<code>oj/judge/SimpleJudge.java</code>(本章核心)</h4>
+<pre class="java"><code>package oj.judge;
+import oj.core.*;
+public class SimpleJudge {
+    // 方法重载示例:可指定/不指定用户名
+    public JudgeResult judge(Problem p, AplusB solution) {
+        return judge(p, solution, &quot;anonymous&quot;);
+    }
+    public JudgeResult judge(Problem p, AplusB solution, String user) {
+        TestCase[] cases = p.getCases();
+        int passed = 0;
+        String detail = &quot;&quot;;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i &lt; cases.length; i++) {
+            String actual   = solution.solve(cases[i].getInput()).trim();
+            String expected = cases[i].getExpected().trim();
+            if (actual.equals(expected)) {
+                passed++;
+            } else if (detail.isEmpty()) {
+                detail = &quot;case#&quot; + i + &quot; 期望[&quot; + expected + &quot;] 实际[&quot; + actual + &quot;]&quot;;
+            }
+        }
+        long elapsed = System.currentTimeMillis() - start;
+        Status st = (passed == cases.length) ? Status.AC : Status.WA;
+        return new JudgeResult(st, passed, cases.length, detail, elapsed);
+    }
+}</code></pre>
+<h4 id="main演示--ojmainjava">Main(演示) —
+<code>oj/Main.java</code></h4>
+<pre class="java"><code>package oj;
+import oj.core.*;
+import oj.judge.*;
+public class Main {
+    public static void main(String[] args) {
+        Problem p = new Problem(1, &quot;A+B&quot;,
+            new TestCase(&quot;1 2&quot;, &quot;3&quot;),
+            new TestCase(&quot;10 20&quot;, &quot;30&quot;));
+        JudgeResult r = new SimpleJudge().judge(p, new AplusB(), &quot;alice&quot;);
+        System.out.println(p.getTitle() + &quot; -&gt; &quot; + r);   // 用到 toString
+        System.out.println(&quot;总提交数: &quot; + Submission.count());
+    }
+}</code></pre>
+<h3 id="动手步骤编译jarjavadoc">动手步骤(编译/jar/javadoc)</h3>
+<p>目录:<code>src/oj/...</code>。写个 <code>Makefile</code>:</p>
+<pre class="make"><code>build:
+    javac -d build $(shell find src -name &#39;*.java&#39;)
+run: build
+    java -cp build oj.Main
+jar: build
+    jar cfe mini-oj.jar oj.Main -C build .
+doc:
+    javadoc -d doc -sourcepath src -subpackages oj</code></pre>
+<pre class="bash"><code>make run          # 跑演示
+make jar &amp;&amp; java -jar mini-oj.jar
+make doc          # 生成 API 文档到 doc/</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />M1
+的判题逻辑现在全部由对象承载,<code>make run</code> 输出
+<code>A+B -&gt; AC 2/2 (...)</code>。</label></li>
+<li><label><input
+type="checkbox" />用到了:<code>private</code>+getter、构造重载、<code>this</code>、<code>static</code>
+计数、对象数组、<code>TestCase...</code> 可变参数、包与
+<code>import</code>。</label></li>
+<li><label><input type="checkbox" /><code>java -jar mini-oj.jar</code>
+能跑;<code>doc/index.html</code> 能打开。</label></li>
+<li><label><input type="checkbox" />能说清"加一道新题"现在只需
+<code>new Problem(...)</code>,比 M1 改数组干净多了。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p><code>SimpleJudge</code>
+只会"精确比对",且写死在一个类里。第5-7章(M3)学<strong>接口/抽象类/多态</strong>后,把它重构成
+<code>Judge</code> 接口 + <code>AbstractJudge</code> +
+多种判题器,并用<strong>异常</strong>处理用户解法崩溃。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-6"><span class="num">06</span>第5-7章 · 接口/继承/多态/异常(M3)</h2>
+<blockquote>
+<p><strong>本章是面向对象的重头戏。</strong> 我们把 M2 写死的
+<code>SimpleJudge</code> 重构成一套可扩展的判题器: <code>Judge</code>
+接口 → <code>AbstractJudge</code> 抽象类(模板)→
+<code>StandardJudge</code>
+子类(继承+重写);并用<strong>自定义异常</strong>处理用户解法崩溃。
+主线一句话:<strong>抽象出"判题器"这个概念,以后加新判法只加类、不改老代码(开闭原则)。</strong></p>
+</blockquote>
+<h3 id="知识点大纲对照本章覆盖最密">知识点(大纲对照)——本章覆盖最密</h3>
+<table>
+<thead>
+<tr class="header">
+<th>主题</th>
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>接口(Ch6)</td>
+<td><code>interface</code>/实现/接口回调/函数接口+Lambda/接口参数/接口多态</td>
+<td><strong>动手</strong>(<code>Solution</code>、<code>Judge</code>)</td>
+</tr>
+<tr class="even">
+<td>继承(Ch5)</td>
+<td>子类 <code>extends</code>/方法重写
+<code>@Override</code>/<code>super</code>/<code>final</code>/上转型/多态</td>
+<td><strong>动手</strong>(<code>AbstractJudge</code>→子类)</td>
+</tr>
+<tr class="odd">
+<td>抽象(Ch5)</td>
+<td><code>abstract</code> 类与方法/面向抽象/开闭原则</td>
+<td><strong>动手</strong>(模板方法)</td>
+</tr>
+<tr class="even">
+<td>内部类(Ch7)</td>
+<td>内部类/匿名类/Lambda 代替匿名类</td>
+<td><strong>动手</strong>(比较器回调)</td>
+</tr>
+<tr class="odd">
+<td>异常(Ch7)</td>
+<td><code>try-catch</code>/自定义异常类/断言</td>
+<td><strong>动手</strong>(RE 处理 + <code>JudgeException</code>)</td>
+</tr>
+<tr class="even">
+<td>成员变量隐藏</td>
+<td>(Ch5)</td>
+<td><strong>了解即可</strong>,不刻意制造</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第一步把-solution-变成接口ch6">第一步:把 <code>Solution</code>
+变成接口(Ch6)</h3>
+<p><code>oj/judge/Solution.java</code></p>
+<pre class="java"><code>package oj.judge;
+public interface Solution {            // 函数式接口(只一个抽象方法)→ 可用 Lambda
+    String solve(String input);
+}</code></pre>
+<p>原来的 <code>AplusB</code> 改成实现接口:</p>
+<pre class="java"><code>package oj.judge;
+import java.util.Scanner;
+public class AplusB implements Solution {
+    @Override public String solve(String input) {
+        Scanner sc = new Scanner(input);
+        return String.valueOf(sc.nextInt() + sc.nextInt());
+    }
+}</code></pre>
+<p><strong>接口=函数式接口的好处</strong>:用户解法可以直接用 Lambda
+写,不必建类:</p>
+<pre class="java"><code>Solution s = input -&gt; {                 // Lambda 实现 Solution
+    Scanner sc = new Scanner(input);
+    return String.valueOf(sc.nextInt() + sc.nextInt());
+};</code></pre>
+<h3
+id="第二步judge-接口--abstractjudge-抽象类ch5ch6-合体">第二步:<code>Judge</code>
+接口 + <code>AbstractJudge</code> 抽象类(Ch5+Ch6 合体)</h3>
+<h4 id="接口-ojjudgejudgejava">接口
+<code>oj/judge/Judge.java</code></h4>
+<pre class="java"><code>package oj.judge;
+import oj.core.*;
+public interface Judge {
+    JudgeResult judge(Problem problem, Solution solution);
+}</code></pre>
+<h4
+id="抽象类模板方法ojjudgeabstractjudgejava本章核心">抽象类(模板方法)<code>oj/judge/AbstractJudge.java</code>——<strong>本章核心</strong></h4>
+<pre class="java"><code>package oj.judge;
+import oj.core.*;
+public abstract class AbstractJudge implements Judge {
+    // final:模板流程固定,子类不许改;子类只能定制 compare(开闭原则的&quot;闭&quot;)
+    @Override
+    public final JudgeResult judge(Problem p, Solution s) {
+        TestCase[] cases = p.getCases();
+        int passed = 0;
+        String detail = &quot;&quot;;
+        long start = System.currentTimeMillis();
+        try {
+            for (int i = 0; i &lt; cases.length; i++) {
+                String actual = s.solve(cases[i].getInput());   // 用户解法,可能抛异常
+                if (compare(cases[i].getExpected(), actual)) {  // 调子类实现(多态)
+                    passed++;
+                } else if (detail.isEmpty()) {
+                    detail = &quot;case#&quot; + i + &quot; 期望[&quot; + cases[i].getExpected().trim()
+                           + &quot;] 实际[&quot; + (actual == null ? &quot;null&quot; : actual.trim()) + &quot;]&quot;;
+                }
+            }
+        } catch (RuntimeException e) {                          // 捕获运行期异常 → RE
+            long t = System.currentTimeMillis() - start;
+            return new JudgeResult(Status.RE, passed, cases.length,
+                                   &quot;运行异常: &quot; + e.getMessage(), t);
+        }
+        long elapsed = System.currentTimeMillis() - start;
+        assert passed &lt;= cases.length : &quot;passed 不应超过 total&quot;;   // 断言:内部不变量
+        Status st = (passed == cases.length) ? Status.AC : Status.WA;
+        return new JudgeResult(st, passed, cases.length, detail, elapsed);
+    }
+
+    // 抽象方法:&quot;怎么比对一组输出&quot;留给子类 → 这就是可扩展点
+    protected abstract boolean compare(String expected, String actual);
+}</code></pre>
+<blockquote>
+<p>这一个抽象方法 <code>compare</code> 是整套设计的"活接头":换判法 =
+写个新子类重写 <code>compare</code>,模板流程一行不动。</p>
+</blockquote>
+<h4
+id="子类精确判题器-ojjudgestandardjudgejava继承--重写--super">子类:精确判题器
+<code>oj/judge/StandardJudge.java</code>(继承 + 重写 + super)</h4>
+<pre class="java"><code>package oj.judge;
+public class StandardJudge extends AbstractJudge {
+    @Override
+    protected boolean compare(String expected, String actual) {
+        if (actual == null) return false;
+        return expected.trim().equals(actual.trim());      // 去首尾空白后精确比对
+    }
+}</code></pre>
+<blockquote>
+<p><code>super</code> 的典型用法(可选演示):子类构造里
+<code>super(...)</code>
+调父类构造;本章父类无显式构造,故从略,留到有字段的子类时再讲。</p>
+</blockquote>
+<h3 id="第三步多态--开闭原则ch5">第三步:多态 + 开闭原则(Ch5)</h3>
+<pre class="java"><code>Judge judge;
+if (useFloat) judge = new SpecialJudge();   // 第8章(M4)实现的浮点判题器
+else          judge = new StandardJudge();  // 上转型:父类型引用指向子类对象
+JudgeResult r = judge.judge(problem, solution);   // 运行时多态:调到具体子类的 compare</code></pre>
+<p><strong>开闭原则</strong>:将来要支持"忽略空白""按行无序"等新判法,只新增
+<code>XxxJudge extends AbstractJudge</code>,
+<code>Main</code>/调用方代码完全不用改。</p>
+<h3 id="第四步内部类--匿名类--lambdach7">第四步:内部类 / 匿名类 /
+Lambda(Ch7)</h3>
+<p>判题里常要一个"输出比较器"回调。三种写法演示<strong>演化关系</strong>:</p>
+<pre class="java"><code>// 1) 命名内部类
+class IgnoreCaseComparator implements OutputComparator {
+    public boolean same(String a, String b) { return a.trim().equalsIgnoreCase(b.trim()); }
+}
+// 2) 匿名类(就地实现)
+OutputComparator c2 = new OutputComparator() {
+    public boolean same(String a, String b) { return a.trim().equals(b.trim()); }
+};
+// 3) Lambda 代替匿名类(函数式接口才行)
+OutputComparator c3 = (a, b) -&gt; a.trim().equals(b.trim());</code></pre>
+<p>其中:</p>
+<pre class="java"><code>package oj.judge;
+public interface OutputComparator {     // 函数式接口
+    boolean same(String a, String b);
+}</code></pre>
+<blockquote>
+<p>体会:匿名类 → Lambda 是同一件事的简写。<code>OutputComparator</code>
+属"可选增强",核心判题用 <code>compare</code> 即可,不强求全用上。</p>
+</blockquote>
+<h3 id="第五步自定义异常ch7">第五步:自定义异常(Ch7)</h3>
+<p><code>oj/exception/JudgeException.java</code></p>
+<pre class="java"><code>package oj.exception;
+public class JudgeException extends Exception {     // 受检异常:判题流程的异常基类
+    public JudgeException(String message) { super(message); }
+}</code></pre>
+<p><code>oj/exception/TimeLimitException.java</code></p>
+<pre class="java"><code>package oj.exception;
+public class TimeLimitException extends JudgeException {   // 继承自定义异常
+    public TimeLimitException(String message) { super(message); }
+}</code></pre>
+<blockquote>
+<p>本章先<strong>定义</strong>这两个异常类(练"怎么写自定义异常、怎么继承异常")。<code>TimeLimitException</code>
+的<strong>真正触发</strong>在第12章(M6a)用线程做超时控制时;本章 RE
+用捕获 <code>RuntimeException</code> 即可。</p>
+</blockquote>
+<h3 id="第六步更新-main-演示">第六步:更新 Main 演示</h3>
+<pre class="java"><code>package oj;
+import oj.core.*;
+import oj.judge.*;
+public class Main {
+    public static void main(String[] args) {
+        Problem p = new Problem(1, &quot;A+B&quot;,
+            new TestCase(&quot;1 2&quot;, &quot;3&quot;), new TestCase(&quot;10 20&quot;, &quot;30&quot;));
+
+        Judge judge = new StandardJudge();          // 多态:用接口类型接收
+        Solution good = new AplusB();
+        System.out.println(&quot;正常: &quot; + judge.judge(p, good));        // AC 2/2
+
+        Solution bad = input -&gt; { throw new RuntimeException(&quot;boom&quot;); };  // Lambda 造一个会崩的解法
+        System.out.println(&quot;崩溃: &quot; + judge.judge(p, bad));         // RE
+    }
+}</code></pre>
+<blockquote>
+<p>跑断言需加
+<code>-ea</code>:<code>java -ea -cp build oj.Main</code>。</p>
+</blockquote>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input
+type="checkbox" /><code>Judge</code>/<code>Solution</code>
+是<strong>接口</strong>;<code>AbstractJudge</code>
+是<strong>抽象类</strong>且实现了
+<code>Judge</code>;<code>StandardJudge</code> <strong>继承</strong>
+<code>AbstractJudge</code> 并
+<code>@Override compare</code>。</label></li>
+<li><label><input
+type="checkbox" />用<strong>接口类型变量</strong>接收子类对象,跑出多态(<code>judge.judge(...)</code>
+调到子类逻辑)。</label></li>
+<li><label><input type="checkbox" />会崩溃的解法被判 <strong>RE</strong>
+而不是让程序挂掉。</label></li>
+<li><label><input type="checkbox" />至少演示了"匿名类 →
+Lambda"两种等价写法之一。</label></li>
+<li><label><input type="checkbox" />定义了自定义异常
+<code>JudgeException</code>/<code>TimeLimitException</code>(<code>extends</code>),并能说清它们的继承关系。</label></li>
+<li><label><input
+type="checkbox" /><strong>能讲清开闭原则</strong>:新增一种判法时,你只新增了类、没动
+<code>AbstractJudge</code> 和 <code>Main</code>。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>判题器框架成型,但只能"精确/浮点"地比。第8章(M4)用
+<strong>String/正则/反射</strong> 实现
+<code>SpecialJudge</code>、做格式校验(PE),并用<strong>反射</strong>按类名动态加载判题器,让判法彻底"可插拔"。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-7"><span class="num">07</span>第8章 · 比对解析与反射(M4)</h2>
+<blockquote>
+<p>目标:用 String/正则做更聪明的比对(浮点容差、格式校验
+PE);用日期类记录提交时间与耗时;用<strong>反射</strong>按类名动态加载判题器,让判法"可插拔"。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>String 常用方法、与基本类型互转</td>
+<td><strong>动手</strong>(比对、解析)</td>
+</tr>
+<tr class="even">
+<td>正则:<code>Pattern</code>/<code>Matcher</code>、<code>split</code></td>
+<td><strong>动手</strong>(<code>SpecialJudge</code>、PE 校验)</td>
+</tr>
+<tr class="odd">
+<td><code>StringBuilder</code></td>
+<td><strong>动手</strong>(判题报告)</td>
+</tr>
+<tr class="even">
+<td>日期时间:<code>LocalDateTime</code>/<code>Duration</code>/格式化</td>
+<td><strong>动手</strong>(<code>Submission.time</code>、耗时)</td>
+</tr>
+<tr class="odd">
+<td><code>Math</code> / <code>BigInteger</code></td>
+<td><strong>动手</strong>(浮点容差 / 大数题)</td>
+</tr>
+<tr class="even">
+<td>反射 <code>Class</code></td>
+<td><strong>动手</strong>(判题器工厂)</td>
+</tr>
+<tr class="odd">
+<td><code>Arrays</code>/<code>System</code></td>
+<td><strong>了解/顺带用</strong></td>
+</tr>
+<tr class="even">
+<td><code>StringTokenizer</code>、<code>Scanner</code>
+细节、数字格式化、<code>Console</code></td>
+<td><strong>了解即可</strong>(<code>split</code>/<code>Scanner</code>
+够用)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-浮点判题器-specialjudge继承-abstractjudge--正则--math">1.
+浮点判题器 <code>SpecialJudge</code>(继承 AbstractJudge + 正则 +
+Math)</h3>
+<p><code>oj/judge/SpecialJudge.java</code></p>
+<pre class="java"><code>package oj.judge;
+public class SpecialJudge extends AbstractJudge {
+    private final double eps;
+    public SpecialJudge()           { this(1e-6); }     // 构造重载 + this()
+    public SpecialJudge(double eps) { this.eps = eps; }
+
+    @Override
+    protected boolean compare(String expected, String actual) {
+        if (actual == null) return false;
+        String[] e = expected.trim().split(&quot;\\s+&quot;);      // 正则空白分隔
+        String[] a = actual.trim().split(&quot;\\s+&quot;);
+        if (e.length != a.length) return false;
+        for (int i = 0; i &lt; e.length; i++) {
+            double d1 = Double.parseDouble(e[i]);        // String→基本类型
+            double d2 = Double.parseDouble(a[i]);
+            if (Math.abs(d1 - d2) &gt; eps) return false;   // Math.abs 容差
+        }
+        return true;
+    }
+}</code></pre>
+<h3 id="2-格式校验--pepatternmatcher">2. 格式校验 →
+PE(Pattern/Matcher)</h3>
+<p>判题前先用正则校验输出格式,不合法记
+<code>PE</code>。可做成一个小工具:</p>
+<pre class="java"><code>package oj.judge;
+import java.util.regex.Pattern;
+public class FormatChecker {
+    // 例:要求输出是&quot;若干个用单空格分隔的整数&quot;
+    private static final Pattern INTS = Pattern.compile(&quot;^-?\\d+( -?\\d+)*$&quot;);
+    public static boolean isIntLine(String s) {
+        return INTS.matcher(s.trim()).matches();         // Matcher.matches
+    }
+}</code></pre>
+<blockquote>
+<p>用法:<code>AbstractJudge.compare</code> 的子类里,先
+<code>if(!FormatChecker.isIntLine(actual)) return false;</code>,并在
+detail 标注 PE。PE 属增强,<strong>可选</strong>。</p>
+</blockquote>
+<h3 id="3-给-submission-加时间localdatetime">3. 给 Submission
+加时间(LocalDateTime)</h3>
+<p>回到 <code>oj/core/Submission.java</code>,补上 00 契约里预留的
+<code>time</code> 字段:</p>
+<pre class="java"><code>import java.time.LocalDateTime;
+private final LocalDateTime time = LocalDateTime.now();   // 构造时记录
+public LocalDateTime getTime() { return time; }</code></pre>
+<p>耗时已由 <code>AbstractJudge</code> 用
+<code>System.currentTimeMillis()</code> 算进
+<code>JudgeResult.elapsedMs</code>; 若想用 <code>Duration</code>
+演示:</p>
+<pre class="java"><code>import java.time.*;
+Instant s = Instant.now();  /* ...判题... */  long ms = Duration.between(s, Instant.now()).toMillis();</code></pre>
+<h3 id="4-大数题biginteger">4. 大数题(BigInteger)</h3>
+<p>加一道"大数加法"题验证高精度判题(用 <code>SpecialJudge</code>
+不行,得精确比,所以用 <code>StandardJudge</code>):</p>
+<pre class="java"><code>Solution bigAdd = input -&gt; {
+    Scanner sc = new Scanner(input);
+    java.math.BigInteger a = sc.nextBigInteger();
+    java.math.BigInteger b = sc.nextBigInteger();
+    return a.add(b).toString();
+};
+// 用例:(&quot;99999999999999 1&quot;, &quot;100000000000000&quot;)</code></pre>
+<h3 id="5-反射判题器工厂本章亮点">5. 反射:判题器工厂(本章亮点)</h3>
+<p><code>oj/judge/JudgeFactory.java</code>——按<strong>类名字符串</strong>造判题器,判法变成配置:</p>
+<pre class="java"><code>package oj.judge;
+public class JudgeFactory {
+    public static Judge create(String className) {
+        try {
+            Class&lt;?&gt; clazz = Class.forName(className);                 // 反射加载类
+            return (Judge) clazz.getDeclaredConstructor().newInstance(); // 反射造对象
+        } catch (Exception e) {
+            throw new IllegalArgumentException(&quot;无法创建判题器: &quot; + className, e);
+        }
+    }
+}</code></pre>
+<p>用法:</p>
+<pre class="java"><code>Judge j = JudgeFactory.create(&quot;oj.judge.SpecialJudge&quot;);   // 改字符串就能换判法</code></pre>
+<blockquote>
+<p>题目可带一个 <code>judgeClass</code>
+字段(String),不同题用不同判题器——为 M5b 入库 / M6
+网络传判法名做铺垫。</p>
+</blockquote>
+<h3 id="6-判题报告stringbuilder">6. 判题报告(StringBuilder)</h3>
+<pre class="java"><code>public static String report(Problem p, JudgeResult r) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(&quot;题目: &quot;).append(p.getTitle()).append(&#39;\n&#39;)
+      .append(&quot;结果: &quot;).append(r).append(&#39;\n&#39;);            // 复用 toString
+    if (!r.isAccepted()) sb.append(&quot;详情: &quot;).append(r.getDetail()).append(&#39;\n&#39;);
+    return sb.toString();
+}</code></pre>
+<h3 id="动手步骤">动手步骤</h3>
+<pre class="bash"><code>make build
+java -cp build oj.Main      # 在 Main 里演示:SpecialJudge、BigInteger 题、JudgeFactory</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><code>SpecialJudge</code> 能让
+<code>3.1400001</code> 与 <code>3.14</code> 判
+<strong>AC</strong>(容差),而 <code>StandardJudge</code> 判
+WA。</label></li>
+<li><label><input type="checkbox" />用正则
+<code>split</code>/<code>Pattern</code>
+做了分词或格式校验。</label></li>
+<li><label><input
+type="checkbox" /><code>JudgeFactory.create("oj.judge.SpecialJudge")</code>
+能反射造出判题器并正常判题。</label></li>
+<li><label><input type="checkbox" />大数加法题用 <code>BigInteger</code>
+判 AC。</label></li>
+<li><label><input type="checkbox" /><code>Submission</code>
+带上了创建时间;报告里能看到耗时。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>判题核心已完备(多判法 +
+反射可插拔)。但题目和提交还都在内存里。第10章(M5a)把<strong>题库搬到文件</strong>(<code>problems/</code>
+目录),把<strong>提交序列化落盘</strong>。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-8"><span class="num">08</span>第10章 · 文件题库与序列化(M5a)</h2>
+<blockquote>
+<p>目标:题目不再硬编码,改从 <code>problems/</code>
+目录读;提交记录序列化落盘,重启能读回历史。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>File</code>:目录遍历、<code>exists</code>、属性</td>
+<td><strong>动手</strong>(扫题库)</td>
+</tr>
+<tr class="even">
+<td>字符输入流 +
+缓冲流(<code>FileReader</code>/<code>BufferedReader</code>)</td>
+<td><strong>动手</strong>(读 .in/.out)</td>
+</tr>
+<tr class="odd">
+<td>对象流 +
+序列化(<code>ObjectInputStream</code>/<code>Serializable</code>)</td>
+<td><strong>动手</strong>(存提交)</td>
+</tr>
+<tr class="even">
+<td><code>Scanner</code> 解析文件</td>
+<td><strong>了解/可选</strong></td>
+</tr>
+<tr class="odd">
+<td>字节流、随机流、数据流、数组流、图像、进度条、文件锁</td>
+<td><strong>了解即可</strong>,不实现</td>
+</tr>
+</tbody>
+</table>
+<h3 id="题库目录约定">题库目录约定</h3>
+<pre><code>problems/
+└── 1/
+    ├── title.txt     A+B Problem
+    ├── 1.in          1 2
+    ├── 1.out         3
+    ├── 2.in          10 20
+    └── 2.out         30</code></pre>
+<h3 id="1-让-submissionjudgeresult-可序列化">1. 让
+Submission/JudgeResult 可序列化</h3>
+<p>序列化要求对象图上每个类都 <code>implements Serializable</code>:</p>
+<pre class="java"><code>// Submission, JudgeResult, (若被引用)TestCase 都加:
+public class Submission implements java.io.Serializable { ... }
+public class JudgeResult implements java.io.Serializable { ... }</code></pre>
+<blockquote>
+<p><code>enum Status</code>
+天生可序列化,无需改。<code>Solution</code>(逻辑/Lambda)<strong>不要</strong>序列化——<code>Submission</code>
+只存结果数据,不存解法。</p>
+</blockquote>
+<h3 id="2-题库加载器-ojioproblemloaderjava本章核心">2. 题库加载器
+<code>oj/io/ProblemLoader.java</code>(本章核心)</h3>
+<pre class="java"><code>package oj.io;
+import oj.core.*;
+import java.io.*;
+import java.util.*;
+public class ProblemLoader {
+    private static final String ROOT = &quot;problems&quot;;
+
+    public static Problem load(int id) throws IOException {
+        File dir = new File(ROOT, String.valueOf(id));
+        if (!dir.isDirectory())                                // File.isDirectory
+            throw new FileNotFoundException(&quot;题目不存在: &quot; + id);
+        String title = readAll(new File(dir, &quot;title.txt&quot;)).trim();
+
+        List&lt;TestCase&gt; list = new ArrayList&lt;&gt;();   // ArrayList 不在大纲,但比手动扩容数组简单,这里用它
+        int n = 1;
+        File in;
+        while ((in = new File(dir, n + &quot;.in&quot;)).exists()) {    // 按 1.in/2.in... 顺序遍历
+            String input    = readAll(in);
+            String expected = readAll(new File(dir, n + &quot;.out&quot;));
+            list.add(new TestCase(input, expected));
+            n++;
+        }
+        return new Problem(id, title, list.toArray(new TestCase[0]));
+    }
+
+    // 字符流 + 缓冲流读整个文件
+    private static String readAll(File f) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(f))) {  // try-with-resources 自动关流
+            String line;
+            while ((line = br.readLine()) != null) sb.append(line).append(&#39;\n&#39;);
+        }
+        return sb.toString();
+    }
+}</code></pre>
+<h3 id="3-提交仓库-ojiosubmissionstorejava对象流">3. 提交仓库
+<code>oj/io/SubmissionStore.java</code>(对象流)</h3>
+<pre class="java"><code>package oj.io;
+import oj.core.Submission;
+import java.io.*;
+import java.util.*;
+public class SubmissionStore {
+    private static final String DIR = &quot;submissions&quot;;
+
+    public static void save(Submission s) throws IOException {
+        new File(DIR).mkdirs();
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                 new FileOutputStream(new File(DIR, s.getId() + &quot;.ser&quot;)))) {
+            oos.writeObject(s);                               // 序列化写出
+        }
+    }
+
+    public static List&lt;Submission&gt; loadAll() throws IOException, ClassNotFoundException {
+        List&lt;Submission&gt; list = new ArrayList&lt;&gt;();
+        File[] files = new File(DIR).listFiles((d, name) -&gt; name.endsWith(&quot;.ser&quot;)); // Lambda 过滤器
+        if (files == null) return list;
+        for (File f : files) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
+                list.add((Submission) ois.readObject());      // 反序列化读回
+            }
+        }
+        return list;
+    }
+}</code></pre>
+<h3 id="4-串起来main-演示">4. 串起来(Main 演示)</h3>
+<pre class="java"><code>Problem p = ProblemLoader.load(1);                  // 从文件读题
+Submission sub = new Submission(p.getId(), &quot;alice&quot;);
+sub.setResult(new StandardJudge().judge(p, new AplusB()));
+SubmissionStore.save(sub);                          // 落盘
+System.out.println(&quot;历史提交数: &quot; + SubmissionStore.loadAll().size());  // 重启后仍在</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />在 <code>problems/</code>
+新建一个题目目录就能被 <code>ProblemLoader.load</code>
+读到,<strong>不改代码</strong>。</label></li>
+<li><label><input type="checkbox" />提交后 <code>submissions/</code>
+出现 <code>&lt;id&gt;.ser</code>;重启程序 <code>loadAll()</code>
+能读回历史。</label></li>
+<li><label><input type="checkbox" />用到了:<code>File</code>
+遍历、<code>BufferedReader</code>
+读文件、<code>ObjectOutputStream/ObjectInputStream</code>
+序列化。</label></li>
+<li><label><input type="checkbox" />能解释为什么 <code>Solution</code>
+不该被序列化(只存数据,不存逻辑)。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>题目/提交已能落盘,但用文件管理元数据和查询很弱。第11章(M5b)把元数据和提交搬进
+<strong>MySQL</strong>,用 JDBC + 事务管理。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-9"><span class="num">09</span>第11章 · JDBC 与 MySQL(M5b)</h2>
+<blockquote>
+<p>目标:把用户、题目元数据、提交记录搬进 MySQL;用
+<code>PreparedStatement</code> 做
+CRUD;用<strong>事务</strong>保证"插入提交 +
+更新通过数"要么都成、要么都不成。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MySQL 启动 / 客户端、建库建表</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>JDBC 连接、<code>DriverManager</code></td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>查询(顺序/条件/排序)、<code>ResultSet</code></td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>增删改、<code>PreparedStatement</code>、通配符</td>
+<td><strong>动手</strong>(防注入)</td>
+</tr>
+<tr class="odd">
+<td>事务:<code>setAutoCommit/commit/rollback</code></td>
+<td><strong>动手</strong>(核心)</td>
+</tr>
+<tr class="even">
+<td>SQLServer / Derby / Access</td>
+<td><strong>了解即可</strong>,不实现</td>
+</tr>
+</tbody>
+</table>
+<h3 id="0-准备命令">0. 准备(命令)</h3>
+<pre class="bash"><code>sudo apt install mysql-server
+sudo systemctl start mysql
+sudo mysql                       # 进客户端建库(见下)
+# 下载驱动放到 lib/:mysql-connector-j-x.x.x.jar
+# 编译运行时挂上 classpath:
+java -cp &quot;build:lib/*&quot; oj.Main</code></pre>
+<p>建库建表:</p>
+<pre class="sql"><code>CREATE DATABASE mini_oj DEFAULT CHARSET utf8mb4;
+USE mini_oj;
+CREATE TABLE users    (name VARCHAR(32) PRIMARY KEY, solved INT DEFAULT 0);
+CREATE TABLE problems (id INT PRIMARY KEY, title VARCHAR(128));
+CREATE TABLE submissions (
+  id         INT PRIMARY KEY AUTO_INCREMENT,
+  problem_id INT, user_name VARCHAR(32),
+  status     VARCHAR(8), passed INT, total INT, elapsed_ms BIGINT,
+  created_at DATETIME
+);</code></pre>
+<h3 id="1-连接工具-ojdbdbjava">1. 连接工具
+<code>oj/db/Db.java</code></h3>
+<pre class="java"><code>package oj.db;
+import java.sql.*;
+public class Db {
+    private static final String URL  = &quot;jdbc:mysql://localhost:3306/mini_oj?serverTimezone=UTC&quot;;
+    private static final String USER = &quot;root&quot;;
+    private static final String PWD  = &quot;你的密码&quot;;
+    public static Connection get() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PWD);   // 驱动会自动注册(JDBC4+)
+    }
+}</code></pre>
+<h3 id="2-题目-dao-ojdbproblemdaojavapreparedstatement--查询">2. 题目
+DAO <code>oj/db/ProblemDao.java</code>(PreparedStatement + 查询)</h3>
+<pre class="java"><code>package oj.db;
+import java.sql.*;
+import java.util.*;
+public class ProblemDao {
+    public void insert(int id, String title) throws SQLException {
+        String sql = &quot;INSERT INTO problems(id, title) VALUES(?, ?)&quot;;   // ? 占位符
+        try (Connection c = Db.get();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.setString(2, title);
+            ps.executeUpdate();
+        }
+    }
+    public List&lt;String&gt; titles() throws SQLException {
+        String sql = &quot;SELECT id, title FROM problems ORDER BY id&quot;;      // 排序查询
+        List&lt;String&gt; out = new ArrayList&lt;&gt;();
+        try (Connection c = Db.get();
+             PreparedStatement ps = c.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next())                                            // 遍历游标
+                out.add(rs.getInt(&quot;id&quot;) + &quot;. &quot; + rs.getString(&quot;title&quot;));
+        }
+        return out;
+    }
+}</code></pre>
+<h3 id="3-提交-dao-ojdbsubmissiondaojava事务本章核心">3. 提交 DAO
+<code>oj/db/SubmissionDao.java</code>(事务,本章核心)</h3>
+<pre class="java"><code>package oj.db;
+import oj.core.*;
+import java.sql.*;
+public class SubmissionDao {
+    /** 一次提交落库:插入 submission + (若AC)给 user 通过数+1,放在同一个事务里。 */
+    public void save(Submission s) throws SQLException {
+        String insert = &quot;INSERT INTO submissions&quot;
+            + &quot;(problem_id,user_name,status,passed,total,elapsed_ms,created_at)&quot;
+            + &quot; VALUES(?,?,?,?,?,?,?)&quot;;
+        String addSolved = &quot;UPDATE users SET solved = solved + 1 WHERE name = ?&quot;;
+        Connection c = null;
+        try {
+            c = Db.get();
+            c.setAutoCommit(false);                       // ① 开启事务
+            JudgeResult r = s.getResult();
+            try (PreparedStatement p1 = c.prepareStatement(insert)) {
+                p1.setInt(1, s.getProblemId());
+                p1.setString(2, s.getUserName());
+                p1.setString(3, r.getStatus().name());    // enum → String
+                p1.setInt(4, r.getPassed());
+                p1.setInt(5, r.getTotal());
+                p1.setLong(6, r.getElapsedMs());
+                p1.setObject(7, s.getTime());             // LocalDateTime → DATETIME
+                p1.executeUpdate();
+            }
+            if (r.isAccepted()) {
+                try (PreparedStatement p2 = c.prepareStatement(addSolved)) {
+                    p2.setString(1, s.getUserName());
+                    p2.executeUpdate();
+                }
+            }
+            c.commit();                                   // ② 一起提交
+        } catch (SQLException e) {
+            if (c != null) c.rollback();                  // ③ 出错回滚,绝不脏写
+            throw e;
+        } finally {
+            if (c != null) { c.setAutoCommit(true); c.close(); }
+        }
+    }
+}</code></pre>
+<h3 id="4-与文件层衔接">4. 与文件层衔接</h3>
+<ul>
+<li>题面/用例仍放 <code>problems/</code>(<code>ProblemLoader</code>
+不变),<strong>元数据 + 提交</strong>进 DB。</li>
+<li>流程:<code>ProblemLoader.load</code> 取题 → 判题 →
+<code>SubmissionDao.save</code> 入库(替代/并存 M5a 的
+<code>SubmissionStore</code>)。</li>
+</ul>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input
+type="checkbox" /><code>ProblemDao.insert/titles</code>、<code>SubmissionDao.save</code>
+能正常读写 MySQL。</label></li>
+<li><label><input type="checkbox" />全部 SQL 用
+<code>PreparedStatement</code> + <code>?</code>(没有字符串拼
+SQL)。</label></li>
+<li><label><input type="checkbox" /><strong>事务验证</strong>:在
+<code>p2.executeUpdate()</code> 前手动
+<code>throw new SQLException("test")</code>,确认 submissions
+表也没插进去(回滚生效);去掉后两条一起成功。</label></li>
+<li><label><input type="checkbox" />能说清"为什么
+<code>PreparedStatement</code> 比拼字符串安全"(防 SQL
+注入)。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>后端(判题 + 文件 + 数据库)齐了。第9章(M5c)给它套一个 <strong>Swing
+桌面客户端</strong>:选题、写输入、点提交、看结果表。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-10"><span class="num">10</span>第9章 · Swing 桌面客户端(M5c)</h2>
+<blockquote>
+<p>目标:给 Mini-OJ
+套一个图形界面——左边选题、中间写输入、点"提交"判题、下方表格看每个用例结果。按
+MVC 思路分层。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>JFrame</code>、布局(<code>BorderLayout</code> 等)</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>常用组件:<code>JList</code>/<code>JTextArea</code>/<code>JButton</code>/<code>JTable</code></td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="odd">
+<td>菜单条
+<code>JMenuBar</code>/<code>JMenu</code>/<code>JMenuItem</code></td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>事件处理:<code>ActionEvent</code> + Lambda 监听器</td>
+<td><strong>动手</strong>(核心)</td>
+</tr>
+<tr class="odd">
+<td>对话框 <code>JOptionPane</code>(消息/确认)</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>MVC 结构</td>
+<td><strong>动手</strong>(分层)</td>
+</tr>
+<tr class="odd">
+<td><code>JTree</code>、Item/Document/Mouse/Key/Focus
+事件、颜色对话框、按钮绑键盘</td>
+<td><strong>了解即可</strong>,挑 1-2 个点到为止</td>
+</tr>
+</tbody>
+</table>
+<h3 id="设计mvc">设计(MVC)</h3>
+<ul>
+<li><strong>Model</strong>:已有的
+<code>ProblemDao</code>/<code>ProblemLoader</code> +
+<code>Judge</code>(后端逻辑,GUI 不重写)。</li>
+<li><strong>View</strong>:<code>OjFrame</code>(纯界面与控件)。</li>
+<li><strong>Controller</strong>:监听器(本项目简单,直接用 Lambda 写在
+<code>OjFrame</code> 里;复杂了再拆 <code>OjController</code>)。</li>
+</ul>
+<h3 id="主窗口-ojguiojframejava核心">主窗口
+<code>oj/gui/OjFrame.java</code>(核心)</h3>
+<pre class="java"><code>package oj.gui;
+import oj.core.*;
+import oj.io.ProblemLoader;
+import oj.judge.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+
+public class OjFrame extends JFrame {
+    private final JList&lt;String&gt; problemList = new JList&lt;&gt;(new String[]{&quot;1. A+B&quot;});
+    private final JTextArea inputArea = new JTextArea(&quot;1 2&quot;);
+    private final DefaultTableModel resultModel =
+            new DefaultTableModel(new String[]{&quot;用例&quot;, &quot;期望&quot;, &quot;状态&quot;}, 0);
+    private final JTable resultTable = new JTable(resultModel);
+
+    public OjFrame() {
+        super(&quot;Mini-OJ&quot;);
+        setJMenuBar(buildMenu());
+        setLayout(new BorderLayout());
+        add(new JScrollPane(problemList), BorderLayout.WEST);     // 左:题目列表
+        add(new JScrollPane(inputArea),   BorderLayout.CENTER);   // 中:输入编辑
+        add(new JScrollPane(resultTable), BorderLayout.SOUTH);    // 下:结果表
+
+        JButton submit = new JButton(&quot;提交&quot;);
+        submit.addActionListener(e -&gt; onSubmit());                // Lambda 监听 ActionEvent
+        add(submit, BorderLayout.EAST);
+
+        setSize(720, 520);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    private JMenuBar buildMenu() {
+        JMenuBar bar = new JMenuBar();
+        JMenu file = new JMenu(&quot;文件&quot;);
+        JMenuItem quit = new JMenuItem(&quot;退出&quot;);
+        quit.addActionListener(e -&gt; dispatchEvent(            // 确认对话框
+            new java.awt.event.WindowEvent(this, java.awt.event.WindowEvent.WINDOW_CLOSING)));
+        file.add(quit);
+        bar.add(file);
+        return bar;
+    }
+
+    /** 点&quot;提交&quot;:取选中题→判题→填结果表→弹消息框 */
+    private void onSubmit() {
+        try {
+            int idx = problemList.getSelectedIndex();
+            if (idx &lt; 0) { JOptionPane.showMessageDialog(this, &quot;先选一道题&quot;); return; }
+            Problem p = ProblemLoader.load(idx + 1);
+            Solution s = new AplusB();                  // 教学版:用内置解法;真实场景由用户提供
+            JudgeResult r = new StandardJudge().judge(p, s);
+            fillResult(p, r);
+            JOptionPane.showMessageDialog(this, r.toString(), &quot;判题结果&quot;,
+                    r.isAccepted() ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.WARNING_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, &quot;出错: &quot; + ex.getMessage(),
+                    &quot;错误&quot;, JOptionPane.ERROR_MESSAGE);   // 错误对话框
+        }
+    }
+
+    private void fillResult(Problem p, JudgeResult r) {
+        resultModel.setRowCount(0);
+        TestCase[] cs = p.getCases();
+        for (int i = 0; i &lt; cs.length; i++) {
+            String st = (i &lt; r.getPassed()) ? &quot;AC&quot; : r.getStatus().name();   // 简化演示
+            resultModel.addRow(new Object[]{ &quot;#&quot; + i, cs[i].getExpected().trim(), st });
+        }
+    }
+}</code></pre>
+<h3 id="启动-ojguilauncherjava">启动
+<code>oj/gui/Launcher.java</code></h3>
+<pre class="java"><code>package oj.gui;
+import javax.swing.SwingUtilities;
+public class Launcher {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -&gt; new OjFrame().setVisible(true));  // 在 EDT 上建界面
+    }
+}</code></pre>
+<pre class="bash"><code>java -cp &quot;build:lib/*&quot; oj.gui.Launcher</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input
+type="checkbox" />窗口能显示:左题目列表、中输入框、下结果表、提交按钮、文件菜单。</label></li>
+<li><label><input type="checkbox" />选题后点"提交"→结果表刷新 +
+弹出结果对话框(AC/WA 图标不同)。</label></li>
+<li><label><input
+type="checkbox" />出错(如没选题/题目文件缺失)弹错误对话框,程序不崩。</label></li>
+<li><label><input type="checkbox" />至少用到:<code>ActionEvent</code>
+监听、<code>JOptionPane</code>
+对话框、一个布局管理器、<code>JTable</code>。</label></li>
+<li><label><input type="checkbox" />能说清哪部分是 Model / View /
+Controller。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>界面好了,但判题是"点一下、卡一下、单个跑"。第12章(M6a)引入<strong>多线程判题队列</strong>:提交入队、后台线程判、<code>SwingWorker</code>
+不卡界面,并用线程做 <strong>TLE 超时</strong>。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-11"><span class="num">11</span>第12章 · 多线程判题队列(M6a)</h2>
+<blockquote>
+<p>目标:提交进队列、后台工作线程并发判题;用线程做 <strong>TLE
+超时</strong>;界面用 <code>SwingWorker</code> 不卡。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Thread</code>/<code>Runnable</code>、启动/<code>run</code></td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td>线程同步 <code>synchronized</code></td>
+<td><strong>动手</strong>(队列)</td>
+</tr>
+<tr class="odd">
+<td>协调同步 <code>wait</code>/<code>notify</code></td>
+<td><strong>动手</strong>(空队列等待)</td>
+</tr>
+<tr class="even">
+<td>线程联合 <code>join</code>(含带超时)</td>
+<td><strong>动手</strong>(TLE)</td>
+</tr>
+<tr class="odd">
+<td>守护线程 <code>setDaemon</code></td>
+<td><strong>动手</strong>(工作线程)</td>
+</tr>
+<tr class="even">
+<td>GUI 线程 <code>SwingWorker</code>/EDT</td>
+<td><strong>动手</strong>(不卡界面)</td>
+</tr>
+<tr class="odd">
+<td>计时器线程 <code>Timer</code>、优先级</td>
+<td><strong>了解即可</strong>,join-timeout 已够做 TLE</td>
+</tr>
+</tbody>
+</table>
+<h3
+id="1-线程安全队列-ojjudgequeuejudgequeuejavasynchronized--waitnotify">1.
+线程安全队列 <code>oj/judge/queue/JudgeQueue.java</code>(synchronized +
+wait/notify)</h3>
+<pre class="java"><code>package oj.judge.queue;
+import oj.core.Submission;
+import java.util.*;
+public class JudgeQueue {
+    private final Queue&lt;Submission&gt; q = new LinkedList&lt;&gt;();   // LinkedList 不在大纲,作队列用;懂原理即可
+
+    public synchronized void put(Submission s) {   // synchronized:同一时刻只一个线程改队列
+        q.add(s);
+        notifyAll();                                // 唤醒在 take() 里等待的工作线程
+    }
+    public synchronized Submission take() throws InterruptedException {
+        while (q.isEmpty()) wait();                 // 队列空 → 释放锁并等待
+        return q.poll();
+    }
+}</code></pre>
+<blockquote>
+<p>现实里直接用 <code>java.util.concurrent.BlockingQueue</code>
+更省事,但本章目的是<strong>亲手体会
+synchronized/wait/notify</strong>,所以手写。</p>
+</blockquote>
+<h3 id="2-带超时的判题join-超时--守护线程做-tle">2. 带超时的判题(join
+超时 + 守护线程做 TLE)</h3>
+<p>把"跑一次判题"放进子线程,主线程 <code>join(timeLimit)</code>
+等;超时就判 TLE:</p>
+<pre class="java"><code>package oj.judge;
+import oj.core.*;
+public class TimedJudge {
+    public static JudgeResult judgeWithLimit(Judge judge, Problem p, Solution s) {
+        final JudgeResult[] box = new JudgeResult[1];
+        Thread t = new Thread(() -&gt; box[0] = judge.judge(p, s));
+        t.setDaemon(true);                          // 守护线程:主程序退出它不拦着
+        t.start();
+        try {
+            t.join(p.getTimeLimitMs());             // 最多等 timeLimit 毫秒
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if (t.isAlive()) {                          // 还没判完 → 超时
+            t.interrupt();
+            return new JudgeResult(Status.TLE, 0, p.getCases().length, &quot;超时&quot;, p.getTimeLimitMs());
+        }
+        return box[0];
+    }
+}</code></pre>
+<blockquote>
+<p>说明:<code>interrupt()</code>
+只能中断会响应中断的代码;对"死循环不检查中断"的解法无法真正掐断(教学版接受这个局限,标注即可)。这里也正好用上了
+M3 定义的 <code>TimeLimitException</code> 概念。</p>
+</blockquote>
+<h3 id="3-工作线程-ojjudgequeuejudgeworkerjavarunnable--守护线程">3.
+工作线程 <code>oj/judge/queue/JudgeWorker.java</code>(Runnable +
+守护线程)</h3>
+<pre class="java"><code>package oj.judge.queue;
+import oj.core.*;
+import oj.judge.*;
+import oj.db.SubmissionDao;
+import java.util.Map;
+public class JudgeWorker implements Runnable {
+    private final JudgeQueue queue;
+    private final Map&lt;Integer, Problem&gt; problems;       // 题号→题目
+    private final Map&lt;Integer, Solution&gt; solutions;     // 提交id→解法(教学版内存暂存)
+    private final Judge judge = new StandardJudge();
+    private final SubmissionDao dao = new SubmissionDao();
+
+    public JudgeWorker(JudgeQueue q, Map&lt;Integer,Problem&gt; ps, Map&lt;Integer,Solution&gt; sols) {
+        this.queue = q; this.problems = ps; this.solutions = sols;
+    }
+    @Override public void run() {
+        while (true) {
+            try {
+                Submission sub = queue.take();                       // 阻塞取
+                Problem p = problems.get(sub.getProblemId());
+                Solution s = solutions.get(sub.getId());
+                JudgeResult r = TimedJudge.judgeWithLimit(judge, p, s);
+                sub.setResult(r);
+                dao.save(sub);                                       // 入库(复用 M5b)
+                System.out.println(&quot;判完 #&quot; + sub.getId() + &quot; -&gt; &quot; + r);
+            } catch (InterruptedException e) { break; }
+            catch (Exception e) { System.err.println(&quot;判题出错: &quot; + e.getMessage()); }
+        }
+    }
+}</code></pre>
+<p>启动 N 个守护工作线程:</p>
+<pre class="java"><code>JudgeQueue queue = new JudgeQueue();
+for (int i = 0; i &lt; 4; i++) {
+    Thread t = new Thread(new JudgeWorker(queue, problems, solutions));
+    t.setDaemon(true);
+    t.start();
+}
+// 提交:queue.put(submission);  多个提交会被 4 个线程并发判</code></pre>
+<h3 id="4-gui-不卡swingworker">4. GUI 不卡(SwingWorker)</h3>
+<p>把 M5c 的 <code>onSubmit</code> 改成后台判、回 EDT 更新:</p>
+<pre class="java"><code>new javax.swing.SwingWorker&lt;JudgeResult, Void&gt;() {
+    protected JudgeResult doInBackground() {                 // 后台线程判题
+        return TimedJudge.judgeWithLimit(new StandardJudge(), p, s);
+    }
+    protected void done() throws Exception {                 // 回到 EDT 更新界面
+        JudgeResult r = get();
+        fillResult(p, r);
+        JOptionPane.showMessageDialog(OjFrame.this, r.toString());
+    }
+}.execute();</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />一次性 <code>put</code> 多个提交,4
+个工作线程能<strong>并发</strong>判(打印交错)。</label></li>
+<li><label><input type="checkbox" />死循环/超慢解法被判
+<strong>TLE</strong>(<code>join</code>
+超时生效),程序不卡死。</label></li>
+<li><label><input type="checkbox" />队列用
+<code>synchronized</code>+<code>wait/notify</code>
+实现,空队列时工作线程阻塞而非空转。</label></li>
+<li><label><input type="checkbox" />GUI
+判题期间界面不冻结(<code>SwingWorker</code>)。</label></li>
+<li><label><input
+type="checkbox" />工作线程是守护线程,主程序结束能正常退出。</label></li>
+</ul>
+<h3 id="本章产物--下一章">本章产物 → 下一章</h3>
+<p>判题能并发、能超时。最后一步:第13章(M6b)把它做成
+<strong>C/S</strong>——客户端通过 Socket
+远程提交,服务端多线程接收并丢进这个判题队列。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-12"><span class="num">12</span>第13章 · 网络 C/S(M6b)</h2>
+<blockquote>
+<p>目标:拆成客户端/服务端——客户端用 <code>Socket</code>
+远程提交,服务端用 <code>ServerSocket</code>
+接收、每连接一线程判题、回写结果。 最终架构成立:<strong>Swing 客户端 ↔︎
+Socket ↔︎ 多线程判题服务端 ↔︎ MySQL</strong>。</p>
+</blockquote>
+<h3 id="知识点大纲对照">知识点(大纲对照)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Socket</code> / <code>ServerSocket</code></td>
+<td><strong>动手</strong>(核心)</td>
+</tr>
+<tr class="even">
+<td><code>InetAddress</code>:获取客户端地址</td>
+<td><strong>动手</strong>(打印来源)</td>
+</tr>
+<tr class="odd">
+<td>每连接一线程(呼应 Ch12)</td>
+<td><strong>动手</strong></td>
+</tr>
+<tr class="even">
+<td><code>URL</code> 读远程资源</td>
+<td><strong>了解/可选</strong>(远程拉题库)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="协议极简一行文本">协议(极简,一行文本)</h3>
+<p>为避免"通过网络传 Java
+对象/源码"的复杂度,教学版约定:<strong>服务端内置若干解法</strong>,客户端只发"题号
++ 解法名 + 用户名"。</p>
+<pre><code>客户端 → 服务端:  &quot;1 aplusb alice&quot;          (空格分隔)
+服务端 → 客户端:  &quot;AC 2/2 (3ms)&quot;            (JudgeResult.toString)</code></pre>
+<blockquote>
+<p>这样网络层只传字符串,简单清晰;判题仍复用前面所有后端代码。</p>
+</blockquote>
+<h3 id="0-服务端内置解法注册表-ojjudgesolutionsjava">0.
+服务端内置解法注册表 <code>oj/judge/Solutions.java</code></h3>
+<pre class="java"><code>package oj.judge;
+import java.util.*;
+public class Solutions {
+    private static final Map&lt;String, Solution&gt; REG = new HashMap&lt;&gt;();
+    static {
+        REG.put(&quot;aplusb&quot;, new AplusB());
+        // 以后加新解法在这里登记
+    }
+    public static Solution get(String name) { return REG.get(name); }
+}</code></pre>
+<h3 id="1-判题服务端-ojnetjudgeserverjavaserversocket--每连接一线程">1.
+判题服务端 <code>oj/net/JudgeServer.java</code>(ServerSocket +
+每连接一线程)</h3>
+<pre class="java"><code>package oj.net;
+import oj.core.*;
+import oj.io.ProblemLoader;
+import oj.judge.*;
+import java.io.*;
+import java.net.*;
+public class JudgeServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket server = new ServerSocket(6789);
+        System.out.println(&quot;判题服务端启动,监听 6789...&quot;);
+        while (true) {
+            Socket sock = server.accept();              // 阻塞等连接
+            new Thread(() -&gt; handle(sock)).start();     // 每连接一线程(呼应 Ch12;可换线程池)
+        }
+    }
+
+    private static void handle(Socket sock) {
+        try (Socket s = sock;                           // try-with-resources 自动关闭
+             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+             PrintWriter out = new PrintWriter(s.getOutputStream(), true)) {
+
+            System.out.println(&quot;来自 &quot; + s.getInetAddress().getHostAddress());  // InetAddress
+            String line = in.readLine();                                        // &quot;1 aplusb alice&quot;
+            if (line == null) return;
+            String[] t = line.trim().split(&quot;\\s+&quot;);
+            Problem p = ProblemLoader.load(Integer.parseInt(t[0]));
+            Solution sol = Solutions.get(t[1]);
+            if (sol == null) { out.println(&quot;CE 0/0 (未知解法)&quot;); return; }
+
+            JudgeResult r = new StandardJudge().judge(p, sol);
+            out.println(r.toString());                                          // 回写结果
+        } catch (Exception e) {
+            System.err.println(&quot;处理连接出错: &quot; + e.getMessage());
+        }
+    }
+}</code></pre>
+<blockquote>
+<p>进阶(可选):把判题改成丢进 M6a 的
+<code>JudgeQueue</code>,由工作线程池消费——和第12章彻底打通。教学版直接判也行。</p>
+</blockquote>
+<h3 id="2-客户端-ojnetjudgeclientjavasocket">2. 客户端
+<code>oj/net/JudgeClient.java</code>(Socket)</h3>
+<pre class="java"><code>package oj.net;
+import java.io.*;
+import java.net.*;
+public class JudgeClient {
+    public static String submit(String host, int problemId, String solName, String user)
+            throws IOException {
+        try (Socket sock = new Socket(host, 6789);
+             PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()))) {
+            out.println(problemId + &quot; &quot; + solName + &quot; &quot; + user);   // 发请求
+            return in.readLine();                                  // 收结果
+        }
+    }
+    public static void main(String[] args) throws IOException {
+        System.out.println(submit(&quot;localhost&quot;, 1, &quot;aplusb&quot;, &quot;alice&quot;));  // 期望: AC 2/2 (...)
+    }
+}</code></pre>
+<h3 id="3-跑起来两个终端">3. 跑起来(两个终端)</h3>
+<pre class="bash"><code># 终端1:起服务端
+java -cp &quot;build:lib/*&quot; oj.net.JudgeServer
+# 终端2:客户端提交
+java -cp &quot;build:lib/*&quot; oj.net.JudgeClient
+# 服务端打印 &quot;来自 127.0.0.1&quot;,客户端打印 &quot;AC 2/2 (...)&quot;</code></pre>
+<blockquote>
+<p>把 M5c 的 Swing "提交"按钮改成调
+<code>JudgeClient.submit(...)</code>,即可实现 GUI 远程提交。</p>
+</blockquote>
+<h3 id="4-可选url-拉远程题面">4. (可选)URL 拉远程题面</h3>
+<pre class="java"><code>import java.net.*; import java.io.*;
+BufferedReader br = new BufferedReader(new InputStreamReader(
+    new URL(&quot;http://localhost:8000/problems/1/title.txt&quot;).openStream()));</code></pre>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />服务端 <code>ServerSocket</code>
+监听;客户端 <code>Socket</code> 连上、发请求、收到
+<code>AC 2/2 (...)</code>。</label></li>
+<li><label><input type="checkbox" />服务端能打印客户端
+<code>InetAddress</code>。</label></li>
+<li><label><input
+type="checkbox" />同时开多个客户端提交,服务端多线程处理不串话。</label></li>
+<li><label><input type="checkbox" />能画出最终架构:Swing 客户端 ↔︎ Socket
+↔︎ 多线程判题服务端 ↔︎ MySQL。</label></li>
+</ul>
+<h3 id="全项目收官">全项目收官</h3>
+<p>至此 13 章全部落到一个连贯项目里: <strong>输入/流程(Ch2-3)→
+对象(Ch4)→ 接口/继承/异常(Ch5-7)→ 类库/反射(Ch8)→ 文件(Ch10)→
+数据库(Ch11)→ GUI(Ch9)→ 多线程(Ch12)→ 网络(Ch13)。</strong> 回到
+<code>00-项目总设计.md</code> 把 10 个里程碑的 ☐ 逐个打勾即可。</p>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-13"><span class="num">13</span>附录A · 判题机集成(Java 调判题机)</h2>
+<blockquote>
+<p>前面 M3/M4 的 Java 判题(<code>Judge</code> 接口 /
+<code>AbstractJudge</code> / <code>Solution</code>)是<strong>讲 OOP
+的教学骨架,保留不动</strong>。
+本章新增一条<strong>真实判题通路</strong>:Java 通过
+<code>ProcessBuilder</code>
+调用独立的「判题机」(<code>judge/</code>),去编译运行真实的
+<strong>C++/Python 提交源码</strong>。 一句话:<strong>OOP 怎么抽象——看
+M3/M4;代码怎么真跑起来被判——看本章。</strong></p>
+</blockquote>
+<h3 id="判题机是什么详见-judgereadmemd">判题机是什么(详见
+<code>judge/README.md</code>)</h3>
+<ul>
+<li>位置:本仓 <code>judge/</code>,单文件
+<code>judge.cpp</code>,<strong>编译型</strong>:<code>cd judge &amp;&amp; make</code>。</li>
+<li>调用:
+<pre class="bash"><code>./judge --problem &lt;题目目录&gt; --src &lt;提交源码&gt; --lang &lt;cpp|python&gt; [--time-ms 1000] [--mem-mb 256]</code></pre></li>
+<li>输出(stdout 一行 JSON):
+<pre class="json"><code>{&quot;status&quot;:&quot;AC&quot;,&quot;passed&quot;:3,&quot;total&quot;:3,&quot;time_ms&quot;:3,&quot;mem_kb&quot;:1840,&quot;detail&quot;:&quot;&quot;}</code></pre></li>
+<li>它负责脏活:<code>fork</code>+<code>exec</code>
+跑提交、<code>setrlimit</code> 限资源、墙钟看门狗抓超时、按行比对输出。
+Java 端<strong>只管调用 + 解析结果</strong>,简单。</li>
+</ul>
+<h3 id="这条通路用到的课程知识点">这条通路用到的课程知识点</h3>
+<table>
+<thead>
+<tr class="header">
+<th>要点</th>
+<th>出处</th>
+<th>用在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>运行外部可执行文件(<code>ProcessBuilder</code>/<code>Process</code>)</td>
+<td>Ch10</td>
+<td>调 <code>judge</code> 二进制</td>
+</tr>
+<tr class="even">
+<td>读子进程输出流</td>
+<td>Ch10</td>
+<td>读 <code>judge</code> 的 stdout</td>
+</tr>
+<tr class="odd">
+<td>String / 正则解析</td>
+<td>Ch8</td>
+<td>解析返回的 JSON</td>
+</tr>
+<tr class="even">
+<td>接口多态(再来一次)</td>
+<td>Ch6</td>
+<td>让 <code>MachineJudge</code> 也纳入统一视角</td>
+</tr>
+</tbody>
+</table>
+<h3 id="第一步status-已含-mle见-00-5">第一步:<code>Status</code> 已含
+MLE(见 00 §5)</h3>
+<p>判题机会返回 <code>MLE</code>(超内存)和
+<code>ERR</code>(内部错)。<code>Status</code> 在 <code>00 §5</code>
+已统一为权威定义:</p>
+<pre class="java"><code>// oj.core.Status
+public enum Status { AC, WA, TLE, MLE, RE, CE, PE }</code></pre>
+<p>判题机的 <code>ERR</code> 无对应枚举值,由下面
+<code>MachineJudge.parse</code> 兜底映射成
+<code>RE</code>;<code>PE</code> 判题机不产生。</p>
+<h3
+id="第二步machinejudge调用外部判题机本章核心">第二步:<code>MachineJudge</code>——调用外部判题机(本章核心)</h3>
+<p><code>oj/judge/MachineJudge.java</code></p>
+<pre class="java"><code>package oj.judge;
+import oj.core.*;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.regex.*;
+
+public class MachineJudge {
+    private final String judgeBin;     // 判题机可执行文件, 如 &quot;judge/judge&quot;
+    public MachineJudge(String judgeBin) { this.judgeBin = judgeBin; }
+
+    /** 判一份真实提交源码。problemDir 形如 &quot;problems/1&quot;;lang = &quot;cpp&quot; | &quot;python&quot; */
+    public JudgeResult judge(String problemDir, String srcFile, String lang,
+                             long timeMs, int memMb)
+            throws IOException, InterruptedException {
+        Process p = new ProcessBuilder(                      // 运行外部可执行文件(Ch10)
+                judgeBin, &quot;--problem&quot;, problemDir, &quot;--src&quot;, srcFile, &quot;--lang&quot;, lang,
+                &quot;--time-ms&quot;, String.valueOf(timeMs),         // 把题目时限/内存真正传给判题机
+                &quot;--mem-mb&quot;,  String.valueOf(memMb)
+        ).start();
+        String json = new String(p.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
+        p.waitFor();
+        return parse(json);
+    }
+
+    /** 便捷重载:题目目录按 id 推导,时限取 Problem 自带值,内存默认 256MB。 */
+    public JudgeResult judge(Problem problem, String srcFile, String lang)
+            throws IOException, InterruptedException {
+        return judge(&quot;problems/&quot; + problem.getId(), srcFile, lang,
+                     problem.getTimeLimitMs(), 256);
+    }
+
+    // 极简 JSON 解析(教学够用): 正则抽字段(Ch8)
+    private JudgeResult parse(String json) {
+        Status status;
+        try { status = Status.valueOf(str(json, &quot;status&quot;)); }
+        catch (IllegalArgumentException e) { status = Status.RE; }   // ERR 等未知状态兜底
+        int  passed = (int) num(json, &quot;passed&quot;);
+        int  total  = (int) num(json, &quot;total&quot;);
+        long timeMs = num(json, &quot;time_ms&quot;);
+        return new JudgeResult(status, passed, total, str(json, &quot;detail&quot;), timeMs);
+    }
+    private static String str(String json, String key) {
+        Matcher m = Pattern.compile(&quot;\&quot;&quot; + key + &quot;\&quot;\\s*:\\s*\&quot;(.*?)\&quot;&quot;).matcher(json);
+        return m.find() ? m.group(1) : &quot;&quot;;
+    }
+    private static long num(String json, String key) {
+        Matcher m = Pattern.compile(&quot;\&quot;&quot; + key + &quot;\&quot;\\s*:\\s*(\\d+)&quot;).matcher(json);
+        return m.find() ? Long.parseLong(m.group(1)) : 0;
+    }
+}</code></pre>
+<blockquote>
+<p>注:<code>detail</code> 含转义(如 CE
+的多行编译错误),正则简易解析只够"看个大概";要精确可换真正的 JSON
+库——但教学版不必。</p>
+</blockquote>
+<h3 id="第三步跑通">第三步:跑通</h3>
+<pre class="java"><code>// 先 cd judge &amp;&amp; make 生成 judge 二进制;题目目录放好 1.in/1.out...
+MachineJudge mj = new MachineJudge(&quot;judge/judge&quot;);
+JudgeResult r = mj.judge(&quot;judge/examples/problems/aplusb&quot;,
+                         &quot;judge/examples/solutions/ac.cpp&quot;, &quot;cpp&quot;, 1000, 256);
+System.out.println(r);     // 期望: AC 3/3 (..ms)</code></pre>
+<h3
+id="与现有设计的关系两条通路并存">与现有设计的关系(两条通路并存)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>通路</th>
+<th>判什么</th>
+<th>价值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Java
+内判题</strong>(<code>Judge</code>/<code>AbstractJudge</code>/<code>Solution</code>,M3/M4)</td>
+<td>Java 写的 <code>Solution</code> 对象</td>
+<td>教接口/继承/多态/异常</td>
+</tr>
+<tr class="even">
+<td><strong>外部判题机</strong>(<code>MachineJudge</code> +
+<code>judge/</code>,本章)</td>
+<td>真实 C++/Python 源码</td>
+<td>真编译真运行、真资源限制</td>
+</tr>
+</tbody>
+</table>
+<p>两者都产出同一个
+<code>oj.core.JudgeResult</code>,但<strong>判定口径不同</strong>:判题机只做精确匹配(详见下方影响清单),
+浮点容差 / special judge 仅在 Java 内判题通路有。想再练一次多态,可让
+<code>MachineJudge</code> 也实现一个统一接口 (如
+<code>interface SubmissionJudge { JudgeResult judge(...); }</code>),与
+Java 内判题在更高层对齐——可选。</p>
+<h3
+id="集成判题机对前面各章的影响清单">集成判题机:对前面各章的影响清单</h3>
+<blockquote>
+<p>前面 <code>00–10</code> 是按「Java
+内判题」写的。<strong>改走判题机时</strong>,按本清单调整对应章节(其余不变);
+不改走判题机、纯学 Java
+时,前面各章原样即可。两条通路的差异都收口在这里。</p>
+</blockquote>
+<p><strong>判定口径(Status / 输出比对)</strong></p>
+<ul>
+<li>判题机只做<strong>逐行去尾空白的精确匹配</strong>,无浮点容差、无
+special judge、不产 <code>PE</code>。M3/M4 的
+<code>SpecialJudge</code>(浮点
+1e-6)、<code>FormatChecker</code>(PE)<strong>只属 Java
+内判题通路</strong>,不随源码进判题机。</li>
+<li>浮点题要交判题机:出题时把标准答案固定到指定小数位、并要求选手同格式输出(把"容差"前移到出题约定)。</li>
+<li><code>Status</code>:判题机产
+<code>AC/WA/TLE/MLE/RE/CE</code>,<code>ERR</code>→映射
+<code>RE</code>,<code>PE</code> 不产。</li>
+</ul>
+<p><strong>Submission / 数据库(M2 Ch4、M5b Ch11)</strong></p>
+<ul>
+<li>用判题机时 <code>Submission</code>
+要多带两项:<code>String lang</code>(cpp/python)+
+源码(<code>String sourceCode</code> 或
+<code>String srcPath</code>)——否则 <code>MachineJudge</code> 无从取
+<code>--src/--lang</code>。</li>
+<li><code>submissions</code>
+表相应加列:<code>lang VARCHAR(8)</code>、<code>source MEDIUMTEXT</code>(或
+<code>src_path VARCHAR(255)</code>)。结果字段不变。</li>
+</ul>
+<p><strong>GUI(M5c Ch9)</strong></p>
+<ul>
+<li><code>08</code> 正文用内置 Java <code>Solution</code>,是「Java
+内判题教学版」。判题机版界面要改:加<strong>语言下拉</strong>(<code>JComboBox</code>)、<strong>源码编辑区/文件选择</strong>(<code>JTextArea</code>
+装源码 或 <code>JFileChooser</code>),<code>onSubmit</code> 落盘源码后调
+<code>MachineJudge.judge(problem, srcFile, lang)</code>。</li>
+</ul>
+<p><strong>多线程(M6a Ch12)</strong></p>
+<ul>
+<li>判题机<strong>自带
+TLE</strong>(<code>setrlimit</code>+墙钟,死循环能真掐断)。改走判题机后
+<code>JudgeWorker</code> 直接调
+<code>MachineJudge</code>,<strong>不要再外套
+<code>TimedJudge</code>/join 超时</strong>(双重超时且
+<code>interrupt()</code> 杀不掉外部子进程)。</li>
+<li><code>09</code> 的 <code>TimedJudge</code>(Java
+线程超时)只用于「Java
+内判题」教学;判题机版里线程只管并发、不管超时。</li>
+</ul>
+<p><strong>网络(M6b Ch13)</strong></p>
+<ul>
+<li><code>10</code> 正文协议发"题号+解法名"、服务端用内置
+<code>Solution</code>,是「Java
+内判题教学版」。判题机版协议要能<strong>承载源码</strong>:先发一行头(题号+语言+用户名+源码字节数),再发源码正文;服务端读出写临时文件,调
+<code>MachineJudge</code> 回写结果。<strong>单行 <code>readLine()</code>
+读法对多行源码不适用</strong>,改按字节数读正文。</li>
+</ul>
+<p><strong>题库目录</strong></p>
+<ul>
+<li><code>--problem</code> 直接传 <code>problems/&lt;id&gt;</code>
+即可:判题机只挑成对 <code>*.in/*.out</code>,<strong>自动忽略
+<code>title.txt</code></strong> 等,和 <code>06</code>
+的目录约定兼容。</li>
+</ul>
+<h3 id="验收标准">验收标准</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" /><code>judge/</code> 下
+<code>make</code> 能编出判题机,<code>make test</code>
+六种判定(AC/WA/TLE/RE/CE/AC-py)全对。</label></li>
+<li><label><input type="checkbox" />Java 的 <code>MachineJudge</code>
+能调用判题机,跑 <code>ac.cpp</code> 得 <strong>AC
+3/3</strong>、<code>ac.py</code> 也 AC。</label></li>
+<li><label><input
+type="checkbox" />能说清两条判题通路各自的职责,以及它们都汇到
+<code>JudgeResult</code>。</label></li>
+</ul>
+
+</section>
+
+<section class="collapsible">
+<h2 id="sec-14"><span class="num">14</span>附录B · 判题机使用手册</h2>
+<p>单文件、编译型的判题机。<strong>编译并运行</strong>用户提交(C++ /
+Python),跑全部测试点, 带 CPU / 墙钟 / 内存限制,比对输出,输出一行
+<strong>JSON</strong> 判定。Java OJ 只需调用它并解析结果。</p>
+<h3 id="编译">编译</h3>
+<pre class="bash"><code>make            # 等价于 g++ -O2 -std=c++17 -o judge judge.cpp</code></pre>
+<h3 id="用法">用法</h3>
+<pre class="bash"><code>./judge --problem &lt;题目目录&gt; --src &lt;提交源码&gt; --lang &lt;cpp|python&gt; \
+        [--time-ms 1000] [--mem-mb 256]</code></pre>
+<p>题目目录约定(成对、按数字排序):</p>
+<pre><code>problems/aplusb/
+├── 1.in   1.out
+├── 2.in   2.out
+└── 3.in   3.out</code></pre>
+<h3 id="输出stdout-一行-json">输出(stdout 一行 JSON)</h3>
+<pre class="json"><code>{&quot;status&quot;:&quot;AC&quot;,&quot;passed&quot;:3,&quot;total&quot;:3,&quot;time_ms&quot;:3,&quot;mem_kb&quot;:1840,&quot;detail&quot;:&quot;&quot;}</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>status</code></td>
+<td><code>AC</code>/<code>WA</code>/<code>TLE</code>/<code>MLE</code>/<code>RE</code>/<code>CE</code>/<code>ERR</code></td>
+</tr>
+<tr class="even">
+<td><code>passed</code> / <code>total</code></td>
+<td>通过测试点数 / 总数</td>
+</tr>
+<tr class="odd">
+<td><code>time_ms</code></td>
+<td>最大测试点 CPU 耗时</td>
+</tr>
+<tr class="even">
+<td><code>mem_kb</code></td>
+<td>峰值内存(ru_maxrss)</td>
+</tr>
+<tr class="odd">
+<td><code>detail</code></td>
+<td>失败说明(WA/RE 的 case 号、CE 的编译错误等)</td>
+</tr>
+</tbody>
+</table>
+<p>状态含义:AC 通过 · WA 答案错 · TLE 超时 · MLE 超内存 · RE
+运行错(崩溃/非零退出) · CE 编译/语法错 · ERR 判题机内部错。</p>
+<h3 id="例子">例子</h3>
+<pre class="bash"><code>./judge --problem examples/problems/aplusb --src examples/solutions/ac.cpp  --lang cpp
+./judge --problem examples/problems/aplusb --src examples/solutions/ac.py   --lang python
+make test        # 跑全部示例提交,逐个打印判定</code></pre>
+<h3 id="java-oj-如何调用示意">Java OJ 如何调用(示意)</h3>
+<pre class="java"><code>Process p = new ProcessBuilder(
+    &quot;./judge&quot;, &quot;--problem&quot;, &quot;problems/1&quot;, &quot;--src&quot;, &quot;sub.cpp&quot;, &quot;--lang&quot;, &quot;cpp&quot;
+).start();
+String json = new String(p.getInputStream().readAllBytes());   // 解析 status/passed/...</code></pre>
+<h3 id="限制与边界教学版">限制与边界(教学版)</h3>
+<ul>
+<li>资源限制用 <code>setrlimit</code>(CPU/AS/输出) +
+父进程墙钟看门狗,<strong>未做完整沙箱</strong>(无
+seccomp/cgroups、不禁系统调用、不隔离文件系统)。<strong>只在你信任的本地/单机环境运行提交。</strong></li>
+<li>内存判定以 <code>ru_maxrss</code> 为准;<code>RLIMIT_AS</code>
+仅作"防吃光内存"的安全上限(给到限额 2
+倍余量),避免正常程序因虚拟内存预留被误判 MLE。</li>
+<li>输出比对:逐行去行尾空白、忽略末尾空行(<code>normalize</code>)。需要更严或
+special judge 可再扩展。</li>
+</ul>
+
+</section>
+<footer>
+  <h4>References</h4>
+  <ul>
+    <li>仓库 · <a href="https://github.com/winbeau/Mini-OJ-docs">github.com/winbeau/Mini-OJ-docs</a></li>
+    <li>判题机源码 · <code>judge/judge.cpp</code>(C++ 单文件,编译型)</li>
+    <li>本页由仓库内全部 Markdown 融合生成</li>
+  </ul>
+</footer>
+</article>
+<script>
+(function(){
+  var toc=document.getElementById('toc'); if(!toc) return;
+  var t=document.createElement('div'); t.className='toc-title'; t.textContent='目录'; toc.appendChild(t);
+  var hs=[].slice.call(document.querySelectorAll('section > h2'));
+  hs.forEach(function(h){ var a=document.createElement('a'); a.href='#'+h.id; a.textContent=h.textContent.replace(/^\s*\d+\s*/,''); toc.appendChild(a); });
+  var links=[].slice.call(toc.querySelectorAll('a'));
+  var obs=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id); }); } }); }, {rootMargin:'-30% 0px -60% 0px'});
+  hs.forEach(function(s){ obs.observe(s); });
+})();
+document.querySelectorAll('section.collapsible h2').forEach(function(h){ h.addEventListener('click', function(e){ if(e.target.tagName==='A') return; h.parentElement.classList.toggle('collapsed'); }); });
+document.querySelectorAll('pre').forEach(function(pre){ var b=document.createElement('button'); b.className='copy-btn'; b.textContent='copy'; b.onclick=async function(){ var c=pre.querySelector('code'); await navigator.clipboard.writeText(c?c.innerText:pre.innerText); b.textContent='copied'; setTimeout(function(){ b.textContent='copy'; },1500); }; pre.appendChild(b); });
+(function(){ var btn=document.getElementById('theme-toggle'); function apply(m){ document.documentElement.classList.toggle('dark', m==='dark'); btn.textContent = m==='dark'?'light':'dark'; } apply(localStorage.getItem('theme')||'light'); btn.addEventListener('click', function(){ var n=document.documentElement.classList.contains('dark')?'light':'dark'; localStorage.setItem('theme', n); apply(n); }); })();
+(function(){ var p=document.getElementById('progress'); window.addEventListener('scroll', function(){ var h=document.documentElement.scrollHeight-innerHeight; p.style.width=(scrollY/Math.max(h,1))*100+'%'; }); })();
+</script>
+</body>
+</html>
