@@ -422,8 +422,10 @@ section.collapsible h2::after { content:"\2212"; position:absolute; right:8px; t
 section.collapsible.collapsed h2::after { content:"+"; }
 section.collapsible.collapsed > *:not(h2) { display:none; }
 pre { position: relative; }
-.copy-btn { position:absolute; top:8px; right:8px; font-family: ui-monospace, Menlo, monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; background:#fff; border:1px solid var(--rule); padding:3px 7px; cursor:pointer; color: var(--ink-faint); }
-.copy-btn:hover { color: var(--ink); }
+.copy-btn { position:absolute; top:7px; right:7px; font-family: ui-monospace, Menlo, monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; background: rgba(255,255,255,0.72); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); border:1px solid var(--rule-soft); border-radius:6px; padding:4px 9px; cursor:pointer; color: var(--ink-faint); opacity:0.45; -webkit-font-smoothing:antialiased; transition: opacity .15s ease, color .15s, background .15s, border-color .15s; }
+pre:hover .copy-btn { opacity:1; }
+.copy-btn:hover { color: var(--ink); background:#fff; border-color: var(--rule); opacity:1; }
+.copy-btn.copied { color:#fff; background: var(--accent); border-color: var(--accent); opacity:1; }
 .toc { position: fixed; top: 56px; left: 20px; width: 218px; max-height: 82vh; overflow:auto; font-family: ui-monospace, Menlo, monospace; font-size: 11px; line-height: 1.65; padding-right:8px; }
 .toc a { display:block; color: var(--ink-faint); border:none; padding: 1px 0; }
 .toc a:hover { color: var(--ink-soft); }
@@ -431,9 +433,12 @@ pre { position: relative; }
 .toc .toc-title { color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 8px; font-weight:600; }
 @media (max-width: 1260px) { .toc { display:none; } }
 html.dark { --paper:#1a1a1a; --paper-edge:#222; --ink:#e8e8e2; --ink-soft:#b8b8b2; --ink-faint:#888; --rule:#333; --rule-soft:#2a2a2a; --code-bg:#262624; --accent-faint:#1c2a35; --warn-soft:#2c2418; }
-html.dark .callout, html.dark .card, html.dark figure, html.dark .copy-btn { background:#1f1f1f; }
+html.dark .callout, html.dark .card, html.dark figure { background:#1f1f1f; }
 html.dark figcaption { background:#181818; }
 html.dark pre, html.dark code { background:#262624; }
+html.dark .copy-btn { background: rgba(38,38,36,0.72); border-color:#333; }
+html.dark .copy-btn:hover { background:#2e2e2c; }
+html.dark .copy-btn.copied { background: var(--accent); border-color: var(--accent); }
 .theme-toggle { position: fixed; top:14px; right:14px; font-family: ui-monospace, Menlo, monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; background: var(--paper-edge); color: var(--ink-faint); border:1px solid var(--rule); padding:6px 10px; cursor:pointer; z-index:30; }
 .reading-progress { position: fixed; top:0; left:0; height:2px; background: var(--accent); width:0%; z-index:40; transition: width 0.1s ease-out; }
 
@@ -3279,7 +3284,7 @@ special judge 可再扩展。</li>
   hs.forEach(function(s){ obs.observe(s); });
 })();
 document.querySelectorAll('section.collapsible h2').forEach(function(h){ h.addEventListener('click', function(e){ if(e.target.tagName==='A') return; h.parentElement.classList.toggle('collapsed'); }); });
-document.querySelectorAll('pre').forEach(function(pre){ var b=document.createElement('button'); b.className='copy-btn'; b.textContent='copy'; b.onclick=async function(){ var c=pre.querySelector('code'); await navigator.clipboard.writeText(c?c.innerText:pre.innerText); b.textContent='copied'; setTimeout(function(){ b.textContent='copy'; },1500); }; pre.appendChild(b); });
+document.querySelectorAll('pre').forEach(function(pre){ var b=document.createElement('button'); b.className='copy-btn'; b.textContent='copy'; b.onclick=async function(){ var c=pre.querySelector('code'); await navigator.clipboard.writeText(c?c.innerText:pre.innerText); b.textContent='copied'; b.classList.add('copied'); setTimeout(function(){ b.textContent='copy'; b.classList.remove('copied'); },1500); }; pre.appendChild(b); });
 (function(){ var btn=document.getElementById('theme-toggle'); function apply(m){ document.documentElement.classList.toggle('dark', m==='dark'); btn.textContent = m==='dark'?'light':'dark'; } apply(localStorage.getItem('theme')||'light'); btn.addEventListener('click', function(){ var n=document.documentElement.classList.contains('dark')?'light':'dark'; localStorage.setItem('theme', n); apply(n); }); })();
 (function(){ var p=document.getElementById('progress'); window.addEventListener('scroll', function(){ var h=document.documentElement.scrollHeight-innerHeight; p.style.width=(scrollY/Math.max(h,1))*100+'%'; }); })();
 </script>
