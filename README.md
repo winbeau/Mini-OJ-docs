@@ -3,7 +3,7 @@
 用一个 **Mini-OJ(在线判题系统)** 项目,循序渐进学完一门 Java 课程(13 章)。
 环境:Ubuntu + nvim + JDK,**古法手撸**(纯 `javac/java` + `Makefile`),简单、教学优先。
 
-> **单页 HTML 教程**(全部 md 融合 + 目录/折叠/复制/暗色,浏览器打开即可):[mini-oj-tutorial.html](mini-oj-tutorial.html)
+> **在线教程**:<https://winbeau.github.io/Mini-OJ-docs/> ·(单页 HTML,全部 md 融合 + 目录/折叠/复制/暗色;本地文件 [mini-oj-tutorial.html](mini-oj-tutorial.html))
 
 ## 文档导航
 
