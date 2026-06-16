@@ -1,0 +1,8 @@
+# 构建产物
+judge/judge
+*.o
+*.class
+build/
+# Python 缓存
+__pycache__/
+*.pyc
