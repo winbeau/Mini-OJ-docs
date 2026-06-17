@@ -1,5 +1,7 @@
 # 08 · M5c Swing 桌面客户端（Ch9，大前端）
 
+> **考试相关度 ★★★(编程+填空双大题)** · 真题原题:加法练习/平方窗口、六按钮 GridLayout。**[第一步·拟合试卷]** 照真题写单窗口:JFrame+布局+JButton+JTextField+JLabel+ActionListener;**[第二步·工程化]** `OjFrame`/`OjController` MVC 解耦 + SwingWorker。
+
 > 判题逻辑已经具备：数据库存题、C++ 判题机真正跑代码。现在缺少的是一扇窗户——用户还在用命令行粘贴代码、手动查库。本章用 Java Swing 为 Mini-OJ 装上可视化界面，把前三代的成果串联成一个完整的桌面应用。
 
 ## 【核心痛点】
