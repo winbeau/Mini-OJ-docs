@@ -1,0 +1,600 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{space}{xeCJK}
+%
+\documentclass[
+  11pt,
+]{ctexart}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \ifXeTeX
+    \usepackage{xeCJK}
+    \setCJKmainfont[]{WenQuanYi Zen Hei}
+          \fi
+  \ifLuaTeX
+    \usepackage[]{luatexja-fontspec}
+    \setmainjfont[]{WenQuanYi Zen Hei}
+  \fi
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\def\TitleMain{Mini-OJ · Java 考试速成}
+\def\TitleSub{拟合试卷 · 只看考试向}
+\input{/home/winbeau/wenbiao_zhao/mini-oj-docs/pdf-preamble.tex}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Mini-OJ · Java 考试速成}
+\author{winbeau}
+\date{2026-06}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{mini-oj-java-ux8003ux8bd5ux901fux6210}{%
+\section{Mini-OJ · Java
+考试速成}\label{mini-oj-java-ux8003ux8bd5ux901fux6210}}
+
+\begin{quote}
+本册\textbf{只覆盖考试向}(每个里程碑的「第一步」):按真题难度/编码风格,用我们
+Mini-OJ 的功能练考点。工程化部分(反射工厂、外部 C++
+判题机、泛型架构、数据库工程、MVC
+解耦)\textbf{不在本册}------要做项目深度看《完整版》。
+题型(新疆大学《面向对象程序设计 B》):\textbf{单选 + 判断 + 读程序 +
+程序填空 + 编程},各约 20 分。全程命令行 \texttt{javac} /
+\texttt{java},不用 make。
+\end{quote}
+
+\hypertarget{ux8003ux70b9ux901fux67e5-ux5386ux5e74ux771fux9898ux5f3aux76f8ux5173}{%
+\subsection{考点速查(★ =
+历年真题强相关)}\label{ux8003ux70b9ux901fux67e5-ux5386ux5e74ux771fux9898ux5f3aux76f8ux5173}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+模块(章)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+★
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+真题题型
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+本册小节
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+类与对象/构造/封装/static(Ch4) & ★★★ & 编程大题、读程序、选择 & M2 \\
+继承/重写/多态/抽象类/接口/异常(Ch5-7) & ★★★ & 编程大题、读程序、选择 &
+M3 \\
+Swing GUI + 事件(Ch9) & ★★★ & 编程 + 填空 双大题、选择 & M5c \\
+集合 ArrayList/LinkedList/HashMap(Ch15) & ★★ & 读程序、填空 & M5a \\
+JDBC 查询/更新(Ch11) & ★★ & 填空、原题 & M5b \\
+多线程 Thread/join/synchronized(Ch12) & ★★ & 填空、选择 & M6a \\
+String/StringBuffer/Random/Math(Ch8) & ★★ & 读程序、选择 & M4 \\
+数组/运算符/流程(Ch2-3) & ★ & 选择、读程序 & M1 \\
+异常 try-catch(Ch7) & ★ & 选择、判断 & M3 \\
+文件 File/流/序列化(Ch10) & ★ & 少量选择/判断 & (并入各章) \\
+环境/编译运行(Ch1) & ☆ & 少量选择 & M0 \\
+\end{longtable}
+
+\begin{quote}
+\textbf{复习顺序建议}:先把编程大题练熟(M2 类、M3 抽象类+多态、M5c
+窗口------必手写),再过填空/读程序(M5a 集合、M5b JDBC、M6a 线程、M4
+String),选择/判断靠平时概念。
+\end{quote}
+
+\hypertarget{m0-ux73afux5883ux4e0eux7f16ux8bd1ux8fd0ux884cch1}{%
+\subsection{M0 ·
+环境与编译运行(Ch1)☆}\label{m0-ux73afux5883ux4e0eux7f16ux8bd1ux8fd0ux884cch1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sudo}\NormalTok{ apt install openjdk{-}21{-}jdk      }\CommentTok{\# 装 JDK}
+\ExtensionTok{nvim}\NormalTok{ Main.java                       }\CommentTok{\# 写一个打印 "Mini{-}OJ ready" 的 Main 类}
+\ExtensionTok{javac}\NormalTok{ Main.java                      }\CommentTok{\# 编译 {-}\textgreater{} Main.class}
+\ExtensionTok{java}\NormalTok{ Main                            }\CommentTok{\# 运行}
+\ExtensionTok{javap} \AttributeTok{{-}c}\NormalTok{ Main                        }\CommentTok{\# 反编译看字节码(理解 .class)}
+\end{Highlighting}
+\end{Shaded}
+
+考点:\texttt{.java} 编译成几个 \texttt{.class}(每个类一个)、运行用
+\texttt{java\ 类名}(不带 \texttt{.class})、平台无关。
+
+\hypertarget{m1-ux6570ux7ec4ux4e0eux6d41ux7a0bux5355ux9898ux5224ux9898ux5668ch2-3}{%
+\subsection{M1 ·
+数组与流程:单题判题器(Ch2-3)★}\label{m1-ux6570ux7ec4ux4e0eux6d41ux7a0bux5355ux9898ux5224ux9898ux5668ch2-3}}
+
+考点:数组遍历、\texttt{if/switch}、\texttt{for/while}、\texttt{++i}、关系/逻辑运算。
+
+\textbf{\texttt{Main.java}}(单文件、纯 \texttt{static})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Main }\OperatorTok{\{}
+    \DataTypeTok{static} \DataTypeTok{int} \FunctionTok{solve}\OperatorTok{(}\DataTypeTok{int}\NormalTok{ a}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ b}\OperatorTok{)} \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ a }\OperatorTok{+}\NormalTok{ b}\OperatorTok{;} \OperatorTok{\}}          \CommentTok{// 模拟用户解法}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \OperatorTok{\{}
+        \DataTypeTok{int}\OperatorTok{[][]}\NormalTok{ in }\OperatorTok{=} \OperatorTok{\{} \OperatorTok{\{}\DecValTok{1}\OperatorTok{,}\DecValTok{2}\OperatorTok{\},} \OperatorTok{\{}\DecValTok{10}\OperatorTok{,}\DecValTok{20}\OperatorTok{\},} \OperatorTok{\{}\DecValTok{0}\OperatorTok{,}\DecValTok{0}\OperatorTok{\}} \OperatorTok{\};}               \CommentTok{// 内置用例}
+        \DataTypeTok{int}\OperatorTok{[]}\NormalTok{ expected }\OperatorTok{=} \OperatorTok{\{} \DecValTok{3}\OperatorTok{,} \DecValTok{30}\OperatorTok{,} \DecValTok{0} \OperatorTok{\};}
+        \DataTypeTok{int}\NormalTok{ passed }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}
+        \ControlFlowTok{for} \OperatorTok{(}\DataTypeTok{int}\NormalTok{ i }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}\NormalTok{ i }\OperatorTok{\textless{}}\NormalTok{ in}\OperatorTok{.}\FunctionTok{length}\OperatorTok{;}\NormalTok{ i}\OperatorTok{++)} \OperatorTok{\{}                 \CommentTok{// 数组遍历}
+            \DataTypeTok{int}\NormalTok{ actual }\OperatorTok{=} \FunctionTok{solve}\OperatorTok{(}\NormalTok{in}\OperatorTok{[}\NormalTok{i}\OperatorTok{][}\DecValTok{0}\OperatorTok{],}\NormalTok{ in}\OperatorTok{[}\NormalTok{i}\OperatorTok{][}\DecValTok{1}\OperatorTok{]);}
+            \ControlFlowTok{if} \OperatorTok{(}\NormalTok{actual }\OperatorTok{==}\NormalTok{ expected}\OperatorTok{[}\NormalTok{i}\OperatorTok{])}\NormalTok{ passed}\OperatorTok{++;}
+            \ControlFlowTok{else} \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\StringTok{"case\#"} \OperatorTok{+}\NormalTok{ i }\OperatorTok{+} \StringTok{" 期望 "} \OperatorTok{+}\NormalTok{ expected}\OperatorTok{[}\NormalTok{i}\OperatorTok{]} \OperatorTok{+} \StringTok{" 实际 "} \OperatorTok{+}\NormalTok{ actual}\OperatorTok{);}
+        \OperatorTok{\}}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\StringTok{"A+B: "} \OperatorTok{+} \OperatorTok{(}\NormalTok{passed }\OperatorTok{==}\NormalTok{ in}\OperatorTok{.}\FunctionTok{length} \OperatorTok{?} \StringTok{"AC"} \OperatorTok{:} \StringTok{"WA"}\OperatorTok{)} \OperatorTok{+} \StringTok{" "} \OperatorTok{+}\NormalTok{ passed }\OperatorTok{+} \StringTok{"/"} \OperatorTok{+}\NormalTok{ in}\OperatorTok{.}\FunctionTok{length}\OperatorTok{);}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac}\NormalTok{ Main.java }\KeywordTok{\&\&} \ExtensionTok{java}\NormalTok{ Main      }\CommentTok{\# A+B: AC 3/3}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{m2-ux7c7bux4e0eux5bf9ux8c61ch4}{%
+\subsection{M2 ·
+类与对象(Ch4)★★★}\label{m2-ux7c7bux4e0eux5bf9ux8c61ch4}}
+
+考点:属性 + 构造方法 +
+get/set、封装(private)、\texttt{static}、\texttt{this}、方法重载。\textbf{编程大题常考「定义一个类」}。
+
+\textbf{\texttt{src/oj/core/TestCase.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ TestCase }\OperatorTok{\{}
+    \KeywordTok{private} \BuiltInTok{String}\NormalTok{ input}\OperatorTok{,}\NormalTok{ expected}\OperatorTok{;}
+    \KeywordTok{public} \FunctionTok{TestCase}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ input}\OperatorTok{,} \BuiltInTok{String}\NormalTok{ expected}\OperatorTok{)} \OperatorTok{\{} \KeywordTok{this}\OperatorTok{.}\FunctionTok{input} \OperatorTok{=}\NormalTok{ input}\OperatorTok{;} \KeywordTok{this}\OperatorTok{.}\FunctionTok{expected} \OperatorTok{=}\NormalTok{ expected}\OperatorTok{;} \OperatorTok{\}}
+    \KeywordTok{public} \BuiltInTok{String} \FunctionTok{getInput}\OperatorTok{()}    \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ input}\OperatorTok{;} \OperatorTok{\}}
+    \KeywordTok{public} \BuiltInTok{String} \FunctionTok{getExpected}\OperatorTok{()} \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ expected}\OperatorTok{;} \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{\texttt{src/oj/core/Problem.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Problem }\OperatorTok{\{}
+    \KeywordTok{private} \DataTypeTok{int}\NormalTok{ id}\OperatorTok{;} \KeywordTok{private} \BuiltInTok{String}\NormalTok{ title}\OperatorTok{;} \KeywordTok{private}\NormalTok{ TestCase}\OperatorTok{[]}\NormalTok{ cases}\OperatorTok{;}
+    \KeywordTok{public} \FunctionTok{Problem}\OperatorTok{(}\DataTypeTok{int}\NormalTok{ id}\OperatorTok{,} \BuiltInTok{String}\NormalTok{ title}\OperatorTok{,}\NormalTok{ TestCase}\OperatorTok{[]}\NormalTok{ cases}\OperatorTok{)} \OperatorTok{\{} \KeywordTok{this}\OperatorTok{.}\FunctionTok{id} \OperatorTok{=}\NormalTok{ id}\OperatorTok{;} \KeywordTok{this}\OperatorTok{.}\FunctionTok{title} \OperatorTok{=}\NormalTok{ title}\OperatorTok{;} \KeywordTok{this}\OperatorTok{.}\FunctionTok{cases} \OperatorTok{=}\NormalTok{ cases}\OperatorTok{;} \OperatorTok{\}}
+    \KeywordTok{public} \DataTypeTok{int} \FunctionTok{getId}\OperatorTok{()}           \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ id}\OperatorTok{;} \OperatorTok{\}}
+    \KeywordTok{public} \BuiltInTok{String} \FunctionTok{getTitle}\OperatorTok{()}     \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ title}\OperatorTok{;} \OperatorTok{\}}
+    \KeywordTok{public}\NormalTok{ TestCase}\OperatorTok{[]} \FunctionTok{getCases}\OperatorTok{()} \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ cases}\OperatorTok{;} \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{\texttt{src/oj/core/JudgeResult.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ JudgeResult }\OperatorTok{\{}
+    \KeywordTok{private} \BuiltInTok{String}\NormalTok{ status}\OperatorTok{;} \KeywordTok{private} \DataTypeTok{int}\NormalTok{ passed}\OperatorTok{,}\NormalTok{ total}\OperatorTok{;}
+    \KeywordTok{public} \FunctionTok{JudgeResult}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ status}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ passed}\OperatorTok{,} \DataTypeTok{int}\NormalTok{ total}\OperatorTok{)} \OperatorTok{\{} \KeywordTok{this}\OperatorTok{.}\FunctionTok{status} \OperatorTok{=}\NormalTok{ status}\OperatorTok{;} \KeywordTok{this}\OperatorTok{.}\FunctionTok{passed} \OperatorTok{=}\NormalTok{ passed}\OperatorTok{;} \KeywordTok{this}\OperatorTok{.}\FunctionTok{total} \OperatorTok{=}\NormalTok{ total}\OperatorTok{;} \OperatorTok{\}}
+    \AttributeTok{@Override} \KeywordTok{public} \BuiltInTok{String} \FunctionTok{toString}\OperatorTok{()} \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ status }\OperatorTok{+} \StringTok{" "} \OperatorTok{+}\NormalTok{ passed }\OperatorTok{+} \StringTok{"/"} \OperatorTok{+}\NormalTok{ total}\OperatorTok{;} \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{\texttt{src/oj/Demo.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{.*;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Demo }\OperatorTok{\{}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{        Problem p }\OperatorTok{=} \KeywordTok{new} \FunctionTok{Problem}\OperatorTok{(}\DecValTok{1}\OperatorTok{,} \StringTok{"A+B"}\OperatorTok{,} \KeywordTok{new}\NormalTok{ TestCase}\OperatorTok{[]\{} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"1 2"}\OperatorTok{,}\StringTok{"3"}\OperatorTok{),} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"10 20"}\OperatorTok{,}\StringTok{"30"}\OperatorTok{)} \OperatorTok{\});}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\NormalTok{p}\OperatorTok{.}\FunctionTok{getTitle}\OperatorTok{()} \OperatorTok{+} \StringTok{" 有 "} \OperatorTok{+}\NormalTok{ p}\OperatorTok{.}\FunctionTok{getCases}\OperatorTok{().}\FunctionTok{length} \OperatorTok{+} \StringTok{" 组用例"}\OperatorTok{);}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\KeywordTok{new} \FunctionTok{JudgeResult}\OperatorTok{(}\StringTok{"AC"}\OperatorTok{,} \DecValTok{2}\OperatorTok{,} \DecValTok{2}\OperatorTok{));}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}d}\NormalTok{ build src/oj/core/}\PreprocessorTok{*}\NormalTok{.java src/oj/Demo.java}
+\ExtensionTok{java} \AttributeTok{{-}cp}\NormalTok{ build oj.Demo            }\CommentTok{\# A+B 有 2 组用例 / AC 2/2}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{m3-ux7ee7ux627fux591aux6001ux62bdux8c61ux63a5ux53e3ux5f02ux5e38ch5-7}{%
+\subsection{M3 ·
+继承/多态/抽象/接口/异常(Ch5-7)★★★}\label{m3-ux7ee7ux627fux591aux6001ux62bdux8c61ux63a5ux53e3ux5f02ux5e38ch5-7}}
+
+考点:抽象基类-\textgreater 子类重写、多态、接口、\texttt{try-catch}、成员变量隐藏。\textbf{编程大题常考「抽象类
++ 子类重写 + 多态」}。
+
+\textbf{\texttt{src/oj/judge/Solution.java}}(接口,可用 Lambda 实现)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{judge}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{interface}\NormalTok{ Solution }\OperatorTok{\{} \BuiltInTok{String} \FunctionTok{solve}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ input}\OperatorTok{);} \OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{\texttt{src/oj/judge/SimpleJudge.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{judge}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{.*;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ SimpleJudge }\OperatorTok{\{}
+    \KeywordTok{public}\NormalTok{ JudgeResult }\FunctionTok{judge}\OperatorTok{(}\NormalTok{Problem p}\OperatorTok{,}\NormalTok{ Solution s}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{        TestCase}\OperatorTok{[]}\NormalTok{ cs }\OperatorTok{=}\NormalTok{ p}\OperatorTok{.}\FunctionTok{getCases}\OperatorTok{();}
+        \DataTypeTok{int}\NormalTok{ passed }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}
+        \ControlFlowTok{try} \OperatorTok{\{}
+            \ControlFlowTok{for} \OperatorTok{(}\NormalTok{TestCase c }\OperatorTok{:}\NormalTok{ cs}\OperatorTok{)}
+                \ControlFlowTok{if} \OperatorTok{(}\NormalTok{s}\OperatorTok{.}\FunctionTok{solve}\OperatorTok{(}\NormalTok{c}\OperatorTok{.}\FunctionTok{getInput}\OperatorTok{()).}\FunctionTok{trim}\OperatorTok{().}\FunctionTok{equals}\OperatorTok{(}\NormalTok{c}\OperatorTok{.}\FunctionTok{getExpected}\OperatorTok{().}\FunctionTok{trim}\OperatorTok{()))}\NormalTok{ passed}\OperatorTok{++;}
+        \OperatorTok{\}} \ControlFlowTok{catch} \OperatorTok{(}\BuiltInTok{RuntimeException}\NormalTok{ e}\OperatorTok{)} \OperatorTok{\{}
+            \ControlFlowTok{return} \KeywordTok{new} \FunctionTok{JudgeResult}\OperatorTok{(}\StringTok{"RE"}\OperatorTok{,}\NormalTok{ passed}\OperatorTok{,}\NormalTok{ cs}\OperatorTok{.}\FunctionTok{length}\OperatorTok{);}   \CommentTok{// 崩溃 {-}\textgreater{} RE}
+        \OperatorTok{\}}
+        \ControlFlowTok{return} \KeywordTok{new} \FunctionTok{JudgeResult}\OperatorTok{(}\NormalTok{passed }\OperatorTok{==}\NormalTok{ cs}\OperatorTok{.}\FunctionTok{length} \OperatorTok{?} \StringTok{"AC"} \OperatorTok{:} \StringTok{"WA"}\OperatorTok{,}\NormalTok{ passed}\OperatorTok{,}\NormalTok{ cs}\OperatorTok{.}\FunctionTok{length}\OperatorTok{);}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{\texttt{src/oj/Demo3.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{.*;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{judge}\OperatorTok{.*;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Demo3 }\OperatorTok{\{}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{        Problem p }\OperatorTok{=} \KeywordTok{new} \FunctionTok{Problem}\OperatorTok{(}\DecValTok{1}\OperatorTok{,} \StringTok{"A+B"}\OperatorTok{,} \KeywordTok{new}\NormalTok{ TestCase}\OperatorTok{[]\{} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"1 2"}\OperatorTok{,}\StringTok{"3"}\OperatorTok{),} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"10 20"}\OperatorTok{,}\StringTok{"30"}\OperatorTok{)} \OperatorTok{\});}
+\NormalTok{        Solution good }\OperatorTok{=}\NormalTok{ in }\OperatorTok{{-}\textgreater{}} \OperatorTok{\{} \BuiltInTok{String}\OperatorTok{[]}\NormalTok{ t }\OperatorTok{=}\NormalTok{ in}\OperatorTok{.}\FunctionTok{split}\OperatorTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{s+"}\OperatorTok{);} \ControlFlowTok{return} \StringTok{""} \OperatorTok{+} \OperatorTok{(}\BuiltInTok{Integer}\OperatorTok{.}\FunctionTok{parseInt}\OperatorTok{(}\NormalTok{t}\OperatorTok{[}\DecValTok{0}\OperatorTok{])} \OperatorTok{+} \BuiltInTok{Integer}\OperatorTok{.}\FunctionTok{parseInt}\OperatorTok{(}\NormalTok{t}\OperatorTok{[}\DecValTok{1}\OperatorTok{]));} \OperatorTok{\};}
+\NormalTok{        Solution bad  }\OperatorTok{=}\NormalTok{ in }\OperatorTok{{-}\textgreater{}} \OperatorTok{\{} \ControlFlowTok{throw} \KeywordTok{new} \BuiltInTok{RuntimeException}\OperatorTok{(}\StringTok{"boom"}\OperatorTok{);} \OperatorTok{\};}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\KeywordTok{new} \FunctionTok{SimpleJudge}\OperatorTok{().}\FunctionTok{judge}\OperatorTok{(}\NormalTok{p}\OperatorTok{,}\NormalTok{ good}\OperatorTok{));}   \CommentTok{// AC 2/2}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\KeywordTok{new} \FunctionTok{SimpleJudge}\OperatorTok{().}\FunctionTok{judge}\OperatorTok{(}\NormalTok{p}\OperatorTok{,}\NormalTok{ bad}\OperatorTok{));}    \CommentTok{// RE 0/2}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}d}\NormalTok{ build src/oj/core/}\PreprocessorTok{*}\NormalTok{.java src/oj/judge/}\PreprocessorTok{*}\NormalTok{.java src/oj/Demo3.java}
+\ExtensionTok{java} \AttributeTok{{-}cp}\NormalTok{ build oj.Demo3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+抽象类写法(编程题模板):\texttt{abstract\ class\ Shape\{\ abstract\ double\ area();\ \}}
+-\textgreater{}
+\texttt{class\ Circle\ extends\ Shape\{\ double\ area()\{...\}\ \}},父类引用指子类对象即多态。
+\end{quote}
+
+\hypertarget{m4-string-ux4e0eux7c7bux5e93ch8}{%
+\subsection{M4 · String
+与类库(Ch8)★★}\label{m4-string-ux4e0eux7c7bux5e93ch8}}
+
+考点:\texttt{String} 的 \texttt{==} vs
+\texttt{equals}(字符串常量池)、\texttt{trim/split}、\texttt{StringBuffer/StringBuilder}、\texttt{Random}/\texttt{Math}。
+
+\textbf{\texttt{src/oj/judge/OutputChecker.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{judge}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ OutputChecker }\OperatorTok{\{}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{boolean} \FunctionTok{same}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ expected}\OperatorTok{,} \BuiltInTok{String}\NormalTok{ actual}\OperatorTok{)} \OperatorTok{\{} \ControlFlowTok{return} \FunctionTok{norm}\OperatorTok{(}\NormalTok{expected}\OperatorTok{).}\FunctionTok{equals}\OperatorTok{(}\FunctionTok{norm}\OperatorTok{(}\NormalTok{actual}\OperatorTok{));} \OperatorTok{\}}
+    \KeywordTok{private} \DataTypeTok{static} \BuiltInTok{String} \FunctionTok{norm}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ s}\OperatorTok{)} \OperatorTok{\{}
+        \BuiltInTok{StringBuilder}\NormalTok{ sb }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{StringBuilder}\OperatorTok{();}
+        \ControlFlowTok{for} \OperatorTok{(}\BuiltInTok{String}\NormalTok{ line }\OperatorTok{:}\NormalTok{ s}\OperatorTok{.}\FunctionTok{split}\OperatorTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\OperatorTok{,} \OperatorTok{{-}}\DecValTok{1}\OperatorTok{))}\NormalTok{ sb}\OperatorTok{.}\FunctionTok{append}\OperatorTok{(}\NormalTok{line}\OperatorTok{.}\FunctionTok{trim}\OperatorTok{()).}\FunctionTok{append}\OperatorTok{(}\CharTok{\textquotesingle{}\textbackslash{}n\textquotesingle{}}\OperatorTok{);}
+        \ControlFlowTok{return}\NormalTok{ sb}\OperatorTok{.}\FunctionTok{toString}\OperatorTok{().}\FunctionTok{trim}\OperatorTok{();}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}d}\NormalTok{ build src/oj/judge/OutputChecker.java}
+\CommentTok{\# 比对忽略行尾空白:same("3\textbackslash{}n","  3  ") {-}\textgreater{} true}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+读程序常考:\texttt{"abc"=="abc"} 为
+true(常量池),\texttt{new\ String("abc")==..} 为 false,\texttt{equals}
+始终比内容。
+\end{quote}
+
+\hypertarget{m5a-ux96c6ux5408ux6846ux67b6ch15}{%
+\subsection{M5a ·
+集合框架(Ch15)★★}\label{m5a-ux96c6ux5408ux6846ux67b6ch15}}
+
+考点:\texttt{ArrayList}/\texttt{LinkedList}(有序可重复)、\texttt{HashSet}(去重)、\texttt{HashMap}(键值)、\texttt{Iterator}
+遍历、\texttt{Stream}。
+
+\textbf{\texttt{src/oj/io/Bank.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{io}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{.*;}
+\KeywordTok{import} \ImportTok{java}\OperatorTok{.}\ImportTok{util}\OperatorTok{.*;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Bank }\OperatorTok{\{}
+    \KeywordTok{private} \BuiltInTok{Map}\OperatorTok{\textless{}}\BuiltInTok{Integer}\OperatorTok{,}\NormalTok{ Problem}\OperatorTok{\textgreater{}}\NormalTok{ problems }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{HashMap}\OperatorTok{\textless{}\textgreater{}();}
+    \KeywordTok{public} \DataTypeTok{void} \FunctionTok{add}\OperatorTok{(}\NormalTok{Problem p}\OperatorTok{)} \OperatorTok{\{}\NormalTok{ problems}\OperatorTok{.}\FunctionTok{put}\OperatorTok{(}\NormalTok{p}\OperatorTok{.}\FunctionTok{getId}\OperatorTok{(),}\NormalTok{ p}\OperatorTok{);} \OperatorTok{\}}
+    \KeywordTok{public}\NormalTok{ Problem }\FunctionTok{get}\OperatorTok{(}\DataTypeTok{int}\NormalTok{ id}\OperatorTok{)} \OperatorTok{\{} \ControlFlowTok{return}\NormalTok{ problems}\OperatorTok{.}\FunctionTok{get}\OperatorTok{(}\NormalTok{id}\OperatorTok{);} \OperatorTok{\}}
+    \KeywordTok{public} \BuiltInTok{List}\OperatorTok{\textless{}}\BuiltInTok{Integer}\OperatorTok{\textgreater{}} \FunctionTok{ids}\OperatorTok{()} \OperatorTok{\{} \ControlFlowTok{return} \KeywordTok{new} \BuiltInTok{ArrayList}\OperatorTok{\textless{}\textgreater{}(}\NormalTok{problems}\OperatorTok{.}\FunctionTok{keySet}\OperatorTok{());} \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{\texttt{src/oj/Demo5a.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{core}\OperatorTok{.*;}
+\KeywordTok{import} \ImportTok{oj}\OperatorTok{.}\ImportTok{io}\OperatorTok{.}\ImportTok{Bank}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Demo5a }\OperatorTok{\{}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \OperatorTok{\{}
+\NormalTok{        Bank bank }\OperatorTok{=} \KeywordTok{new} \FunctionTok{Bank}\OperatorTok{();}
+\NormalTok{        bank}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\KeywordTok{new} \FunctionTok{Problem}\OperatorTok{(}\DecValTok{1}\OperatorTok{,} \StringTok{"A+B"}\OperatorTok{,} \KeywordTok{new}\NormalTok{ TestCase}\OperatorTok{[]\{} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"1 2"}\OperatorTok{,}\StringTok{"3"}\OperatorTok{)} \OperatorTok{\}));}
+\NormalTok{        bank}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\KeywordTok{new} \FunctionTok{Problem}\OperatorTok{(}\DecValTok{2}\OperatorTok{,} \StringTok{"平方"}\OperatorTok{,} \KeywordTok{new}\NormalTok{ TestCase}\OperatorTok{[]\{} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"3"}\OperatorTok{,}\StringTok{"9"}\OperatorTok{),} \KeywordTok{new} \FunctionTok{TestCase}\OperatorTok{(}\StringTok{"4"}\OperatorTok{,}\StringTok{"16"}\OperatorTok{)} \OperatorTok{\}));}
+        \ControlFlowTok{for} \OperatorTok{(}\DataTypeTok{int}\NormalTok{ id }\OperatorTok{:}\NormalTok{ bank}\OperatorTok{.}\FunctionTok{ids}\OperatorTok{())}                                       \CommentTok{// 遍历}
+            \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\NormalTok{id }\OperatorTok{+} \StringTok{" =\textgreater{} "} \OperatorTok{+}\NormalTok{ bank}\OperatorTok{.}\FunctionTok{get}\OperatorTok{(}\NormalTok{id}\OperatorTok{).}\FunctionTok{getTitle}\OperatorTok{());}
+        \DataTypeTok{long}\NormalTok{ n }\OperatorTok{=}\NormalTok{ bank}\OperatorTok{.}\FunctionTok{ids}\OperatorTok{().}\FunctionTok{stream}\OperatorTok{().}\FunctionTok{mapToInt}\OperatorTok{(}\NormalTok{id }\OperatorTok{{-}\textgreater{}}\NormalTok{ bank}\OperatorTok{.}\FunctionTok{get}\OperatorTok{(}\NormalTok{id}\OperatorTok{).}\FunctionTok{getCases}\OperatorTok{().}\FunctionTok{length}\OperatorTok{).}\FunctionTok{sum}\OperatorTok{();}  \CommentTok{// Stream}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\StringTok{"总用例: "} \OperatorTok{+}\NormalTok{ n}\OperatorTok{);}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}d}\NormalTok{ build src/oj/core/}\PreprocessorTok{*}\NormalTok{.java src/oj/io/Bank.java src/oj/Demo5a.java}
+\ExtensionTok{java} \AttributeTok{{-}cp}\NormalTok{ build oj.Demo5a}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{m5b-jdbcch11}{%
+\subsection{M5b · JDBC(Ch11)★★}\label{m5b-jdbcch11}}
+
+考点:\texttt{DriverManager.getConnection} -\textgreater{}
+\texttt{Statement} -\textgreater{} \texttt{executeQuery/executeUpdate}
+-\textgreater{}
+\texttt{ResultSet.next()};\texttt{PreparedStatement}(\texttt{?} 占位)防
+SQL 注入。\textbf{填空常考}。
+
+\textbf{\texttt{src/oj/db/SimpleDb.java}}(需 MySQL + \texttt{lib/}
+里放驱动 jar)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{db}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{java}\OperatorTok{.}\ImportTok{sql}\OperatorTok{.*;}
+\KeywordTok{import} \ImportTok{java}\OperatorTok{.}\ImportTok{util}\OperatorTok{.*;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ SimpleDb }\OperatorTok{\{}
+    \DataTypeTok{static} \DataTypeTok{final} \BuiltInTok{String} \BuiltInTok{URL} \OperatorTok{=} \StringTok{"jdbc:mysql://localhost:3306/mini\_oj?serverTimezone=UTC"}\OperatorTok{;}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \KeywordTok{throws} \BuiltInTok{Exception} \OperatorTok{\{}
+        \ControlFlowTok{try} \OperatorTok{(}\BuiltInTok{Connection}\NormalTok{ c }\OperatorTok{=} \BuiltInTok{DriverManager}\OperatorTok{.}\FunctionTok{getConnection}\OperatorTok{(}\BuiltInTok{URL}\OperatorTok{,} \StringTok{"root"}\OperatorTok{,} \StringTok{"root"}\OperatorTok{);}
+             \BuiltInTok{Statement}\NormalTok{ st }\OperatorTok{=}\NormalTok{ c}\OperatorTok{.}\FunctionTok{createStatement}\OperatorTok{())} \OperatorTok{\{}
+\NormalTok{            st}\OperatorTok{.}\FunctionTok{executeUpdate}\OperatorTok{(}\StringTok{"CREATE TABLE IF NOT EXISTS sub(id INT, name VARCHAR(32), status VARCHAR(8))"}\OperatorTok{);}
+\NormalTok{            st}\OperatorTok{.}\FunctionTok{executeUpdate}\OperatorTok{(}\StringTok{"INSERT INTO sub VALUES(1,\textquotesingle{}alice\textquotesingle{},\textquotesingle{}AC\textquotesingle{})"}\OperatorTok{);}
+            \BuiltInTok{ResultSet}\NormalTok{ rs }\OperatorTok{=}\NormalTok{ st}\OperatorTok{.}\FunctionTok{executeQuery}\OperatorTok{(}\StringTok{"SELECT id,name,status FROM sub"}\OperatorTok{);}
+            \BuiltInTok{List}\OperatorTok{\textless{}}\BuiltInTok{String}\OperatorTok{\textgreater{}}\NormalTok{ rows }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{ArrayList}\OperatorTok{\textless{}\textgreater{}();}
+            \ControlFlowTok{while} \OperatorTok{(}\NormalTok{rs}\OperatorTok{.}\FunctionTok{next}\OperatorTok{())}\NormalTok{ rows}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\NormalTok{rs}\OperatorTok{.}\FunctionTok{getInt}\OperatorTok{(}\StringTok{"id"}\OperatorTok{)} \OperatorTok{+} \StringTok{" "} \OperatorTok{+}\NormalTok{ rs}\OperatorTok{.}\FunctionTok{getString}\OperatorTok{(}\StringTok{"name"}\OperatorTok{)} \OperatorTok{+} \StringTok{" "} \OperatorTok{+}\NormalTok{ rs}\OperatorTok{.}\FunctionTok{getString}\OperatorTok{(}\StringTok{"status"}\OperatorTok{));}
+\NormalTok{            rows}\OperatorTok{.}\FunctionTok{forEach}\OperatorTok{(}\BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{::}\NormalTok{println}\OperatorTok{);}
+        \OperatorTok{\}}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}cp} \StringTok{"lib/*"} \AttributeTok{{-}d}\NormalTok{ build src/oj/db/SimpleDb.java}
+\ExtensionTok{java} \AttributeTok{{-}cp} \StringTok{"build:lib/*"}\NormalTok{ oj.db.SimpleDb            }\CommentTok{\# 1 alice AC}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{m5c-swing-guich9}{%
+\subsection{M5c · Swing GUI(Ch9)★★★}\label{m5c-swing-guich9}}
+
+考点:\texttt{JFrame}、布局(\texttt{FlowLayout}/\texttt{BorderLayout}/\texttt{GridLayout})、\texttt{JButton}/\texttt{JTextField}/\texttt{JLabel}/\texttt{JComboBox}、\texttt{ActionListener}(Lambda)、\texttt{JOptionPane}。\textbf{编程
++ 填空 双大题}。
+
+\textbf{\texttt{src/oj/gui/SimpleOj.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{.}\ImportTok{gui}\OperatorTok{;}
+\KeywordTok{import} \ImportTok{javax}\OperatorTok{.}\ImportTok{swing}\OperatorTok{.*;}
+\KeywordTok{import} \ImportTok{java}\OperatorTok{.}\ImportTok{awt}\OperatorTok{.*;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ SimpleOj }\OperatorTok{\{}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \OperatorTok{\{}
+        \BuiltInTok{SwingUtilities}\OperatorTok{.}\FunctionTok{invokeLater}\OperatorTok{(()} \OperatorTok{{-}\textgreater{}} \OperatorTok{\{}                   \CommentTok{// 在 EDT 上建界面}
+            \BuiltInTok{JFrame}\NormalTok{ f }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{JFrame}\OperatorTok{(}\StringTok{"Mini{-}OJ 提交"}\OperatorTok{);}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{setLayout}\OperatorTok{(}\KeywordTok{new} \BuiltInTok{FlowLayout}\OperatorTok{());}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{setSize}\OperatorTok{(}\DecValTok{380}\OperatorTok{,} \DecValTok{150}\OperatorTok{);}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{setDefaultCloseOperation}\OperatorTok{(}\BuiltInTok{JFrame}\OperatorTok{.}\FunctionTok{EXIT\_ON\_CLOSE}\OperatorTok{);}
+            \BuiltInTok{JComboBox}\OperatorTok{\textless{}}\BuiltInTok{String}\OperatorTok{\textgreater{}}\NormalTok{ prob }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{JComboBox}\OperatorTok{\textless{}\textgreater{}(}\KeywordTok{new} \BuiltInTok{String}\OperatorTok{[]\{} \StringTok{"1 A+B"}\OperatorTok{,} \StringTok{"2 平方"} \OperatorTok{\});}
+            \BuiltInTok{JTextField}\NormalTok{ input }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{JTextField}\OperatorTok{(}\DecValTok{12}\OperatorTok{);}
+            \BuiltInTok{JButton}\NormalTok{ submit }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{JButton}\OperatorTok{(}\StringTok{"提交"}\OperatorTok{);}
+            \BuiltInTok{JLabel}\NormalTok{ result }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{JLabel}\OperatorTok{(}\StringTok{"等待提交"}\OperatorTok{);}
+\NormalTok{            submit}\OperatorTok{.}\FunctionTok{addActionListener}\OperatorTok{(}\NormalTok{e }\OperatorTok{{-}\textgreater{}}                    \CommentTok{// Lambda 监听}
+\NormalTok{                result}\OperatorTok{.}\FunctionTok{setText}\OperatorTok{(}\StringTok{"已提交["} \OperatorTok{+}\NormalTok{ prob}\OperatorTok{.}\FunctionTok{getSelectedItem}\OperatorTok{()} \OperatorTok{+} \StringTok{"] 输出="} \OperatorTok{+}\NormalTok{ input}\OperatorTok{.}\FunctionTok{getText}\OperatorTok{()));}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\KeywordTok{new} \BuiltInTok{JLabel}\OperatorTok{(}\StringTok{"题目"}\OperatorTok{));}\NormalTok{ f}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\NormalTok{prob}\OperatorTok{);}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\KeywordTok{new} \BuiltInTok{JLabel}\OperatorTok{(}\StringTok{"输出"}\OperatorTok{));}\NormalTok{ f}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\NormalTok{input}\OperatorTok{);}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\NormalTok{submit}\OperatorTok{);}\NormalTok{ f}\OperatorTok{.}\FunctionTok{add}\OperatorTok{(}\NormalTok{result}\OperatorTok{);}
+\NormalTok{            f}\OperatorTok{.}\FunctionTok{setVisible}\OperatorTok{(}\KeywordTok{true}\OperatorTok{);}
+        \OperatorTok{\});}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}d}\NormalTok{ build src/oj/gui/SimpleOj.java}
+\ExtensionTok{java} \AttributeTok{{-}cp}\NormalTok{ build oj.gui.SimpleOj                   }\CommentTok{\# 需图形界面}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+填空常考骨架:\texttt{new\ JFrame()} -\textgreater{}
+\texttt{setLayout(new\ GridLayout(行,列))} -\textgreater{}
+\texttt{for(...)\ add(new\ JButton(...))} -\textgreater{}
+\texttt{setVisible(true)}。
+\end{quote}
+
+\hypertarget{m6a-ux591aux7ebfux7a0bch12}{%
+\subsection{M6a · 多线程(Ch12)★★}\label{m6a-ux591aux7ebfux7a0bch12}}
+
+考点:\texttt{Thread}/\texttt{Runnable}、\texttt{start()}(非
+\texttt{run()})、\texttt{join()}、\texttt{synchronized}。\textbf{填空常考线程类}。
+
+\textbf{\texttt{src/oj/Demo6a.java}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{package}\ImportTok{ oj}\OperatorTok{;}
+\KeywordTok{public} \KeywordTok{class}\NormalTok{ Demo6a }\OperatorTok{\{}
+    \DataTypeTok{static} \DataTypeTok{int}\NormalTok{ done }\OperatorTok{=} \DecValTok{0}\OperatorTok{;}
+    \DataTypeTok{static} \KeywordTok{synchronized} \DataTypeTok{void} \FunctionTok{finish}\OperatorTok{(}\BuiltInTok{String}\NormalTok{ who}\OperatorTok{)} \OperatorTok{\{}\NormalTok{ done}\OperatorTok{++;} \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\NormalTok{who }\OperatorTok{+} \StringTok{" 判完,累计 "} \OperatorTok{+}\NormalTok{ done}\OperatorTok{);} \OperatorTok{\}}
+    \KeywordTok{public} \DataTypeTok{static} \DataTypeTok{void} \FunctionTok{main}\OperatorTok{(}\BuiltInTok{String}\OperatorTok{[]}\NormalTok{ args}\OperatorTok{)} \KeywordTok{throws} \BuiltInTok{InterruptedException} \OperatorTok{\{}
+        \BuiltInTok{Runnable}\NormalTok{ job }\OperatorTok{=} \OperatorTok{()} \OperatorTok{{-}\textgreater{}} \OperatorTok{\{} \ControlFlowTok{try} \OperatorTok{\{} \BuiltInTok{Thread}\OperatorTok{.}\FunctionTok{sleep}\OperatorTok{(}\DecValTok{50}\OperatorTok{);} \OperatorTok{\}} \ControlFlowTok{catch} \OperatorTok{(}\BuiltInTok{InterruptedException}\NormalTok{ e}\OperatorTok{)} \OperatorTok{\{\}} \FunctionTok{finish}\OperatorTok{(}\BuiltInTok{Thread}\OperatorTok{.}\FunctionTok{currentThread}\OperatorTok{().}\FunctionTok{getName}\OperatorTok{());} \OperatorTok{\};}
+        \BuiltInTok{Thread}\NormalTok{ t1 }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{Thread}\OperatorTok{(}\NormalTok{job}\OperatorTok{,} \StringTok{"worker{-}1"}\OperatorTok{);}
+        \BuiltInTok{Thread}\NormalTok{ t2 }\OperatorTok{=} \KeywordTok{new} \BuiltInTok{Thread}\OperatorTok{(}\NormalTok{job}\OperatorTok{,} \StringTok{"worker{-}2"}\OperatorTok{);}
+\NormalTok{        t1}\OperatorTok{.}\FunctionTok{start}\OperatorTok{();}\NormalTok{ t2}\OperatorTok{.}\FunctionTok{start}\OperatorTok{();}                              \CommentTok{// 并发(不是 run())}
+\NormalTok{        t1}\OperatorTok{.}\FunctionTok{join}\OperatorTok{();}\NormalTok{  t2}\OperatorTok{.}\FunctionTok{join}\OperatorTok{();}                                \CommentTok{// 主线程等它们}
+        \BuiltInTok{System}\OperatorTok{.}\FunctionTok{out}\OperatorTok{.}\FunctionTok{println}\OperatorTok{(}\StringTok{"全部完成: "} \OperatorTok{+}\NormalTok{ done}\OperatorTok{);}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{javac} \AttributeTok{{-}d}\NormalTok{ build src/oj/Demo6a.java}
+\ExtensionTok{java} \AttributeTok{{-}cp}\NormalTok{ build oj.Demo6a}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{quote}
+填空常考:\texttt{class\ T\ extends\ Thread\{\ public\ T(String\ n)\{\ super(n);\ \}\ public\ void\ run()\{...\}\ \}};主线程
+\texttt{t.start();} 启动。
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{quote}
+想看「这些功能怎么长成工业级判题系统」(反射、外部 C++
+判题机、数据库工程、多线程队列、MVC)------见\textbf{完整版}:\url{https://winbeau.github.io/Mini-OJ-docs/mini-oj-tutorial.pdf}
+\end{quote}
+
+\end{document}

@@ -67,13 +67,15 @@
 % ---- 段落 ----
 \setlength{\parindent}{0pt}\setlength{\parskip}{4pt}
 
-% ---- 彩色标题页 ----
+% ---- 彩色标题页(标题可由 \def\TitleMain / \TitleSub 覆盖)----
+\providecommand{\TitleMain}{用 Mini-OJ 项目学 Java}
+\providecommand{\TitleSub}{判题机三代演进}
 \renewcommand{\maketitle}{%
 \begin{titlepage}
 \thispagestyle{empty}
 \vspace*{2.2cm}
 {\setlength{\fboxsep}{0pt}\noindent\colorbox{primary}{\parbox{\textwidth}{\centering\color{white}%
-  \vspace{22pt}{\Huge\bfseries 用 Mini-OJ 项目学 Java}\\[10pt]{\Large 判题机三代演进}\vspace{22pt}}}}
+  \vspace{22pt}{\Huge\bfseries \TitleMain}\\[10pt]{\Large \TitleSub}\vspace{22pt}}}}
 \vfill
 \noindent{\large\bfseries\color{primarydark} winbeau · Mini-OJ 教学项目}\par\vspace{4pt}
 \noindent{\large\color{primary} 古法手撸 · 教学优先 · 2026-06}\par\vspace{16pt}
