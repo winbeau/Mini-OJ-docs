@@ -9,6 +9,10 @@ TPL  = "/home/winbeau/.claude/skills/article-to-html/references/template.html"
 css = re.search(r"<style>(.*?)</style>", open(TPL, encoding="utf-8").read(), re.S).group(1)
 
 EXTRA = """
+/* —— download buttons —— */
+.dl-btn { display:inline-block; margin:4px 10px 4px 0; padding:9px 15px; font-family: ui-monospace, Menlo, monospace; font-size:12px; letter-spacing:0.02em; background: var(--accent); color:#fff; border:1px solid var(--accent); border-radius:7px; text-decoration:none; -webkit-font-smoothing:antialiased; transition: background .15s, border-color .15s; }
+.dl-btn:hover { background:#5a87a4; border-color:#5a87a4; color:#fff; }
+html.dark .dl-btn { color:#fff; }
 /* —— interactivity —— */
 section.collapsible h2 { cursor: pointer; position: relative; padding-right: 28px; }
 section.collapsible h2::after { content:"\\2212"; position:absolute; right:8px; top:8px; font-family: ui-monospace, Menlo, monospace; color: var(--ink-faint); }

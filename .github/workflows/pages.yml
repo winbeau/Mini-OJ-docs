@@ -28,7 +28,9 @@ jobs:
           mkdir -p _site
           cp ./*.html _site/
           cp ./*.md   _site/
-          cp -r judge  _site/judge
+          rm -f judge/judge                          # 不打包二进制(平台相关)
+          cp -r judge  _site/judge                   # 源码可单文件下载 judge/judge.cpp
+          tar -czf _site/judge-bundle.tar.gz judge   # 完整判题机打包下载(源码+Makefile+示例)
           touch _site/.nojekyll
 
       - uses: actions/configure-pages@v5
