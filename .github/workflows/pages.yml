@@ -31,6 +31,8 @@ jobs:
           rm -f judge/judge                          # 不打包二进制(平台相关)
           cp -r judge  _site/judge                   # 源码可单文件下载 judge/judge.cpp
           tar -czf _site/judge-bundle.tar.gz judge   # 完整判题机打包下载(源码+Makefile+示例)
+          cp ./*.pdf _site/ 2>/dev/null || true      # PDF 教程下载
+          cp ./*.tex _site/ 2>/dev/null || true      # PDF 的 LaTeX 源
           touch _site/.nojekyll
 
       - uses: actions/configure-pages@v5

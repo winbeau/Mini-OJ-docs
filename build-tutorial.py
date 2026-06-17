@@ -138,6 +138,9 @@ HTML = """<!DOCTYPE html>
     <span>REPO · github.com/winbeau/Mini-OJ-docs</span>
   </div>
 </header>
+<p style="margin:18px 0 0">
+  <a class="dl-btn" href="mini-oj-tutorial.pdf" download>⬇ 下载 PDF 教程(单文件,适合打印/离线)</a>
+</p>
 <div class="tldr">
   <div class="tldr-label">TL;DR</div>
   以一个 <strong>Mini-OJ(在线判题系统)</strong> 为主线学完 Java 课程,贯穿<strong>判题机三代演进</strong>:第一代 Java 对象在 JVM 内模拟判题(M1–M3)、第二代反射工厂 + 单文件配置(M4)、第三代外部 <strong>C++ 判题机</strong>真编译/真运行/真 <code>setrlimit</code>(M5a)。其后用数据库(M5b)、Swing 大前端(M5c)、多线程并发(M6a 收官)做工程化。课程调整:<strong>第13章网络(Socket)已删</strong>,<strong>新增第15章泛型与集合</strong>。全程 <code>javac/java</code> 古法手撸。点击章节标题可折叠,右上角可切暗色。

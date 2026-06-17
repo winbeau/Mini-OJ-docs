@@ -6,3 +6,8 @@ build/
 # Python 缓存
 __pycache__/
 *.pyc
+# LaTeX 中间产物(保留 .tex/.pdf)
+*.log
+*.aux
+*.toc
+*.out

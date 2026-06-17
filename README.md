@@ -4,6 +4,7 @@
 环境:Ubuntu + nvim + JDK,**古法手撸**(纯 `javac/java` + `Makefile`),简单、教学优先。
 
 > **在线教程**:<https://winbeau.github.io/Mini-OJ-docs/> ·(单页 HTML,全部 md 融合 + 目录/折叠/复制/暗色;本地文件 [mini-oj-tutorial.html](mini-oj-tutorial.html))
+> **PDF 教程**(单文件,适合打印/离线):[mini-oj-tutorial.pdf](mini-oj-tutorial.pdf) ·(LaTeX 源 `mini-oj-tutorial.tex`,用 `build-pdf.sh` + tectonic 重编)
 
 ## 文档导航
 
