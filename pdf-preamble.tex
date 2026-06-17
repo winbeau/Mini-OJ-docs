@@ -1,0 +1,84 @@
+% ===== Mini-OJ 教程 PDF 彩色样式(pandoc -H 注入;ctexart + xelatex/tectonic)=====
+% ---- 配色 ----
+\usepackage{xcolor}
+\definecolor{primary}{HTML}{2C6E91}      % 主色:蓝
+\definecolor{primarydark}{HTML}{1B4763}
+\definecolor{primarylight}{HTML}{AFC8DA}
+\definecolor{examgreen}{HTML}{2E8B57}    % 考试向:绿
+\definecolor{engorange}{HTML}{C8772E}    % 工程向:橙
+\definecolor{codebg}{HTML}{F6F8FA}
+\definecolor{calloutbg}{HTML}{EEF4FA}
+\definecolor{gold}{HTML}{D4A017}         % ★
+
+% ---- 链接 ----
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=primary,urlcolor=primary,citecolor=primary}
+
+% ---- 章节着色 ----
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{primary}}{\color{primarylight}\thesection}{0.6em}{}[{\color{primarylight}\titlerule[1.2pt]}]
+\titleformat{\subsection}{\large\bfseries\color{primarydark}}{\color{primary}\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{primarydark}}{}{0em}{}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+% ---- 页眉页脚 ----
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\small\color{primary}\nouppercase{\leftmark}}
+\fancyhead[R]{\small\color{primarylight}\textbf{Mini-OJ 教程}}
+\fancyfoot[C]{\small\color{primary}\thepage}
+
+% ---- 代码:换行 + 圆角彩框 ----
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,fontsize=\small,commandchars=\\\{\}}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\renewenvironment{Shaded}{%
+  \begin{tcolorbox}[breakable,enhanced,boxrule=0pt,leftrule=2.5pt,arc=2pt,
+    colback=codebg,colframe=primary,left=8pt,right=6pt,top=4pt,bottom=4pt]}{%
+  \end{tcolorbox}}
+
+% ---- 引用块 → 彩色提示框 ----
+\renewenvironment{quote}{%
+  \begin{tcolorbox}[breakable,enhanced,boxrule=0pt,leftrule=3pt,arc=1pt,
+    colback=calloutbg,colframe=primary,left=8pt,right=8pt,top=5pt,bottom=5pt]}{%
+  \end{tcolorbox}}
+
+% ---- 表格 ----
+\usepackage{booktabs}
+
+% ---- 考试向 / 工程向 徽章 ----
+\newcommand{\KS}{\,\colorbox{examgreen}{\textcolor{white}{\scriptsize\bfseries 考试向}}\,}
+\newcommand{\GC}{\,\colorbox{engorange}{\textcolor{white}{\scriptsize\bfseries 工程向}}\,}
+
+% ---- 符号字形(★☐①… 映射到 Dingbats/amssymb,并上色)----
+\usepackage{pifont}\usepackage{amssymb}\usepackage{newunicodechar}
+\newunicodechar{★}{\textcolor{gold}{\ding{72}}}
+\newunicodechar{☆}{\textcolor{gold!60}{\ding{73}}}
+\newunicodechar{✘}{\textcolor{red!65!black}{\ding{55}}}
+\newunicodechar{✓}{\textcolor{examgreen}{\ding{51}}}
+\newunicodechar{✔}{\textcolor{examgreen}{\ding{51}}}
+\newunicodechar{☐}{$\square$}
+\newunicodechar{①}{\ding{172}}\newunicodechar{②}{\ding{173}}\newunicodechar{③}{\ding{174}}
+\newunicodechar{④}{\ding{175}}\newunicodechar{⑤}{\ding{176}}\newunicodechar{⑥}{\ding{177}}
+
+% ---- 段落 ----
+\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}
+
+% ---- 彩色标题页 ----
+\renewcommand{\maketitle}{%
+\begin{titlepage}
+\thispagestyle{empty}
+\vspace*{2.2cm}
+{\setlength{\fboxsep}{0pt}\noindent\colorbox{primary}{\parbox{\textwidth}{\centering\color{white}%
+  \vspace{22pt}{\Huge\bfseries 用 Mini-OJ 项目学 Java}\\[10pt]{\Large 判题机三代演进}\vspace{22pt}}}}
+\vfill
+\noindent{\large\bfseries\color{primarydark} winbeau · Mini-OJ 教学项目}\par\vspace{4pt}
+\noindent{\large\color{primary} 古法手撸 · 教学优先 · 2026-06}\par\vspace{16pt}
+\noindent{\color{examgreen}\rule{36pt}{8pt}}\ {\small 考试向(拟合试卷,先上手)}\par\vspace{4pt}
+\noindent{\color{engorange}\rule{36pt}{8pt}}\ {\small 工程向(项目深度,选学)}\par\vspace{4pt}
+\noindent{\color{gold}\ding{72}\ding{72}\ding{72}}\ {\small 考试相关度(历年真题)}
+\vspace{2.2cm}
+\end{titlepage}}
