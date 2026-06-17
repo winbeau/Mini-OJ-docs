@@ -104,13 +104,13 @@ mini-oj/
 
 - **M0 Ch1** ☆:走通编写→编译→运行;`Main` 打印就绪。
 - **M1 Ch2–3** ★:数组+if/switch/循环,硬编码判 A+B 出 AC/WA(真题:数组遍历、`++i`、运算符)。
-- **M2 Ch4** ★★★:`[第一步]` 照真题写带构造/get-set 的普通类(如 Vehicle);`[第二步]` 收成 `Problem/TestCase` + static 计数 + 包/jar。
-- **M3 Ch5–7** ★★★:`[第一步]` 照真题写抽象基类+子类重写+多态+try-catch(如 Shape→Circle/Rectangle);`[第二步]` 抽成 `Judge` 接口 / `AbstractJudge` 模板。
-- **M4 Ch8+Ch10** ★★(Ch8):`[第一步]` String `==`/equals、StringBuffer、Random/Math(读程序/选择);`[第二步·工程]` `config.txt`+`Class.forName` 反射工厂、单文件读写。
-- **M5a Ch15+Ch10** ★★(Ch15):`[第一步]` ArrayList/LinkedList/HashMap/Iterator 遍历(读程序/填空);`[第二步·工程]` `ProcessBuilder` 调外部 C++ 判题机、序列化、`ProblemRepository`。
-- **M5b Ch11** ★★:`[第一步]` 照真题写 Connection/Statement/ResultSet 查询入 ArrayList + 更新(score_t/student 原题);`[第二步·工程]` `ProblemDao`/事务/`ProblemService` 的 FS/DB 分工。
-- **M5c Ch9** ★★★:`[第一步]` 照真题写「加法/平方/六按钮」窗口(JFrame+布局+JButton+JTextField+JLabel+ActionListener);`[第二步·工程]` `OjFrame`/`OjController` MVC 解耦 + SwingWorker。
-- **M6a Ch12** ★★:`[第一步]` 照真题写 `extends Thread`/`Runnable` + start/run + join/synchronized(线程类填空原题);`[第二步·工程]` 泛型阻塞队列 + 工作线程池 + 调 C++ 判题机(**收官**)。
+- **M2 Ch4** ★★★:`[第一步·考试向]` 用考试级写法把 OJ 的 `TestCase/Problem/JudgeResult` 写成最简普通类;`[第二步·工程向]` 收成 `ProblemMeta`+`static`+包/jar。
+- **M3 Ch5–7** ★★★:`[第一步·考试向]` 写一个简单判题(判出 AC/WA)+ try-catch;`[第二步·工程向]` 抽成 `Judge` 接口/`AbstractJudge` 模板 + 多态 + 自定义异常。
+- **M4 Ch8+Ch10** ★★:`[第一步·考试向]` 用 `trim/equals/split`+`StringBuilder` 做 OJ 输出比对与报告;`[第二步·工程向]` `config.txt`+反射工厂、单文件读写。
+- **M5a Ch15+Ch10** ★★:`[第一步·考试向]` 用 `ArrayList/HashMap` 装 OJ 的多组用例/题目(内存题库);`[第二步·工程向]` `ProblemLoader/Repository` + `ProcessBuilder` 调 C++ 判题机 + 序列化。
+- **M5b Ch11** ★★:`[第一步·考试向]` 用最简 JDBC(`Statement`)把 OJ 的提交/题目存取 MySQL;`[第二步·工程向]` `ProblemDao`/事务/`PreparedStatement`/`ProblemService` FS/DB 分工。
+- **M5c Ch9** ★★★:`[第一步·考试向]` 写 OJ 提交窗口最简版(选题+输入+提交+标签显示结果);`[第二步·工程向]` `OjFrame`/`OjController` MVC 解耦 + SwingWorker。
+- **M6a Ch12** ★★:`[第一步·考试向]` 给 OJ 判题加最简并发(`Thread/Runnable`+`synchronized/join`);`[第二步·工程向]` 泛型阻塞队列 + 线程池 + 调 C++ 判题机(**收官**)。
 
 ## 学习方法
 

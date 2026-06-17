@@ -1,6 +1,6 @@
 # 08 · M5c Swing 桌面客户端（Ch9，大前端）
 
-> **考试相关度 ★★★(编程+填空双大题)** · 真题原题:加法练习/平方窗口、六按钮 GridLayout。**[第一步·拟合试卷]** 照真题写单窗口:JFrame+布局+JButton+JTextField+JLabel+ActionListener;**[第二步·工程化]** `OjFrame`/`OjController` MVC 解耦 + SwingWorker。
+> **考试相关度 ★★★(编程+填空双大题)** · 真题考点参考:JFrame/布局/JButton/JTextField/JLabel/ActionListener。**[第一步·考试向]** 用考试级 Swing 写 OJ 提交窗口最简版(选题+输入+提交按钮+标签显示判题结果);**[第二步·工程向]** `OjFrame`/`OjController` MVC 解耦 + SwingWorker。
 
 > 判题逻辑已经具备：数据库存题、C++ 判题机真正跑代码。现在缺少的是一扇窗户——用户还在用命令行粘贴代码、手动查库。本章用 Java Swing 为 Mini-OJ 装上可视化界面，把前三代的成果串联成一个完整的桌面应用。
 
@@ -469,6 +469,52 @@ public class Main {
 **没有任何 Socket/ServerSocket/网络调用**。MachineJudge 通过 `ProcessBuilder` 启动本地可执行文件（系统进程），SubmissionDao 通过 JDBC 访问本地数据库，两者均为进程内的本地调用。
 
 ---
+
+## 动手实现:两步走(javac / java 实操)
+
+### 第一步 [考试向] — 最简 OJ 提交窗口(单文件)
+
+**`src/oj/gui/SimpleOj.java`**
+```java
+package oj.gui;
+import javax.swing.*;
+import java.awt.*;
+public class SimpleOj {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {               // 在 EDT 上建界面
+            JFrame f = new JFrame("Mini-OJ 提交");
+            f.setLayout(new FlowLayout());
+            f.setSize(380, 150);
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JComboBox<String> prob = new JComboBox<>(new String[]{ "1 A+B", "2 平方" });
+            JTextField input = new JTextField(12);
+            JButton submit = new JButton("提交");
+            JLabel result = new JLabel("等待提交");
+            submit.addActionListener(e ->                // Lambda 监听 ActionEvent
+                result.setText("已提交[" + prob.getSelectedItem() + "] 输出=" + input.getText()));
+            f.add(new JLabel("题目")); f.add(prob);
+            f.add(new JLabel("输出")); f.add(input);
+            f.add(submit); f.add(result);
+            f.setVisible(true);
+        });
+    }
+}
+```
+讲解:`JFrame`+`FlowLayout`+`JComboBox`(选题)+`JTextField`(输入)+`JButton`+`JLabel`+`ActionListener` Lambda——Ch9 全部考点,组成 OJ 的提交窗口。
+
+编译运行(需图形界面环境):
+```bash
+javac -d build src/oj/gui/SimpleOj.java
+java -cp build oj.gui.SimpleOj
+```
+
+### 第二步 [工程向] — MVC 解耦 + 后台判题
+
+拆成 `OjFrame`(View)/`OjController`(Controller)/`ProblemService`+`MachineJudge`(Model),点提交后用 `SwingWorker` 在后台调判题机、回 EDT 刷新,界面不卡(代码见上文【新产物架构】):
+```bash
+javac -cp "lib/*" -d build $(find src -name '*.java')
+java -cp "build:lib/*" oj.gui.Main
+```
 
 ## 验收标准
 
